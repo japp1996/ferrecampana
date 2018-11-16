@@ -15182,13 +15182,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 	methods: {
 		_addCart: function _addCart(item) {
+			if (resultado != undefined) {
+				swal("", "Ya ha añadido este producto", "warning");
+				return;
+			}
 			this.carrito.push({
 				id_producto: item.id,
 				name: item.name,
 				//cantidad: item.cantidad,
 				id_estado: 3
 			});
-			console.log(this.carrito);
 		},
 		_addQuanty: function _addQuanty(i, q) {
 			this.dataProducts[i].splice(i, 0, q);
