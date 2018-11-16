@@ -27,7 +27,7 @@
 				        </ul>
 					</div>
 		      	</div>
-		        <div v-for="item in dataProducts" class="col-md-3">
+		        <div v-for="(item, i) in dataProducts" class="col-md-3">
 				    <div class="make3D">
 			            <div class="product-front">
 			                <div class="shadow"></div>

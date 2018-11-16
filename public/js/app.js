@@ -15298,7 +15298,7 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._l(_vm.dataProducts, function(item) {
+          _vm._l(_vm.dataProducts, function(item, i) {
             return _c("div", { staticClass: "col-md-3" }, [
               _c("div", { staticClass: "make3D" }, [
                 _c("div", { staticClass: "product-front" }, [
