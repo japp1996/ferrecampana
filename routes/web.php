@@ -62,6 +62,8 @@
 		Route::resource('restaurar', 'RestoreController');
 		//Perfil
 		Route::resource('perfil', 'PerfilController');
+		Route::resource('password', 'PasswordController');
+
 		//Factura
 		Route::resource('facturacion', 'FacturaController');
 	});

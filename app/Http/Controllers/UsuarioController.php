@@ -13,10 +13,6 @@ class UsuarioController extends Controller
         return view('content.create');
     }
 
-    public function create() {
-
-    }
-
     public function store(UsuarioRequest $request) {
         $user = new Usuario;
         $user->number = $request->tipodoc."-".$request->number;
@@ -27,23 +23,8 @@ class UsuarioController extends Controller
         $user->address = $request->address;
         $user->birthday = $request->date;
         $user->level = 'CLI';
+        $user->status = '1';
         $user->save();
         return response()->json(['result' => true, 'text' => 'Registro completado']);
-    }
-
-    public function show() {
-        
-    }
-
-    public function edit() {
-        
-    }
-
-    public function update() {
-        
-    }
-    
-    public function destroy() {
-        
     }
 }

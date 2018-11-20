@@ -22,10 +22,32 @@ class ProfileRequest extends FormRequest
      *
      * @return array
      */
+
     public function rules()
     {
         return [
-            'email' => 'required|email'
+            'email' => 'required|email',
+            'phone' => 'required',
+            'name' => 'required',
+            'address' => 'required',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'email' => 'Correo',
+            'phone' => 'Teléfono',
+            'name' => 'Nombres y Apellidos',
+            'address' => 'Dirección'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'required' => 'Debe completar los campos en :attribute',
+            'email' => 'El campo :attribute debe tener formáto de email'
         ];
     }
 

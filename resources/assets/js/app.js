@@ -42,6 +42,7 @@
 	Vue.component('estado-pedido-index', require('./components/Admin/EstadoPedido/IndexEstadoPedido'));
 	//Perfil
 	Vue.component('perfil-index', require('./components/Admin/Perfil/IndexPerfil'))
+	Vue.component('password-index', require('./components/Admin/Perfil/PasswordChange'));
 	//Productos
 	Vue.component('productos-index', require('./components/Admin/Productos/IndexProductos'));
 	//Recepcion

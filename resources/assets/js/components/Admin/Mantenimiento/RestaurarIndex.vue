@@ -12,8 +12,8 @@
    						<input class="form-control" type="text" placeholder="Usuario">
    						<input class="form-control" type="password" placeholder="Contraseña">
    						<label for="" class="form-control">Archivo SQL</label>
-   						<input class="form-control" id="file" v-model="form.database" name="file" type="file" placeholder="Base de Datos">
-   						<button class="btn btn-primary btn-center">Respaldar</button>
+   						<input class="form-control" type="file" >
+   						<button class="btn btn-primary btn-center" @click="_restore()">Respaldar</button>
    					</div>
    				</div>
    			</div>

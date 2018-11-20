@@ -1,5 +1,5 @@
 @extends('layouts.admin')
 @section('title', 'Perfil')
 @section('content')
-	<perfil-index></perfil-index>
+	<perfil-index :usuario="{{ $usuario }}"></perfil-index>
 @endsection()

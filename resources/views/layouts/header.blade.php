@@ -46,7 +46,6 @@
 					<ul>
 						<li><a href="{{ asset('intranet/perfil') }}">Modificar datos</a></li>
 						<li><a href="{{ asset('intranet/password') }}">Cambiar contraseña</a></li>
-						<li><a href="{{ asset('intranet/delete_account') }}">Eliminar cuenta</a></li>
 						<li><a href="{{ asset('logout') }}">Cerrar sesión</a></li>
 					</ul>
 				</li>

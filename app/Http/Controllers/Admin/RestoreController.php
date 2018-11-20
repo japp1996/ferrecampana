@@ -17,7 +17,7 @@ class RestoreController extends Controller
 		$usuario = $request->user; 
 		$contrasena = $request->password;   
 		$formatobd = ".sql";
-		
+
     	$respaldo = "c:\\www\\mysql\\bin\\mysqldump.exe -u $usuario --password=$contrasena --opt $bd < $archivosql"; 
 		system($respaldo, $resultado);
 		if ($resultado) {
