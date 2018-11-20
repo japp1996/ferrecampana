@@ -11,6 +11,6 @@ class EstadoPedido extends Model
 	public $timestamps = false;
     
     public function pedidos() {
-    	$this->belongsToMany(Pedido::class, 'id_estado');
+    	$this->belongsTo(Pedido::class, 'id_estado');
     }
 }

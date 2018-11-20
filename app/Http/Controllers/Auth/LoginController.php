@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
 
 class LoginController extends Controller
@@ -22,10 +23,6 @@ class LoginController extends Controller
 
     public function login(LoginRequest $request)
     {    
-        $data = [
-            'email' => $request->email,
-            'password' => $request->password
-        ];
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             if (Auth::user()->level == 'CLI') {
                 return response()->json([
@@ -44,5 +41,10 @@ class LoginController extends Controller
                 'error' => "Correo Electrónico o Contraseña incorrectos"
             ]);
         }
+    }
+
+    public function logout() {
+        Auth::logout();
+        return redirect('');
     }
 }

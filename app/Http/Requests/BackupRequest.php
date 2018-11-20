@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\Rule;
 
-class DesignRequest extends FormRequest
+class BackupRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,34 +26,25 @@ class DesignRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
-                'required',
-                Rule::unique('designs')->ignore($this->id)->where(function ($query) {
-                    return $query->where('status', '1');
-                }),
-            ],
-            'name_english' => [
-                'required',
-                Rule::unique('designs')->ignore($this->id)->where(function ($query) {
-                    return $query->where('status', '1');
-                }),
-            ]
+            'server' => 'required',
+            'user' => 'required',
+            'database' => 'required'
         ];
     }
 
     public function attributes()
     {
         return [
-            'name' => 'nombre del diseño',
-            'name_english' => 'nombre del diseño en inglés'
+            'server' => 'Nombre del Servidor',
+            'user' => 'Nombre de Usuario',
+            'database' => 'Nombre de la Base de datos',
         ];
     }
 
     public function messages()
     {
         return [
-            'unique' => 'Ya existe un diseño registrado con este nombre',
-            'required' => 'El campo :attribute es requerido'
+            'required' => 'Debe completar los campos en :attribute'
         ];
     }
 

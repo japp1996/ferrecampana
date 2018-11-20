@@ -16,9 +16,9 @@ class IntranetMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check()){
-            return redirect('/login');
+        if (Auth::check()) {
+            return $next($request);
         }
-        return $next($request);
+        return redirect('/login');
     }
 }

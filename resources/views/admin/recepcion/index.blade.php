@@ -1,5 +1,5 @@
 @extends('layouts.admin')
 @section('title', 'Recepción')
 @section('content')
-	<recepcion-index></recepcion-index>
+	<recepcion-index :orden="{{ $orden }}" :recepcion="{{ $recepcion }}"></recepcion-index>
 @endsection()

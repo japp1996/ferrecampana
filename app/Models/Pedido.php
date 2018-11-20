@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\EstadoPedido;
 use App\Models\DetallesPedido;
+use App\Models\Usuario;
 
 class Pedido extends Model
 {
@@ -12,10 +13,15 @@ class Pedido extends Model
 	public $timestamps = false;
 
     public function estado() {
-    	$this->hasOne(EstadoPedido::class, 'id');
+    	return $this->hasOne(EstadoPedido::class, 'id');
     }
 
     public function detalles() {
-    	$this->hasMany(DetallesPedido::class, 'id_pedido');
+    	return $this->hasMany(DetallesPedido::class, 'id_pedido');
+    }
+
+    public function usuario()
+    {
+		return $this->belongsTo(Usuario::class, 'number');
     }
 }

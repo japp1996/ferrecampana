@@ -5,18 +5,18 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\OrdenCompra;
-use App\Models\Recepcion;
-use App\Models\DetallesRecepcion;
+use App\Models\Requisicion;
+use App\Models\DetallesRequisicion;
 use App\Models\DetallesOrdenCompra;
 use App\Models\Producto;
 use App\Models\Categoria;
-use App\Http\Requests\RecepcionRequest;
+use App\Http\Requests\OrdenCompraRequest;
 
-class RecepcionController extends Controller
+class OrdenCompraController extends Controller
 {
     public function index()
     {
-        $recepcion = Recepcion::where('id_estado', '!=', '1')->with(['detalles' => function($q){
+    	$orden = OrdenCompra::where('id_estado', '!=', '1')->with(['detalles' => function($q){
             $q->with(['productos' => function($query) {
                 $query->get();
             }])->get();
@@ -25,7 +25,7 @@ class RecepcionController extends Controller
         }])
         ->get();
 
-        $orden = OrdenCompra::where('id_estado', '!=','1')->where('id_estado', '!=', '5')
+        $requisicion = Requisicion::where('id_estado', '!=','1')->where('id_estado', '!=', '5')
         ->with(['detalles' => function($q){
             $q->with(['productos' => function($query) {
                 $query->get();
@@ -35,56 +35,42 @@ class RecepcionController extends Controller
         }])
         ->get();
         
-        return view('admin.recepcion.index')->with(['recepcion' => $recepcion, 'orden' => $orden]);
+        return view('admin.orden.index')->with(['orden' => $orden, 'requisicion' => $requisicion]);
     }
 
     public function store(Request $request)
-    {   
-        $orden = OrdenCompra::find($request->id);
-        $orden->id_estado = 5;
-        $orden->save();
+    {	
+		$requisicion = Requisicion::find($request->id);
+    	$requisicion->id_estado = 5;
+    	$requisicion->save();
 
-        $recepcion = new Recepcion;
-        $recepcion->number = 123456789;
-        $recepcion->id_estado = 3;
-        $recepcion->save();
+    	$orden = new OrdenCompra;
+    	$orden->number = 123456789;
+    	$orden->id_estado = 3;
+    	$orden->save();
 
-        foreach ($request->detalles as $key => $value) {
-            $detalles = new DetallesRecepcion;
-            $detalles->id_recepcion = $recepcion->id;
+    	foreach ($request->detalles as $key => $value) {
+            $detalles = new DetallesOrdenCompra;
+            $detalles->id_orden = $orden->id;
             $detalles->id_producto = $value['id_producto'];
-            $detalles->cantidad = $value['cantidad'];
-            $detalles->save();
+			$detalles->cantidad = $value['cantidad_requisicion'];
+			$detalles->save();
         }
-        
-        return response()->json(['result' => true, 'text' => 'Orden de compra importada con éxito']);
+    	
+        return response()->json(['result' => true, 'text' => 'Requisición importada con éxito']);
     }
 
     public function destroy($id)
     {
-        $destroy = Recepcion::find($id);
+    	$destroy = OrdenCompra::find($id);
         $destroy->id_estado = '1';
         $destroy->save();
-        return response()->json(['result' => true, 'text' => 'Genial! Tu Recepción ha sido borrada!']);
+        return response()->json(['result' => true, 'text' => 'Genial! Tu Orden de compra ha sido borrada!']);
     }
 
     public function get()
     {
-        $recepcion = Recepcion::where('id_estado', '!=', '1')->where('id_estado', '!=', '5')->with(['detalles' => function($q){
-            $q->with(['productos' => function($query) {
-                $query->get();
-            }])->get();
-        }])->with(['usuario' => function($quer) {
-            $quer->where('number', '123456789')->get();
-        }])
-        ->get();
-        return response()->json($recepcion);
-    }
-
-    public function getr()
-    {
-        $orden = OrdenCompra::where('id_estado', '!=','1')->where('id_estado', '!=', '5')
-        ->with(['detalles' => function($q){
+    	$orden = OrdenCompra::where('id_estado', '!=', '1')->where('id_estado', '!=', '5')->with(['detalles' => function($q){
             $q->with(['productos' => function($query) {
                 $query->get();
             }])->get();
@@ -93,5 +79,19 @@ class RecepcionController extends Controller
         }])
         ->get();
         return response()->json($orden);
+    }
+
+    public function getr()
+    {
+		$requisicion = Requisicion::where('id_estado', '!=','1')->where('id_estado', '!=', '5')
+        ->with(['detalles' => function($q){
+            $q->with(['productos' => function($query) {
+                $query->get();
+            }])->get();
+        }])->with(['usuario' => function($quer) {
+            $quer->where('number', '123456789')->get();
+        }])
+        ->get();
+        return response()->json($requisicion);
     }
 }

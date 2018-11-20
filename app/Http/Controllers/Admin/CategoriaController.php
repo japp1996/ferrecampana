@@ -47,7 +47,7 @@ class CategoriaController extends Controller
     	$destroy = Categoria::find($id);
         $destroy->status = '2';
         $destroy->save();
-        return response()->json(['result' => true, 'text' => 'Genial! Tu categoria ha sido borrado!']);
+        return response()->json(['result' => true, 'text' => 'Genial! Tu categoria ha sido borrada!']);
     }
 
     public function get()

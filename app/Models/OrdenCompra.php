@@ -3,13 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\DetallesRecepcion;
+use App\Models\DetallesOrdenCompra;
 use App\Models\Usuario;
 use App\Models\EstadoPedido;
 
-class Recepcion extends Model
+class OrdenCompra extends Model
 {
-    protected $table = "recepcion";
+    protected $table = "orden_compra";
     public $timestamps = false;
     
     public function estado() {
@@ -17,7 +17,7 @@ class Recepcion extends Model
     }
 
     public function detalles() {
-    	return $this->hasMany(DetallesRecepcion::class, 'id_recepcion');
+    	return $this->hasMany(DetallesOrdenCompra::class, 'id_orden');
     }
 
     public function usuario()

@@ -30,18 +30,25 @@
 	Vue.component('dashboard-index', require('./components/Admin/Index'));
 	//Categorias
 	Vue.component('categorias-index', require('./components/Admin/Categorias/IndexCategorias'));
-	//Facturacion
 	//Matenimiento
+	Vue.component('respaldar-index', require('./components/Admin/Mantenimiento/RespaldarIndex'));
+	Vue.component('restaurar-index', require('./components/Admin/Mantenimiento/RestaurarIndex'));
 	//Pedidos
 	Vue.component('pedidos-index', require('./components/Admin/Pedidos/IndexPedidos'));
+	Vue.component('pedidos-index-show', require('./components/Admin/Pedidos/ShowPedidos'));
+	//Orden de compra
+	Vue.component('orden-compra-index', require('./components/Admin/OrdenCompra/IndexOrdenCompra'));
 	//Estado Pedidos
 	Vue.component('estado-pedido-index', require('./components/Admin/EstadoPedido/IndexEstadoPedido'));
 	//Perfil
+	Vue.component('perfil-index', require('./components/Admin/Perfil/IndexPerfil'))
 	//Productos
 	Vue.component('productos-index', require('./components/Admin/Productos/IndexProductos'));
-	
 	//Recepcion
+	Vue.component('recepcion-index', require('./components/Admin/Recepcion/IndexRecepcion'));
 	//Requisicion
+	Vue.component('requisicion-index', require('./components/Admin/Requisicion/IndexRequisicion'));
+	Vue.component('requisicion-index-show', require('./components/Admin/Requisicion/ShowRequisicion'));
 	//Usuarios
 	Vue.component('usuarios-index', require('./components/Usuarios/IndexUsuarios'));
 	Vue.component('usuarios-login', require('./components/Usuarios/LoginUsuarios'));

@@ -1,9 +1,9 @@
 <?php
 	use Illuminate\Support\Facades\Auth;
+
 	//PUBLIC
 	Route::resource('/', 'HomeController');
-	Route::group(['prefix' => '/'], function () {
-
+	
 		//Quienes Somos
 		Route::get('/who', 'HomeController@who');
 		//Productos
@@ -16,15 +16,15 @@
 		//Login
 		Route::get('/login', 'HomeController@login');
 		Route::post('/login', 'Auth\LoginController@login');
+		Route::get('/logout', 'Auth\LoginController@logout');
 
 		//Olvido contraseña
 		Route::get('forgot/password', 'HomeController@forgotPassword');
-	});
 	//Route::get('/', function (){return view('welcome')});
-
+		
 	//INTRANET
 
-	Route::group(['prefix' => 'intranet', 'namespace' => 'Admin', 'middleware' => 'intranet' ], function(){
+	Route::group(['prefix' => 'intranet', 'namespace' => 'Admin'], function(){
 		//Inicio
 		Route::get('dashboard', 'DashboardController@index');
 		//Productos
@@ -37,20 +37,33 @@
 		Route::resource('usuarios', 'UsuarioController');
 		//Pedido
 		Route::resource('pedidos', 'PedidoController');
-		//Pedido
+		Route::get('pedidos-all', 'PedidoController@show');
+		Route::get('pedidos-get', 'PedidoController@get');
+		//Estados
 		Route::resource('estado', 'EstadoPedidoController');
 		Route::get('estado-all', 'EstadoPedidoController@get');
 		//Requisicion
 		Route::resource('requisicion', 'RequisicionController');
+		Route::get('requisicion-all', 'RequisicionController@show');
+		Route::get('requisicion-get', 'RequisicionController@get');
+		//Orden de compra
+		Route::resource('orden', 'OrdenCompraController');
+		Route::get('orden-all', 'OrdenCompraController@show');
+		Route::get('orden-get', 'OrdenCompraController@get');
+		Route::get('orden-getr', 'OrdenCompraController@getr');
 		//Recepcion
 		Route::resource('recepcion', 'RecepcionController');
+		Route::get('recepcion-all', 'RecepcionController@show');
+		Route::get('recepcion-get', 'RecepcionController@get');
+		Route::get('recepcion-getr', 'RecepcionController@getr');
 		//Mantenimiento
 		Route::resource('mantenimiento', 'MantenimientoController');
+		Route::resource('respaldar', 'BackupController');
+		Route::resource('restaurar', 'RestoreController');
 		//Perfil
 		Route::resource('perfil', 'PerfilController');
 		//Factura
 		Route::resource('facturacion', 'FacturaController');
-
 	});
 	
 		

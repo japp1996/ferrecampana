@@ -1,15 +1,15 @@
-<template id="template-requisicion-index">
+<template id="template-pedidos-index">
 	<div class="generalContent">
 	    <div class="container">
 	    	<div class="row">
-	    		<div id="grid-selector">
-					     Total de Resultados: {{ dataProducts.length }} 
-					</div>  
+	    		<div class="col-sm-6 col-sm-offset-3">
+					<h1>REQUISICIÓN</h1>
+	    		</div>  
 	    	</div>
 	      <div class="row">
 	      	<div class="col-md-3">
 	      		<div id="sidebar">
-					<h3>CARRITO</h3>
+					<h3>REQUERIDOR</h3>
 				    <div id="cart">
 				    	<span class="empty" v-if="carrito.length == 0">No hay nada añadido.</span>  
 				    	<ul v-if="carrito.length > 0" class="list-group">
@@ -18,7 +18,7 @@
 						    {{ cart.name }}
 						  </li>
 						</ul>
-						<button type="button" @click="_create()" class="btn btn-primary" v-if="carrito.length > 0">Crear Pedido</button>     
+						<button type="button" @click="_create()" class="btn btn-primary" v-if="carrito.length > 0">Crear Requisición</button>     
 				    </div>
 				    
 				    <h3>CATEGORIAS</h3>
@@ -33,11 +33,8 @@
 			                <div class="shadow"></div>
 			                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/5.jpg" width="100%" alt="" />
 			                <div class="image_overlay"></div>
-			                <div class="btn btn-success" @click="_addCart(item, i)">Añadir al carrito</div>
-			                <select class="form-control" v-model="item.cantidad" id="">
-			                	<option value="">Seleccione la cantidad</option>
-			                	<option :value="n" v-for="n in item.stock">{{ n }}</option>
-			                </select>
+			                <div class="btn btn-success" @click="_addReq(item, i)">Añadir requisición</div>
+			                <input type="text" class="form-control" v-model="item.cantidad">
 			                <div class="stats">        	
 			                    <div class="stats-container">
 			                        <span class="product_name"> {{ item.name }}</span>    
@@ -72,7 +69,7 @@
 
 <script>
 	export default {
-		template: "#template-requisicion-index",
+		template: "#template-pedidos-index",
 		data() {
 			return {
 				options: 0,
@@ -94,7 +91,7 @@
 			}
 		},
 		props: {
-			pedidos: {
+			requisicion: {
 				type: Array,
 				default: []
 			},
@@ -108,13 +105,16 @@
 			}
 		},
 		methods: {
-			_addCart(item, i) {
+			_addReq(item, i) {
+				if (item.cantidad == 0) {
+					swal("","Debe seleccionar una cantidad mayor a 0","warning")
+					return 
+				}
 				console.log(item)
 				this.carrito.push({
 					id_producto: item.id,
 					name: item.name,
 					cantidad: item.cantidad,
-					precio: item.price * item.cantidad
 				})
 			},
 			_splice(i) {
