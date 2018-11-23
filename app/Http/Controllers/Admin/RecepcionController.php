@@ -10,6 +10,7 @@ use App\Models\DetallesRecepcion;
 use App\Models\DetallesOrdenCompra;
 use App\Models\Producto;
 use App\Models\Categoria;
+use App\Models\Auditoria;
 use App\Http\Requests\RecepcionRequest;
 
 class RecepcionController extends Controller
@@ -55,7 +56,16 @@ class RecepcionController extends Controller
             $detalles->id_producto = $value['id_producto'];
             $detalles->cantidad = $value['cantidad'];
             $detalles->save();
+            $productos = Producto::find($value['id_producto']);
+            $productos->stock = $productos->stock + $value['cantidad'];
         }
+
+        $auditoria = new Auditoria;
+        $auditoria->number = 123456789;
+        $auditoria->operacion = 'REGISTRO';
+        $auditoria->rama = 'RECEPCION';
+        $auditoria->detalles_operacion = 'Registro de una nueva recepción con el id: '.$recepcion->id.' ';
+        $auditoria->save();
         
         return response()->json(['result' => true, 'text' => 'Orden de compra importada con éxito']);
     }
@@ -65,6 +75,14 @@ class RecepcionController extends Controller
         $destroy = Recepcion::find($id);
         $destroy->id_estado = '1';
         $destroy->save();
+        
+        $auditoria = new Auditoria;
+        $auditoria->number = 123456789;
+        $auditoria->operacion = 'BORRADO';
+        $auditoria->rama = 'RECEPCION';
+        $auditoria->detalles_operacion = 'Borrado de una recepción: '.$recepcion->id.' ';
+        $auditoria->save();
+        
         return response()->json(['result' => true, 'text' => 'Genial! Tu Recepción ha sido borrada!']);
     }
 

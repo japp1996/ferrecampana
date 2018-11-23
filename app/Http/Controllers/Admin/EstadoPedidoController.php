@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\EstadoPedido;
 use App\Http\Requests\EstadoPedidoRequest;
+use App\Models\Auditoria;
 
 class EstadoPedidoController extends Controller
 {
@@ -23,6 +24,12 @@ class EstadoPedidoController extends Controller
     	$estado = new EstadoPedido;
         $estado->descripcion_estado = $request->descripcion_estado;
         $estado->save();
+        $auditoria = new Auditoria;
+        $auditoria->number = 123456789;
+        $auditoria->operacion = 'REGISTRO';
+        $auditoria->rama = 'ESTADO DE PEDIDO';
+        $auditoria->detalles_operacion = 'Registro de un tipo de estado de pedidos con el nombre de '.$request->descripcion_estado;
+        $auditoria->save();
         return response()->json(['result' => true, 'text' => 'Registro completado']);
     }
 
@@ -38,6 +45,12 @@ class EstadoPedidoController extends Controller
     	$estado = EstadoPedido::find($id);
         $estado->descripcion_estado = $request->descripcion_estado;
         $estado->save();
+        $auditoria = new Auditoria;
+        $auditoria->number = 123456789;
+        $auditoria->operacion = 'ACTUALIZACION';
+        $auditoria->rama = 'ESTADO DE PEDIDO';
+        $auditoria->detalles_operacion = 'Actualizacion de un tipo de estado de pedidos con el id: '.$estado->id.' y la descripción: '.$estado->descripcion_estado;
+        $auditoria->save();
         return response()->json(['result' => true, 'text' => 'Genial! Tu estado ha sido actualizado!']);
     }
     
@@ -45,6 +58,12 @@ class EstadoPedidoController extends Controller
     	$destroy = EstadoPedido::find($id);
         $destroy->status = '2';
         $destroy->save();
+        $auditoria = new Auditoria;
+        $auditoria->number = 123456789;
+        $auditoria->operacion = 'BORRADO';
+        $auditoria->rama = 'ESTADO DE PEDIDO';
+        $auditoria->detalles_operacion = 'Borrado de un tipo de estado de pedidos con el id: '.$id;
+        $auditoria->save();
         return response()->json(['result' => true, 'text' => 'Genial! Tu estado ha sido borrado!']);
     }
 

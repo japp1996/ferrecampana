@@ -8,6 +8,7 @@ use App\Models\Requisicion;
 use App\Models\DetallesRequisicion;
 use App\Models\Producto;
 use App\Models\Categoria;
+use App\Models\Auditoria;
 use App\Http\Requests\RequisicionRequest;
 
 class RequisicionController extends Controller
@@ -42,6 +43,13 @@ class RequisicionController extends Controller
             $detalles->cantidad_requisicion = $key['cantidad'];
             $detalles->save();
         }
+
+        $auditoria = new Auditoria;
+        $auditoria->number = 123456789;
+        $auditoria->operacion = 'REGISTRO';
+        $auditoria->rama = 'REQUISICION';
+        $auditoria->detalles_operacion = 'Registro de una nueva requisición con el id: '.$requisicion->id.' ';
+        $auditoria->save();
         return response()->json(['result' => true, 'text' => 'Requisición realizado con éxito']);
     }
 
@@ -73,6 +81,12 @@ class RequisicionController extends Controller
         $destroy = Requisicion::find($id);
         $destroy->id_estado = '1';
         $destroy->save();
+        $auditoria = new Auditoria;
+        $auditoria->number = 123456789;
+        $auditoria->operacion = 'BORRADO';
+        $auditoria->rama = 'REQUISICION';
+        $auditoria->detalles_operacion = 'Borrado de una requisición: '.$requisicion->id.' ';
+        $auditoria->save();
         return response()->json(['result' => true, 'text' => 'Genial! Tu Requisicion ha sido borrada!']);
     }
 

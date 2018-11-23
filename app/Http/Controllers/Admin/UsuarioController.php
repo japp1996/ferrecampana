@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Usuario;
+use App\Models\Auditoria;
 
 class UsuarioController extends Controller
 {
@@ -28,6 +29,13 @@ class UsuarioController extends Controller
         $user->birthday = $request->date;
         $user->level = 'CLI';
         $user->save();
+
+        $auditoria = new Auditoria;
+        $auditoria->number = 123456789;
+        $auditoria->operacion = 'REGISTRO';
+        $auditoria->rama = 'USUARIO';
+        $auditoria->detalles_operacion = 'Registro de un nuevo usuario bajo C.I: '.$user->number.' ';
+        $auditoria->save();
         return response()->json(['result' => true, 'text' => 'Registro completado']);
     }
 

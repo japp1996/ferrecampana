@@ -85,11 +85,11 @@
            		formData.append("address", this.form.address);
            		formData.append("date", this.form.date);
 				
-				axios.post("", formData)
+				axios.post("usuario", formData)
 			  	.then( response => {
 			  		console.log(response)
 			    	swal({
-						text: response,
+						text: response.data.text,
 						title: "Ok",
 						timer: 3000,
 						icon: "success",
@@ -103,7 +103,7 @@
 						timer: 2500,
 						icon: "warning",
 						button: false
-					})  
+					})
 			  	})
 			}
 		},

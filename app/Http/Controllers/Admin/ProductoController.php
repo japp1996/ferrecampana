@@ -7,6 +7,9 @@ use App\Http\Requests\ProductoRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Producto;
 use App\Models\Categoria;
+use App\Models\Auditoria;
+use Exporter;
+use Carbon\Carbon;
 
 class ProductoController extends Controller
 {
@@ -30,6 +33,13 @@ class ProductoController extends Controller
         $prod->unity = $request->unity;
         $prod->price = $request->price;
         $prod->save();
+        
+        $auditoria = new Auditoria;
+        $auditoria->number = 123456789;
+        $auditoria->operacion = 'REGISTRO';
+        $auditoria->rama = 'PRODUCTOS';
+        $auditoria->detalles_operacion = 'Registro del producto código: '.$prod->code.', Nombre: '.$prod->name;
+        $auditoria->save();
         return response()->json(['result' => true, 'text' => 'Registro completado']);
     }
 
@@ -49,6 +59,13 @@ class ProductoController extends Controller
         $prod->unity = $request->unity;
         $prod->price = $request->price;
         $prod->save();
+
+        $auditoria = new Auditoria;
+        $auditoria->number = 123456789;
+        $auditoria->operacion = 'ACTUALIZACIÓN';
+        $auditoria->rama = 'PRODUCTOS';
+        $auditoria->detalles_operacion = 'Actualización del producto código: '.$prod->code.', Nombre:'.$prod->name;
+        $auditoria->save();
         return response()->json(['result' => true, 'text' => 'Genial! Tu producto ha sido actualizado!']);
     }
     
@@ -56,6 +73,13 @@ class ProductoController extends Controller
         $destroy = Producto::find($id);
         $destroy->status = "2";
         $destroy->save();
+
+        $auditoria = new Auditoria;
+        $auditoria->number = 123456789;
+        $auditoria->operacion = 'BORRADO';
+        $auditoria->rama = 'PRODUCTOS';
+        $auditoria->detalles_operacion = 'Borrado del producto código: '.$destroy->code.', Nombre:'.$destroy->name;
+        $auditoria->save();
         return response()->json(['result' => true, 'text' => 'Genial! Tu producto ha sido borrado!']);
     }
 
@@ -64,5 +88,14 @@ class ProductoController extends Controller
         $productos = Producto::select('productos.id','productos.code','productos.name', 'productos.price','productos.stock', 'productos.unity','categorias.descripcion_categoria','categorias.code as codecat')->join('categorias' ,'productos.id_categoria', 'categorias.code')->where('productos.status', '1')
                 ->get();
         return response()->json($productos);
+    }
+
+    public function excel()
+    {
+        $productos = Producto::select('productos.id','productos.code','productos.name', 'productos.price','productos.stock', 'productos.unity','categorias.descripcion_categoria','categorias.code as codecat')->join('categorias' ,'productos.id_categoria', 'categorias.code')->where('productos.status', '1')
+                ->get();
+        $excel = Exporter::make('Excel');
+        $excel->load($productos);
+        return $excel->stream("excel_".Carbon::now());
     }
 }

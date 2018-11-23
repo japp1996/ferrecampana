@@ -12,7 +12,7 @@
    							<input class="form-control" v-model="form.password" type="password" placeholder="Contraseña">
    						</div>
    						<div class="col-md-6">
-   							<input class="form-control" v-model="form.password" type="password" placeholder="Repetir Contraseña">
+   							<input class="form-control" v-model="form.password2" type="password" placeholder="Repetir Contraseña">
    						</div>
    						<div class="col-md-12">
 	   						<button class="btn btn-primary btn-center" @click="_edit()">Modificar</button>
@@ -42,13 +42,27 @@
 					swal("", "Las contraseñas deben cohincidir", "info")
 					return
 				}
-				axios.put(`password/${this.id}`, this.form.password)
-				.then(resp => {
-					swal('',resp.data.text,'success')
+				if (this.form.password == "" || this.form.password2 == "") {
+					swal("", "Las contraseñas no deben estar vacías", "info")
+				}
+				swal({
+				  title: "¿Estás seguro que deseas cambiar tu contraseña?",
+				  text: "",
+				  icon: "warning",
+				  buttons: true,
+				  dangerMode: true,
 				})
-				.catch(erro => {
-					swal('','Disculpe, ha ocurrido un error','error')
-				})
+				.then((accept) => {
+				  if (accept) {
+				    axios.put(`password/${this.id}`, this.form)
+					.then(resp => {
+						swal('',resp.data.text,'success')
+					})
+					.catch(erro => {
+						swal('','Disculpe, ha ocurrido un error','error')
+					})
+				  }
+				});
 			}
 		},
 		props: {

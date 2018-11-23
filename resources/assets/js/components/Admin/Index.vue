@@ -4,6 +4,32 @@
 			<h1>Dashboard</h1>
 		</div>
 		<div class="row">
+			<div class="col-md-4">
+				<canvas id="lineChart" width="100px" height="100px"></canvas>
+			</div>
+			<div class="col-md-4">
+				<canvas id="myChart" width="400px" height="400px" aria-label="Hello ARIA World" role="img">
+					<p>Hellow</p>
+				</canvas>			
+			</div>
+			<div class="col-md-4">
+				<canvas id="pieChart" width="400px" height="400px"></canvas>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+				
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+				<canvas id="torta" width="" height=""></canvas>
+			</div>
+			<div class="col-md-3">
+				<canvas id="" width="" height=""></canvas>
+			</div>
+		</div>
+		<!--div class="row">
 			<div class="col-md-6">
 	            <div class="panel panel-primary">
 	                <div class="panel-heading">
@@ -54,7 +80,7 @@
 	                </div>
 	            </div>
 	        </div>
-		</div>
+		</div-->
 	</section>
 </template>
 
@@ -62,13 +88,111 @@
 export default {
 	template: "#template-dashboard-index",
 	data() {
-
+		return {
+			
+		}
 	},
 	props: {
+		respaldo: {type: Number},
+		pedido: {type: Number},
+		oc: {type: Number},
+		recep: {type: Number},
+		requi: {type: Number},
+		restauracion: {type: Number},
+		registros: {type: Number},
+		actualizacion: {type: Number},
+		borrado: {type: Number}
 
 	}, 
 	mounted() {
+		
+		var ctl = document.getElementById("lineChart");
+		var myLineChart = new Chart(ctl, {
+		    type: 'line',
+		    data: {
+		    	labels: ['Ventas'],
+		    	datasets: [{
+		    		label: 'Ventas',
+		    		data: [1,3,6,10,6,4,8,1]
+		    	}]
+		    },
+		    options: {
+		    	scales: {
+		    		yAxes: [{
+		    			stacked: true
+		    		}]
+		    	}
+		    }
+		});
+		var ctx = document.getElementById("myChart").getContext('2d');
+		var myChart = new Chart(ctx, {
+		    type: 'bar',
+		    data: {
+		    	labels: ["Pedidos", "Requi", "O. Compra", "Recep", "Respaldos", "Restauros"],
+		    	datasets: [{
+		            label: 'Movimientos',
+		            data: [this.pedido, this.requi, this.oc, this.recep, this.respaldo, this.restauracion],
+		            backgroundColor: [
+		                'rgba(255, 99, 132, 0.2)',
+		                'rgba(54, 162, 235, 0.2)',
+		                'rgba(255, 206, 86, 0.2)',
+		                'rgba(75, 192, 192, 0.2)',
+		                'rgba(153, 102, 255, 0.2)',
+		                'rgba(255, 159, 64, 0.2)'
+		            ],
+		            borderColor: [
+		                'rgba(255,99,132,1)',
+		                'rgba(54, 162, 235, 1)',
+		                'rgba(255, 206, 86, 1)',
+		                'rgba(75, 192, 192, 1)',
+		                'rgba(153, 102, 255, 1)',
+		                'rgba(255, 159, 64, 1)'
+		            ],
+		            borderWidth: 1,
 
+		        }],
+		        responsive: true
+		    },
+		    options: {
+		        scales: {
+		            yAxes: [{
+		                ticks: {
+		                    beginAtZero:true
+		                }
+		            }]
+		        }
+		    }
+		});
+		var ctp = document.getElementById("pieChart");
+		var myPieChart = new Chart(ctp,{
+		    type: 'pie',
+		    data: {
+		    	datasets: [{
+			        data: [this.registros, this.actualizacion, this.borrado],
+			        backgroundColor:[
+				    	'rgba(255,99,132,1)',
+		                'rgba(54, 162, 235, 1)',
+		                'rgba(255, 206, 86, 1)',	
+			    	]			    
+			    }],
+			    labels: [
+			        'Registros',
+			        'Actualizaciones',
+			        'Borrados'
+			    ],
+		    	borderColor:[
+		    		'rgba(54, 162, 235, 1)'
+		    	],
+		    	borderWidth:4
+		    },
+		    options: {
+		    	animation:{
+		    		animateRotate: true,
+		    		animateScale:true
+		    	}
+		    }
+		});
+		
 	}
 }
 	

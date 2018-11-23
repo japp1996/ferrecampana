@@ -27,12 +27,12 @@ class UsuarioRequest extends FormRequest
     {
         return [
             "tipodoc" => "required|string",
-            "number" => "unique:usuarios|required|numeric",
+            "number" => "unique:users|required|numeric",
             "name" => "required",
             "password" => "required|min:8",
             "password2" => "required|min:8",
-            "email" => "unique:usuarios|required|email",
-            "phone" => "unique:usuarios|required",
+            "email" => "unique:users|required|email",
+            "phone" => "unique:users|required",
             "address" => "required",
             "date" => "required|date"
         ];

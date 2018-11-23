@@ -19,23 +19,31 @@ class BackupController extends Controller
     public function store(BackupRequest $request)
     {
         $host = $request->server;
-		$bd = $request->database; 
-		$usuario = $request->user; 
-		$contrasena = $request->password;   
+		$bd = $request->database;
+		$usuario = $request->user;
+		$contrasena = $request->password;
 		$formatobd = ".sql";
 
 		$fechaderespaldo=date("d-m-Y_His");
-		$archivosql = 'backup/'$bd.'_'.$fechaderespaldo.$formatobd;  
-	
-		$respaldo = "c:\\www\\mysql\\bin\\mysqldump.exe -u $usuario --password=$contrasena --opt $bd > $archivosql"; 
+		$archivosql = 'backup/'.$bd.'_'.$fechaderespaldo.$formatobd;
+
+		$respaldo = "c:\\www\\mysql\\bin\\mysqldump.exe -u $usuario --password=$contrasena --opt $bd > $archivosql";
 		system($respaldo, $resultado);
 		$fecha=date('Y-m-d g:i:s-a');
 
 		if ($resultado) {
-			$auditoria = new Auditoria;
-			return response()->json(['result' => false,'text' => 'Respaldo Fallido', 'file' => $archivosql]);
+			if(file_exists(public_path($archivosql))){
+			  unlink(public_path($archivosql));
+			}
+			return response()->json(['result' => false,'text' => 'Respaldo Fallido']);
 		 } else {
-		 	return response()->json(['result' => false,'text' => 'Respaldo Exitoso']);
+		 	$auditoria = new Auditoria;
+			$auditoria->number = 123456789;
+			$auditoria->operacion = 'BASE DE DATOS';
+			$auditoria->rama = 'RESPALDO';
+			$auditoria->detalles_operacion = 'Respaldo de Base de Datos bajo el archivo '.$archivosql.'';
+			$auditoria->save();
+		 	return response()->json(['result' => true,'text' => 'Respaldo Exitoso', 'file' => $archivosql]);
 		}
     }
 

@@ -30,9 +30,12 @@
 		                    <button v-if="options == 1" class="btn btn-success" @click="_import(item)">
 								Importar
 							</button>
-			            	<button v-if="options != 1" class="btn btn-danger" @click="_delete(item.id)">
-								Borrar
+							<button v-if="options != 1" class="btn btn-danger" @click="_view(item.id)">
+								Ver detalles
 							</button>
+			            	<!--button v-if="options != 1" class="btn btn-danger" @click="_delete(item.id)">
+								Borrar
+							</button-->
 			            </table-cell>
 			        </table-row>
 

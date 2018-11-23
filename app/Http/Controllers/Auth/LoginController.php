@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Models\Auditoria;
 use Auth;
 
 class LoginController extends Controller
@@ -25,6 +26,15 @@ class LoginController extends Controller
     {    
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             if (Auth::user()->level == 'CLI') {
+                $auditoria = new Auditoria;
+                $auditoria->number = 123456789;
+                $auditoria->operacion = 'LOGIN';
+                $auditoria->rama = 'LOGIN';
+                $auditoria->detalles_operacion = 'EL usuario '.
+                    Auth::user()->name.' C.I: '.
+                    Auth::user()->tipodoc
+                    .Auth::user()->number. ' Inició Sesión';
+                $auditoria->save();
                 return response()->json([
                     'result' => true,
                     'location' => url('/intranet/dashboard')
@@ -45,6 +55,15 @@ class LoginController extends Controller
 
     public function logout() {
         Auth::logout();
+        $auditoria = new Auditoria;
+        $auditoria->number = 123456789;
+        $auditoria->operacion = 'LOGIN';
+        $auditoria->rama = 'LOGOUT';
+        $auditoria->detalles_operacion = 'EL usuario '.
+            Auth::user()->name.' C.I: '.
+            Auth::user()->tipodoc
+            .Auth::user()->number. ' Cerró Sesión';
+        $auditoria->save();
         return redirect('');
     }
 }

@@ -4,7 +4,8 @@
 	    	<div class="row">
 	    		<div id="grid-selector">
 					     Total de Resultados: {{ dataProducts.length }} 
-					</div>  
+				</div> 
+				<div class="col-md-3"> Buscar <input type="search" placeholder="Nombre de Producto" class="form-control"></div> 
 	    	</div>
 	      <div class="row">
 	      	<div class="col-md-3">

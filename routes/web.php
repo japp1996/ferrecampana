@@ -4,24 +4,24 @@
 	//PUBLIC
 	Route::resource('/', 'HomeController');
 	
-		//Quienes Somos
-		Route::get('/who', 'HomeController@who');
-		//Productos
-		Route::get('/products', 'HomeController@products');
-		//Registro
-		Route::get('/usuario', 'UsuarioController@index');
-		Route::resource('/usuario', 'UsuarioController');
-		//Contáctanos
-		Route::get('/contact', 'HomeController@contact');
-		//Login
-		Route::get('/login', 'HomeController@login');
-		Route::post('/login', 'Auth\LoginController@login');
-		Route::get('/logout', 'Auth\LoginController@logout');
+	//Quienes Somos
+	Route::get('/who', 'HomeController@who');
+	//Productos
+	Route::get('/products', 'HomeController@products');
+	//Registro
+	Route::get('/usuario', 'UsuarioController@index');
+	Route::post('/usuario', 'UsuarioController@store');
+	//Contáctanos
+	Route::get('/contact', 'HomeController@contact');
+	//Login
+	Route::get('/login', 'HomeController@login');
+	Route::post('/login', 'Auth\LoginController@login');
+	Route::get('/logout', 'Auth\LoginController@logout');
 
-		//Olvido contraseña
-		Route::get('forgot/password', 'HomeController@forgotPassword');
+	//Olvido contraseña
+	Route::get('forgot/password', 'HomeController@forgotPassword');
 	//Route::get('/', function (){return view('welcome')});
-		
+	
 	//INTRANET
 
 	Route::group(['prefix' => 'intranet', 'namespace' => 'Admin'], function(){
@@ -30,6 +30,7 @@
 		//Productos
 		Route::resource('productos', 'ProductoController');
 		Route::get('productos-all','ProductoController@get');
+		Route::get('productos-excel', 'ProductoController@excel');
 		//Categorias
 		Route::resource('categorias', 'CategoriaController');
 		Route::get('categorias-all','CategoriaController@get');
@@ -60,6 +61,7 @@
 		Route::resource('mantenimiento', 'MantenimientoController');
 		Route::resource('respaldar', 'BackupController');
 		Route::resource('restaurar', 'RestoreController');
+		Route::get('auditoria', 'MantenimientoController@audit');
 		//Perfil
 		Route::resource('perfil', 'PerfilController');
 		Route::resource('password', 'PasswordController');
@@ -67,5 +69,3 @@
 		//Factura
 		Route::resource('facturacion', 'FacturaController');
 	});
-	
-		

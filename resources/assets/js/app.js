@@ -6,7 +6,6 @@
 	 */
 
 	//require('./bootstrap');
-
 	window.Vue = require('vue');
 	window.axios = require('axios');
 	// Filters
@@ -14,16 +13,18 @@
 	//import amountInLetters from './filters/amount-in-letters'
 	//import asset from './filters/asset'
 	//import image from './filters/image'
- 
+ 	//import icons from 'glyphicons'
 	import swal from 'sweetalert'
-	import date from './filters/date'
-	import icons from 'glyphicons'
+	import Chart from 'chart.js'
+	
+
+	
 	/**
 	 * Next, we will create a fresh Vue application instance and attach it to
 	 * the page. Then, you may begin adding components to this application
 	 * or customize the JavaScript scaffolding to fit your unique needs.
 	 */
-	Vue.use(date)
+	
 	//Example
 	Vue.component('example-component', require('./components/ExampleComponent.vue'));
 	//Index
@@ -33,6 +34,7 @@
 	//Matenimiento
 	Vue.component('respaldar-index', require('./components/Admin/Mantenimiento/RespaldarIndex'));
 	Vue.component('restaurar-index', require('./components/Admin/Mantenimiento/RestaurarIndex'));
+	Vue.component('auditoria-index', require('./components/Admin/Mantenimiento/AuditoriaIndex'));
 	//Pedidos
 	Vue.component('pedidos-index', require('./components/Admin/Pedidos/IndexPedidos'));
 	Vue.component('pedidos-index-show', require('./components/Admin/Pedidos/ShowPedidos'));
@@ -54,7 +56,6 @@
 	Vue.component('usuarios-index', require('./components/Usuarios/IndexUsuarios'));
 	Vue.component('usuarios-login', require('./components/Usuarios/LoginUsuarios'));
 	Vue.component('usuarios-admin', require('./components/Usuarios/AdminUsuarios'));
-		
 	//Tabla
 	Vue.component('table-byte', require("./components/Admin/Table/Table"));
 	Vue.component("table-row", require("./components/Admin/Table/TableRow"));
@@ -70,35 +71,7 @@
     } else {
         console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
     }
-    class Errors {
-        constructor() {
-            this.errors = {};
-        }
-
-        get(field) {
-            if (this.errors[field]) {
-                return this.errors[field][0];
-            }
-        }
-
-        record(errors) {
-            this.errors = errors;
-        }
-
-        clear(field) {
-            delete this.errors[field];
-        }
-
-        has(field) {
-            return this.errors.hasOwnProperty(field);
-        }
-
-        any() {
-            return Object.keys(this.errors).length > 0;
-        }
-    }
-
-
+    
 	const app = new Vue({
 	    el: '#app',
 	    methods: {

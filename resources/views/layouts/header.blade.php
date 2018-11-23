@@ -34,7 +34,7 @@
 				<li>
 					<a href="#" title="Mantenimiento">Mantenimiento<span class="caret"></span></a>
 					<ul>
-						<li><a href="{{ asset('intranet/dashboard') }}">Auditoría de sistema</a></li>
+						<li><a href="{{ asset('intranet/auditoria') }}">Auditoría de sistema</a></li>
 						<li><a href="{{ asset('intranet/respaldar') }}">Respaldar datos</a></li>
 						<li><a href="{{ asset('intranet/restaurar') }}">Restaurar un punto</a></li>
 						<li><a href="{{ asset('intranet/usuarios') }}">Usuarios</a></li>

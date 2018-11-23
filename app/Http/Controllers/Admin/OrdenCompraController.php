@@ -11,6 +11,7 @@ use App\Models\DetallesOrdenCompra;
 use App\Models\Producto;
 use App\Models\Categoria;
 use App\Http\Requests\OrdenCompraRequest;
+use App\Models\Auditoria;
 
 class OrdenCompraController extends Controller
 {
@@ -56,7 +57,13 @@ class OrdenCompraController extends Controller
 			$detalles->cantidad = $value['cantidad_requisicion'];
 			$detalles->save();
         }
-    	
+
+    	$auditoria = new Auditoria;
+        $auditoria->number = 123456789;
+        $auditoria->operacion = 'REGISTRO';
+        $auditoria->rama = 'ORDEN DE COMPRA';
+        $auditoria->detalles_operacion = 'Registro de una orden de compra con el id: '.$orden->id;
+        $auditoria->save();
         return response()->json(['result' => true, 'text' => 'Requisición importada con éxito']);
     }
 
@@ -65,6 +72,13 @@ class OrdenCompraController extends Controller
     	$destroy = OrdenCompra::find($id);
         $destroy->id_estado = '1';
         $destroy->save();
+
+        $auditoria = new Auditoria;
+        $auditoria->number = 123456789;
+        $auditoria->operacion = 'BORRADO';
+        $auditoria->rama = 'ORDEN DE COMPRA';
+        $auditoria->detalles_operacion = 'Borrado de una orden de compra con el id: '.$id;
+        $auditoria->save();
         return response()->json(['result' => true, 'text' => 'Genial! Tu Orden de compra ha sido borrada!']);
     }
 

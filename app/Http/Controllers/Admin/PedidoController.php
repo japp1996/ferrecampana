@@ -12,19 +12,19 @@ use App\Models\EstadoPedido;
 use App\Models\DetallesPedido;
 use App\Http\Requests\PedidoRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Auditoria;
 
 class PedidoController extends Controller
 {
     public function index() {
-        $pedidos = Pedido::with(['estado', 'detalles']) 
-                ->get();
         $productos = Producto::select('productos.id','productos.code as idP', 'productos.name', 'productos.stock','productos.id_categoria', 'productos.price', 'productos.unity', 'categorias.code', 'categorias.descripcion_categoria')
             ->join('categorias','productos.id_categoria', 'categorias.code')
             ->where('productos.status', '1')
             ->get();
         $categorias = Categoria::get();
+        
     	return view('admin.pedidos.index')
-            ->with(['pedidos' => $pedidos, 'productos' => $productos, 'categorias' => $categorias]);
+            ->with(['productos' => $productos, 'categorias' => $categorias]);
     }
 
     public function create() {
@@ -44,6 +44,12 @@ class PedidoController extends Controller
             $detalles->precio = $key['precio'];
             $detalles->save();
         }
+        $auditoria = new Auditoria;
+        $auditoria->number = 123456789;
+        $auditoria->operacion = 'REGISTRO';
+        $auditoria->rama = 'PEDIDO';
+        $auditoria->detalles_operacion = 'Registro de un pedido con el id: '.$pedido->id;
+        $auditoria->save();
         return response()->json(['result' => true, 'text' => 'Pedido realizado con éxito']);
     }
 
@@ -71,6 +77,12 @@ class PedidoController extends Controller
     	$destroy = Pedido::find($id);
         $destroy->id_estado = '1';
         $destroy->save();
+        $auditoria = new Auditoria;
+        $auditoria->number = 123456789;
+        $auditoria->operacion = 'BORRADO';
+        $auditoria->rama = 'PEDIDO';
+        $auditoria->detalles_operacion = 'Borrado de un pedido con el id: '.$orden->id;
+        $auditoria->save();
         return response()->json(['result' => true, 'text' => 'Genial! Tu Pedido ha sido borrado!']);
     }
 

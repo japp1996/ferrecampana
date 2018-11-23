@@ -8,10 +8,7 @@
    				<div class="col-md-2"></div>
    				<div class="col-md-8">
    					<div class="form-group">
-   						<div class="col-md-6">
-   							<input class="form-control" v-model="form.number" type="text" placeholder="Número de Documento">
-   						</div>
-   						<div class="col-md-6">
+   						<div class="col-md-12">
    							<input class="form-control" v-model="form.name" type="text" placeholder="Nombres y Apellidos">
    						</div>
    						<div class="col-md-6">
@@ -25,7 +22,7 @@
    						</div>
    						<div class="col-md-12">
 	   						<button class="btn btn-primary btn-center" @click="_edit()">Actualizar</button>
-	   						<button class="btn btn-danger btn-center" @click="_delete()">Borrar</button>
+	   						<button class="btn btn-danger btn-center" @click="_delete()">Borrar Cuenta</button>
    						</div>
    					</div>
    				</div>
@@ -62,7 +59,7 @@
 			_delete() {
 				swal({
 				  title: "¿Estás seguro que deseas borrar tu cuenta?",
-				  text: "Una vez borrada, no podrás revertir esta acción!",
+				  text: "Una vez borrada, no podrás revertir esta acción y perderá el acceso a sus datos. Piensalo bien!",
 				  icon: "warning",
 				  buttons: true,
 				  dangerMode: true,

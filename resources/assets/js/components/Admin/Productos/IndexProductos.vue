@@ -10,6 +10,8 @@
 	      <div class="row">	      	
             <div class="col-sm-12 container-btn-add" >
                 <button v-if="options == 0" class="btn btn-success" @click="_add()"> Agregar nuevo </button>                            
+                <button v-if="options == 0" class="btn btn-success" ><a href="productos/excel" target="_blank"> Exportar EXCEL </a></button>
+                <button v-if="options == 0" class="btn btn-danger" ><a href="productos/pdf" target="_blank"> Exportar PDF </a></button>
                 <button v-if="options == 1 || options == 2" class="btn btn-success" @click="options = 0">Volver</button>
             </div>
             <div class="col-sm-12 col-md-12">
