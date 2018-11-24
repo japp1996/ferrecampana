@@ -54,7 +54,7 @@ class LoginController extends Controller
     }
 
     public function logout() {
-        Auth::logout();
+        
         $auditoria = new Auditoria;
         $auditoria->number = 123456789;
         $auditoria->operacion = 'LOGIN';
@@ -64,6 +64,7 @@ class LoginController extends Controller
             Auth::user()->tipodoc
             .Auth::user()->number. ' Cerró Sesión';
         $auditoria->save();
+        Auth::logout();
         return redirect('');
     }
 }

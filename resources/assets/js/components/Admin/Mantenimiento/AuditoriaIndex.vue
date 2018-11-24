@@ -14,6 +14,7 @@
 				            <table-head>N°</table-head>
 				            <table-head>Usuario</table-head>
 				            <table-head>Accion</table-head>
+				            <table-head>Rama</table-head>
 				            <table-head>Detalle</table-head>
 				            <table-head>Fecha</table-head>
 				        </table-row>
@@ -21,13 +22,14 @@
 				        <table-row slot="table-row" slot-scope="{ item }">
 				            <table-cell>{{ item.id }}</table-cell>
 				            <table-cell>{{ item.user }}</table-cell>
-				            <table-cell>{{ item.accion }}</table-cell>
-				            <table-cell>{{ item.detalle }}</table-cell>
-				            <table-cell>{{ item.date }}</table-cell>
+				            <table-cell>{{ item.operacion }}</table-cell>
+				            <table-cell>{{ item.rama }}</table-cell>
+				            <table-cell>{{ item.detalles_operacion }}</table-cell>
+				            <table-cell>{{ item.created_at }}</table-cell>
 				        </table-row>
 
 				        <table-row slot="empty-rows">
-				            <table-cell colspan="5">
+				            <table-cell colspan="6">
 				                No se encontraron registros.
 				            </table-cell>
 				        </table-row>

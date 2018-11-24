@@ -46184,6 +46184,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	template: "#template-auditoria-index",
@@ -46242,6 +46244,8 @@ var render = function() {
                             _vm._v(" "),
                             _c("table-head", [_vm._v("Accion")]),
                             _vm._v(" "),
+                            _c("table-head", [_vm._v("Rama")]),
+                            _vm._v(" "),
                             _c("table-head", [_vm._v("Detalle")]),
                             _vm._v(" "),
                             _c("table-head", [_vm._v("Fecha")])
@@ -46262,11 +46266,15 @@ var render = function() {
                             _vm._v(" "),
                             _c("table-cell", [_vm._v(_vm._s(item.user))]),
                             _vm._v(" "),
-                            _c("table-cell", [_vm._v(_vm._s(item.accion))]),
+                            _c("table-cell", [_vm._v(_vm._s(item.operacion))]),
                             _vm._v(" "),
-                            _c("table-cell", [_vm._v(_vm._s(item.detalle))]),
+                            _c("table-cell", [_vm._v(_vm._s(item.rama))]),
                             _vm._v(" "),
-                            _c("table-cell", [_vm._v(_vm._s(item.date))])
+                            _c("table-cell", [
+                              _vm._v(_vm._s(item.detalles_operacion))
+                            ]),
+                            _vm._v(" "),
+                            _c("table-cell", [_vm._v(_vm._s(item.created_at))])
                           ],
                           1
                         )
@@ -51744,7 +51752,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 			axios.post("", formData).then(function (response) {
 				if (response.data.result) {
-					window.location = response.data.location;
+					//window.location = response.data.location
 				} else {
 					swal({
 						text: response.data.error,

@@ -15,8 +15,7 @@
 	    	return $this->belongsToMany(Auditoria::class, 'number');
 	    }
 
-	    public function pedidos()
-	    {
+	    public function pedidos() {
 	 		return $this->hasMany(Pedido::class, 'number');
 	    }
 	}

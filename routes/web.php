@@ -1,5 +1,5 @@
 <?php
-	use Illuminate\Support\Facades\Auth;
+	use Auth;
 
 	//PUBLIC
 	Route::resource('/', 'HomeController');
@@ -24,7 +24,7 @@
 	
 	//INTRANET
 
-	Route::group(['prefix' => 'intranet', 'namespace' => 'Admin'], function(){
+	Route::group(['prefix' => 'intranet', 'namespace' => 'Admin', 'middleware' => 'web'], function(){
 		//Inicio
 		Route::get('dashboard', 'DashboardController@index');
 		//Productos
