@@ -1,22 +1,32 @@
 <template id="template-usuarios-login">
-	<div id="wrapper" >
-	    <div id="content">
-			<div class="login-panel">
-                <h2 class="" style="color:#000">Iniciar Sesión</h2>
-                <hr style="margin: 1px 0 1px 0">
-				<form>
-					<ul>
-						<li class="full"><input name="email" v-model="form.email" type="text" id="email" maxlength="50" size="50" placeholder="Email:"></li>
-						<li class="full"><input name="password" v-model="form.password" type="password" id="password" maxlength="15" size="15" placeholder="Contraseña:"></li>
+	<section id="formulario">
+		<div class="container">
+			<div class="row">
+				<div id="wrapper" >
+				    <div id="content">
+						<div class="login-panel">
+			                <h2 class="with-hr-center" style="color:#000">Iniciar Sesión</h2>
+			                <hr style="margin: 1px 0 1px 0">
+			                <div class="col-xs-12 col-sm-12 col-md-10 col-md-offset-1">
+								<div class="row">
+									<form>
+										<ul>
+											<li class="full"><input name="email" v-model="form.email" type="text" id="email" maxlength="50" size="50" placeholder="Email:"></li>
+											<li class="full"><input name="password" v-model="form.password" type="password" id="password" maxlength="15" size="15" placeholder="Contraseña:"></li>
 
-                        <li class="full"><div class="alert alert-danger" id="errores" style="display:none;"></div></li>
-						<li class="full"><input value="Entrar" type="button" @click="ajax()" class="btn btn-default"></li>
-                        <li class="full"><br><p class="text-center"><a href="">¿Olvidaste tu Contraseña?</a></p></li>
-                    </ul>
-				</form>
+					                        <li class="full"><div class="alert alert-danger" id="errores" style="display:none;"></div></li>
+											<li class="full"><input value="Entrar" type="button" @click="ajax()" class="btn btn-default"></li>
+					                        <li class="full"><br><p class="text-center"><a href="">¿Olvidaste tu Contraseña?</a></p></li>
+					                    </ul>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>	
+	</section>
 </template>
 
 <script>

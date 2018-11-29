@@ -13,7 +13,7 @@ class CategoriaController extends Controller
     public function index() {
         $categorias = Categoria::where('status', '1')->get();
     	return view('admin.categorias.index')
-            ->with(['categorias' => $categorias]);
+            ->with(['categorias' => $categorias, 'current' => 'table']);
     }
 
     public function create() {

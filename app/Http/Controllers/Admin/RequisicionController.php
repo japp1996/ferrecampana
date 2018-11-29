@@ -23,7 +23,7 @@ class RequisicionController extends Controller
             ->get();
         $categorias = Categoria::get();
         return view('admin.requisicion.index')
-         ->with(['requisicion' => $requisicion, 'productos' => $productos, 'categorias' => $categorias]);
+         ->with(['requisicion' => $requisicion, 'productos' => $productos, 'categorias' => $categorias, 'current' => 'req']);
     }
 
     public function create() {
@@ -63,7 +63,7 @@ class RequisicionController extends Controller
             $quer->where('number', '123456789')->get();
         }])
         ->get();
-        return view('admin.requisicion.show')->with(['requisicion' => $requisicion]);
+        return view('admin.requisicion.show')->with(['requisicion' => $requisicion, 'current' => 'list']);
     }
 
     public function edit() 

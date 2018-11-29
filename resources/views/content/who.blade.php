@@ -5,8 +5,13 @@
 		<div class="container">
 
 			<h1 class="with-hr-right text-right">Quiénes somos</h1>
-			<div class="text-right">
-				<p class="subtitle" style="color:#fff;">Ferretería la Campana es una ferretería que provee articulos de trabajo<br /> en el ramo de las herramientas, jardín, menaje y hogar, <br />material de construcción y suministros teniendo atención <br />de calidad para los diferentes clientes que se <br />acercan a nuestras instalaciones</p></div>
+			<div class="text-right bg-dark">
+				<div class="card bg-primary text-white">
+				  <div class="card-img-overlay">
+    				<p class="subtitle" style="color:#fff;">Ferretería la Campana es una ferretería que provee articulos de trabajo<br /> en el ramo de las herramientas, jardín, menaje y hogar, <br />material de construcción y suministros teniendo atención <br />de calidad para los diferentes clientes que se <br />acercan a nuestras instalaciones</p>
+				  </div>
+				</div>
+			</div>
 		</div>
 	</section>
 	<section class="block2 section-top-grey">

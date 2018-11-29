@@ -14,7 +14,7 @@ class MantenimientoController extends Controller
 
     public function audit() {
         $audit = Auditoria::with(['usuarios'])->get();
-        return view('admin.mantenimiento.auditoria')->with(['auditoria' => $audit]);
+        return view('admin.mantenimiento.auditoria')->with(['auditoria' => $audit, 'current' => 'mant']);
     }
 
     public function create() {

@@ -22,9 +22,8 @@ class PedidoController extends Controller
             ->where('productos.status', '1')
             ->get();
         $categorias = Categoria::get();
-        
     	return view('admin.pedidos.index')
-            ->with(['productos' => $productos, 'categorias' => $categorias]);
+            ->with(['productos' => $productos, 'categorias' => $categorias, 'current' => 'process']);
     }
 
     public function create() {
@@ -62,7 +61,7 @@ class PedidoController extends Controller
             $quer->where('number', '123456789')->get();
         }])
         ->get();
-    	return view('admin.pedidos.show')->with(['pedidos' => $pedidos]);
+    	return view('admin.pedidos.show')->with(['pedidos' => $pedidos, 'current' => 'list']);
     }
 
     public function edit() {

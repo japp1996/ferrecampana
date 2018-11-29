@@ -36,7 +36,7 @@ class RecepcionController extends Controller
         }])
         ->get();
         
-        return view('admin.recepcion.index')->with(['recepcion' => $recepcion, 'orden' => $orden]);
+        return view('admin.recepcion.index')->with(['recepcion' => $recepcion, 'orden' => $orden, 'current' => 'rec']);
     }
 
     public function store(Request $request)

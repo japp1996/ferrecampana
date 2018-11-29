@@ -12,7 +12,7 @@ use App\Models\Auditoria;
 class PasswordController extends Controller
 {
     public function index() {
-    	return view('admin.password.index');
+    	return view('admin.password.index')->with(['current' => 'yo']);
     }
 
     public function update(PasswordRequest $request, $id) {

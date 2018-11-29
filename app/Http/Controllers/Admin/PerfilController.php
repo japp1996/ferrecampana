@@ -15,7 +15,7 @@ class PerfilController extends Controller
         $usuario = Usuario::select('name','number','address','phone','email')
             ->where('number', 123456789)
             ->first();
-    	return view('admin.perfil.index')->with(['usuario' => $usuario]);
+    	return view('admin.perfil.index')->with(['usuario' => $usuario, 'current' => 'yo']);
     }
 
     public function store() {

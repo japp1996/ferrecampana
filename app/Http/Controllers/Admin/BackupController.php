@@ -13,7 +13,7 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 class BackupController extends Controller
 {
 	public function index() {
-		return view('admin.mantenimiento.respaldar');
+		return view('admin.mantenimiento.respaldar')->with(['current' => 'mant']);
 	}
 
     public function store(BackupRequest $request)

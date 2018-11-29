@@ -36,7 +36,7 @@ class OrdenCompraController extends Controller
         }])
         ->get();
         
-        return view('admin.orden.index')->with(['orden' => $orden, 'requisicion' => $requisicion]);
+        return view('admin.orden.index')->with(['orden' => $orden, 'requisicion' => $requisicion, 'current' => 'process']);
     }
 
     public function store(Request $request)

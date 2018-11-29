@@ -37,6 +37,6 @@ class DashboardController extends Controller
 		$borrado = Auditoria::where('operacion', 'REGISTRO')->get();
 		$borrado = count($borrado);
 
-		return view('admin.index')->with(['pedido' => $pedido, 'requi' => $requi, 'recep' => $recep, 'oc' => $oc, 'respaldo' => $respaldo, 'restauracion' => $restauracion, 'registros' => $registros, 'actualizacion' => $actualizacion, 'borrado' => $borrado]);
+		return view('admin.index')->with(['pedido' => $pedido, 'requi' => $requi, 'recep' => $recep, 'oc' => $oc, 'respaldo' => $respaldo, 'restauracion' => $restauracion, 'registros' => $registros, 'actualizacion' => $actualizacion, 'borrado' => $borrado, 'current' => 'dash']);
     }
 }

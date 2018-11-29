@@ -17,7 +17,7 @@ class ProductoController extends Controller
         $productos = Producto::select('productos.id','productos.code','productos.name', 'productos.price','productos.stock', 'productos.unity','categorias.descripcion_categoria','categorias.code as codecat')->join('categorias' ,'productos.id_categoria', 'categorias.code')->where('productos.status', '1')
                 ->get();
         $categorias = Categoria::select('code','descripcion_categoria')->get();
-        return view('admin.productos.index')->with(['productos' => $productos, 'categorias' => $categorias]);
+        return view('admin.productos.index')->with(['productos' => $productos, 'categorias' => $categorias, 'current' => 'table']);
     }
 
     public function create() {

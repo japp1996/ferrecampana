@@ -36,7 +36,8 @@
 	Vue.component('restaurar-index', require('./components/Admin/Mantenimiento/RestaurarIndex'));
 	Vue.component('auditoria-index', require('./components/Admin/Mantenimiento/AuditoriaIndex'));
 	//Pedidos
-	Vue.component('pedidos-index', require('./components/Admin/Pedidos/IndexPedidos'));
+	//Vue.component('pedidos-index', require('./components/Admin/Pedidos/IndexPedidos'));
+	Vue.component('pedidos-index', require('./components/Admin/Pedidos/CreatePedidos'));
 	Vue.component('pedidos-index-show', require('./components/Admin/Pedidos/ShowPedidos'));
 	//Orden de compra
 	Vue.component('orden-compra-index', require('./components/Admin/OrdenCompra/IndexOrdenCompra'));

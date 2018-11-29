@@ -24,7 +24,7 @@
 	
 	//INTRANET
 
-	Route::group(['prefix' => 'intranet', 'namespace' => 'Admin', 'middleware' => 'web'], function(){
+	Route::group(['prefix' => 'intranet', 'namespace' => 'Admin', 'middleware' => 'guest'], function(){
 		//Inicio
 		Route::get('dashboard', 'DashboardController@index');
 		//Productos

@@ -9,7 +9,7 @@ use App\Models\Auditoria;
 class RestoreController extends Controller
 {
     public function index() {
-    	return view('admin.mantenimiento.restaurar');	
+    	return view('admin.mantenimiento.restaurar')->with(['current' => 'mant']);	
     }
 
     public function store() {

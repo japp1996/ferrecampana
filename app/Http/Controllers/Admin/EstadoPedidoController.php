@@ -13,7 +13,7 @@ class EstadoPedidoController extends Controller
      public function index() {
         $estado = EstadoPedido::where('status', '1')->get();
     	return view('admin.estado_pedido.index')
-            ->with(['estado' => $estado]);
+            ->with(['estado' => $estado, 'current' => 'process']);
     }
 
     public function create() {

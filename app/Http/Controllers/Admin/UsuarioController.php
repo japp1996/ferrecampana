@@ -11,7 +11,7 @@ class UsuarioController extends Controller
 {
     public function index() {
     	$usuarios = Usuario::get();
-        return view('admin.usuarios.index')->with(['usuarios' => $usuarios]);
+        return view('admin.usuarios.index')->with(['usuarios' => $usuarios, 'current' => 'list']);
     }
 
     public function create() {

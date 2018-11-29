@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\Auditoria;
+use App\Models\Usuario;
 use Auth;
 
 class LoginController extends Controller
@@ -25,9 +26,9 @@ class LoginController extends Controller
     public function login(LoginRequest $request)
     {    
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])){
-            if (Auth::user()->level == 'CLI') {
+            if (Auth::user()->status == '1') {
                 $auditoria = new Auditoria;
-                $auditoria->number = 123456789;
+                $auditoria->number = Auth::user()->number;
                 $auditoria->operacion = 'LOGIN';
                 $auditoria->rama = 'LOGIN';
                 $auditoria->detalles_operacion = 'EL usuario '.
@@ -56,7 +57,7 @@ class LoginController extends Controller
     public function logout() {
         
         $auditoria = new Auditoria;
-        $auditoria->number = 123456789;
+        $auditoria->number = Auth::user()->number;
         $auditoria->operacion = 'LOGIN';
         $auditoria->rama = 'LOGOUT';
         $auditoria->detalles_operacion = 'EL usuario '.
