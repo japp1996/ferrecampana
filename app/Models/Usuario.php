@@ -11,10 +11,6 @@
 	    protected $table = "users";
 	    protected $primaryKey = "number";
 
-	    public function auditoria() {
-	    	return $this->belongsToMany(Auditoria::class, 'number');
-	    }
-
 	    public function pedidos() {
 	 		return $this->hasMany(Pedido::class, 'number');
 	    }

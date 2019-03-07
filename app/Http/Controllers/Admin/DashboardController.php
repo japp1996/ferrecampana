@@ -31,10 +31,10 @@ class DashboardController extends Controller
 		$registros = Auditoria::where('operacion', 'REGISTRO')->get();
 		$registros = count($registros);
 
-		$actualizacion = Auditoria::where('operacion', 'REGISTRO')->get();
+		$actualizacion = Auditoria::where('operacion', 'ACTUALIZACION')->get();
 		$actualizacion = count($actualizacion);
 
-		$borrado = Auditoria::where('operacion', 'REGISTRO')->get();
+		$borrado = Auditoria::where('operacion', 'BORRADO')->get();
 		$borrado = count($borrado);
 
 		return view('admin.index')->with(['pedido' => $pedido, 'requi' => $requi, 'recep' => $recep, 'oc' => $oc, 'respaldo' => $respaldo, 'restauracion' => $restauracion, 'registros' => $registros, 'actualizacion' => $actualizacion, 'borrado' => $borrado, 'current' => 'dash']);

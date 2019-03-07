@@ -28,7 +28,39 @@
 				        </ul>
 					</div>
 		      	</div>
-		        <div v-for="(item, i) in dataProducts" v-if="i/pagination.perPage <= pagination.currentPage && i/pagination.perPage > pagination.currentPage-1 && item.code == categoria" class="col-md-3">
+		       <div class="col-md-9">
+		         <div class="datagrid" v-if="options == 0 || options == 1">
+					<table-byte :set-table="dataTable" :filters="['productos.name']">
+				        <table-row slot="table-head" slot-scope="{ item }">
+				            <table-head>No.</table-head>
+				            <table-head>Cliente</table-head>
+				            <table-head>Fecha</table-head>
+				            <table-head>Acciones</table-head>
+				        </table-row>
+
+				        <table-row slot="table-row" slot-scope="{ item }">
+				            <table-cell>{{ item.name }}</table-cell>
+				            <table-cell>{{ item.descripcion_categoria }}</table-cell>
+				            <table-cell>{{ item.stock }}</table-cell>
+				            <table-cell>{{ item.unity }}</table-cell>
+				            <table-cell>{{ item.price }}</table-cell>
+				            <table-cell>
+			                    <button v-if="options == 1" class="btn btn-success" @click="addCart(item, i)">
+									Añadir al carrito
+								</button>
+				            </table-cell>
+				        </table-row>
+
+				        <table-row slot="empty-rows">
+				            <table-cell colspan="4">
+				                No se encontraron registros.
+				            </table-cell>
+				        </table-row>
+				    </table-byte>
+				 </div>
+				</div>
+
+		        <!--div v-for="(item, i) in dataProducts" v-if="i/pagination.perPage <= pagination.currentPage && i/pagination.perPage > pagination.currentPage-1 && item.code == categoria" class="col-md-3">
 				    <div class="make3D">
 			            <div class="product-front">
 			                <div class="shadow"></div>
@@ -65,7 +97,7 @@
 				      </a>
 				    </li>
 				  </ul>
-				</nav>
+				</nav-->
 		</div>
 	</div>
 </div>
@@ -146,12 +178,12 @@
 		},
 		mounted() {
 			this.dataProducts = this.productos
-			this.dataProducts.forEach(function(el){
-				el.cantidad = 0
-			})
-			this.pagination.total = this.dataProducts.length
-			this.pagination.lastPage = parseInt(this.pagination.total/this.pagination.perPage)
-			this.pagination.paginate = parseInt(this.pagination.total/this.pagination.perPage)
+			//this.dataProducts.forEach(function(el){
+			//	el.cantidad = 0
+			//})
+			//this.pagination.total = this.dataProducts.length
+			//this.pagination.lastPage = parseInt(this.pagination.total/this.pagination.perPage)
+			//this.pagination.paginate = parseInt(this.pagination.total/this.pagination.perPage)
 			this.dataCategory = this.categorias
 		}
 	}

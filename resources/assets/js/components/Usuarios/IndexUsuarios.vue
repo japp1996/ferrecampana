@@ -87,7 +87,8 @@
 				
 				axios.post("usuario", formData)
 			  	.then( response => {
-			  		console.log(response)
+			  		console.log("then", response)
+			  		console.log("then-:data", response.data)
 			    	swal({
 						text: response.data.text,
 						title: "Ok",
@@ -97,8 +98,13 @@
 					})
 			  	})
 			  	.catch(error => {
+			  		console.log("catch", error.response.status)
+			  		let message = "Disculpe, ha ocurrido un error";
+			  		if (error.response.status == 422) {
+			  			message = error.response.data.error;
+			  		}
 					swal({
-						text: error.response.data.error,
+						text: message,
 						title: "Atención",
 						timer: 2500,
 						icon: "warning",

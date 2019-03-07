@@ -31,14 +31,13 @@ class LoginController extends Controller
                 $auditoria->number = Auth::user()->number;
                 $auditoria->operacion = 'LOGIN';
                 $auditoria->rama = 'LOGIN';
-                $auditoria->detalles_operacion = 'EL usuario '.
-                    Auth::user()->name.' C.I: '.
-                    Auth::user()->tipodoc
-                    .Auth::user()->number. ' Inició Sesión';
+                $auditoria->detalles_operacion = 'El usuario ' . 
+                Auth::user()->name . ' C.I: ' . Auth::user()->tipodoc . Auth::user()->number . ' Inició Sesión';
                 $auditoria->save();
                 return response()->json([
                     'result' => true,
-                    'location' => url('/intranet/dashboard')
+                    'location' => url('/intranet/dashboard'),
+                    'type' => Auth::user()->level
                 ]);
             } else {
                 return response()->json([

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Producto;
 use App\Models\Categoria;
 use App\Models\Auditoria;
+use App\Models\Proveedor;
 use Exporter;
 use Carbon\Carbon;
 
@@ -17,7 +18,8 @@ class ProductoController extends Controller
         $productos = Producto::select('productos.id','productos.code','productos.name', 'productos.price','productos.stock', 'productos.unity','categorias.descripcion_categoria','categorias.code as codecat')->join('categorias' ,'productos.id_categoria', 'categorias.code')->where('productos.status', '1')
                 ->get();
         $categorias = Categoria::select('code','descripcion_categoria')->get();
-        return view('admin.productos.index')->with(['productos' => $productos, 'categorias' => $categorias, 'current' => 'table']);
+        $prov = Proveedor::get();
+        return view('admin.productos.index')->with(['productos' => $productos, 'categorias' => $categorias, 'current' => 'table', 'proveedores' => $prov]);
     }
 
     public function create() {
@@ -29,6 +31,7 @@ class ProductoController extends Controller
         $prod->code = $request->code;
         $prod->name = $request->name;
         $prod->id_categoria = $request->id_categoria;
+        $prod->id_proveedor = $request->id_proveedor;
         $prod->stock = $request->stock;
         $prod->unity = $request->unity;
         $prod->price = $request->price;
@@ -55,6 +58,7 @@ class ProductoController extends Controller
         $prod = Producto::find($id);
         $prod->name = $request->name;
         $prod->id_categoria = $request->id_categoria;
+        $prod->id_proveedor = $request->id_proveedor;
         $prod->stock = $request->stock;
         $prod->unity = $request->unity;
         $prod->price = $request->price;

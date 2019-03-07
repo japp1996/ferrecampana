@@ -15,6 +15,7 @@ use App\Models\Requisicion;
 class Producto extends Model
 {
     public $timestamps = false;
+    
     protected $table = "productos";
 
     public function categorias()
@@ -40,5 +41,10 @@ class Producto extends Model
     public function detalesOrdenCompra()
     {
         return $this->belongsTo(DetallesOrdenCompra::class, 'id_producto');
+    }
+
+    public function proveedor()
+    {
+        return $this->hasOne(Producto::class, '', '');
     }
 }

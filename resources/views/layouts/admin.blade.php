@@ -7,7 +7,9 @@
         <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/apple-touch-icon.png') }} ">
         <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon-32x32.png') }}">
         <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon-16x16.png') }}">
-        <title>@yield('title') | Ferretería la campana</title>
+        <title>
+            @yield('title') | Ferretería la campana
+        </title>
         <meta name="keywords" content="" />
         <meta name="description" content="Ferretería la Campana es una ferretería que vende productos y artículos de trabajo desde jardinería, material de construcción y del hogar. " />
         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -29,8 +31,8 @@
             }
        </style>
     </head>
-    <body ">
-    <div id="loader"></div>
+    <body>
+    
     @include('layouts.header')
     <div class="generalContent" id="app">
         @yield('content')

@@ -12,7 +12,7 @@ use Auth;
 class PerfilController extends Controller
 {
     public function index() {
-        $usuario = Usuario::select('name','number','address','phone','email')
+        $usuario = Usuario::select('id','name','number','address','phone','email')
             ->where('number', 123456789)
             ->first();
     	return view('admin.perfil.index')->with(['usuario' => $usuario, 'current' => 'yo']);
@@ -23,7 +23,7 @@ class PerfilController extends Controller
     }
 
     public function update(ProfileRequest $request) {
-    	$usuario = Usuario::find($request->$number);
+    	$usuario = Usuario::find($request->number);
         $usuario->name = $request->name;
         $usuario->email = $request->email;
         $usuario->phone = $request->phone;

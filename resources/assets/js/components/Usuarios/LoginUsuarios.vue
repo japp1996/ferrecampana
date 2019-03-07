@@ -16,7 +16,7 @@
 
 					                        <li class="full"><div class="alert alert-danger" id="errores" style="display:none;"></div></li>
 											<li class="full"><input value="Entrar" type="button" @click="ajax()" class="btn btn-default"></li>
-					                        <li class="full"><br><p class="text-center"><a href="">¿Olvidaste tu Contraseña?</a></p></li>
+					                        <!--li class="full"><br><p class="text-center"><a href="">¿Olvidaste tu Contraseña?</a></p></li-->
 					                    </ul>
 									</form>
 								</div>
@@ -34,6 +34,7 @@
 		template: "#template-usuarios-login",
 		data() {
 			return {
+				url: urlBase,
 				form: {
 					email: "",
 					password: ""
@@ -46,29 +47,21 @@
            		formData.append("email", this.form.email);
            		formData.append("password", this.form.password);
 				
-				axios.post("", formData)
+				axios.post("login", formData)
 			  	.then( response => {
 			  		if(response.data.result){
 						window.location = response.data.location
 			  		} else {
-    					swal({
-							text: response.data.error,
-							title: "Error",
-							timer: 2500,
-							icon: "error",
-							button: false
-						})			  			
+    					swal("Error", response.data.error ,"error",)			  			
 			  		}
 
 			  	})
-			  	.catch(error => {
-					swal({
-						text: error.response.data.error,
-						title: "Atención",
-						timer: 2500,
-						icon: "warning",
-						button: false
-					})  
+			  	.catch( error => {
+			  		let message = "Disculpe, ha ocurrido un error";
+			  		//if (error.response.status == 422) {
+			  			//message = error.response.data.error;
+			  		//}
+					swal("Atención", message, "warning")
 			  	})
 			}
 		}

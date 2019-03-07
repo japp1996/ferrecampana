@@ -33,7 +33,8 @@ class ProductoRequest extends FormRequest
             'stock' => 'required',
             'unity' => 'required',  
             'price' => 'required|numeric',
-            'id_categoria' => 'required'
+            'id_categoria' => 'required',
+            'id_proveedor' => 'required'
             //'main' => 'required'
         ];
     }
@@ -47,6 +48,7 @@ class ProductoRequest extends FormRequest
             'unity' => 'Unidad',
             'price' => 'Precio',
             'id_categoria' => 'Categoría',
+            'id_proveedor' => 'Proveedor'
             //'main' => 'Imagen principal'
         ];
     }

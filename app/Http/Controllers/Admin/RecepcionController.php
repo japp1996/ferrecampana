@@ -58,6 +58,7 @@ class RecepcionController extends Controller
             $detalles->save();
             $productos = Producto::find($value['id_producto']);
             $productos->stock = $productos->stock + $value['cantidad'];
+            $productos->save();
         }
 
         $auditoria = new Auditoria;
@@ -75,7 +76,14 @@ class RecepcionController extends Controller
         $destroy = Recepcion::find($id);
         $destroy->id_estado = '1';
         $destroy->save();
-        
+            
+        $detalles = DetallesRecepcion::where('id_recepcion', $id)->get();
+        foreach ($detalles as $key) {
+            $producto = Producto::find($key['id_producto']);
+            $producto->stock = $producto->stock + $key['cantidad'];
+            $producto->save();
+        }
+
         $auditoria = new Auditoria;
         $auditoria->number = 123456789;
         $auditoria->operacion = 'BORRADO';

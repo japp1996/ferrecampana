@@ -26,7 +26,7 @@ class UsuarioRequest extends FormRequest
     public function rules()
     {
         return [
-            "tipodoc" => "required|string",
+            "tipodoc" => "required",
             "number" => "unique:users|required|numeric",
             "name" => "required",
             "password" => "required|min:8",
@@ -42,7 +42,7 @@ class UsuarioRequest extends FormRequest
     {
         return [
             'tipodoc' => 'Tipo de Documento',
-            'number' => 'Número',
+            'number' => 'Número de documento',
             'name' => 'Nombre',
             'password' => 'Contraseña',
             "password2" => "Repetir contraseña",
@@ -58,7 +58,7 @@ class UsuarioRequest extends FormRequest
         return [
             'required' => 'El campo :attribute es requerido',
             'min' => 'El campo :attribute no puede contener menos de :min caracteres',
-            'unique' => 'Ya existe un Usuario registrado con este documento',
+            'unique' => 'Ya existe un Usuario registrado con el dato :attribute',
             'mimes' => 'La imágen tiene un formato incorrecto',
             'numeric' => 'El campo :attribute debe contener sólo números',
             'date' => 'El campo :attribute no tiene formato de fecha',

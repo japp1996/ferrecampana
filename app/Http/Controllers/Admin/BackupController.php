@@ -31,7 +31,7 @@ class BackupController extends Controller
 		system($respaldo, $resultado);
 		$fecha=date('Y-m-d g:i:s-a');
 
-		if ($resultado) {
+		if (!$resultado) {
 			if(file_exists(public_path($archivosql))){
 			  unlink(public_path($archivosql));
 			}

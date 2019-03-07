@@ -9,9 +9,9 @@
 	      </div>
 	      <div class="row">	      	
             <div class="col-sm-12 container-btn-add" >
-                <button v-if="options == 0" class="btn btn-success" @click="_add()"> Agregar nuevo </button>                            
-                <button v-if="options == 0" class="btn btn-success" ><a href="productos/excel" target="_blank"> Exportar EXCEL </a></button>
-                <button v-if="options == 0" class="btn btn-danger" ><a href="productos/pdf" target="_blank"> Exportar PDF </a></button>
+                <button v-if="options == 0" class="btn btn-success" @click="_add()"> Agregar nuevo </button>
+                <!--button v-if="options == 0" class="btn btn-success" ><a href="productos/excel" target="_blank"> Exportar EXCEL </a></button>
+                <button v-if="options == 0" class="btn btn-danger" ><a href="productos/pdf" target="_blank"> Exportar PDF </a></button-->
                 <button v-if="options == 1 || options == 2" class="btn btn-success" @click="options = 0">Volver</button>
             </div>
             <div class="col-sm-12 col-md-12">
@@ -34,10 +34,10 @@
 			            <table-cell>{{ item.price }}</table-cell>
 			            <table-cell>
 			            	<a  @click="_edit(item)">
-			                    <img class="img-responsive" >E		            		
+			                    <img src="http://localhost:8080/ferrecampana/public/images/icons/edit.png" width="30px" style="display:inline-block" class="img-responsive" >	            		
 			            	</a>
 			            	<a @click="_delete(item.id)">
-			                    <img class="img-responsive" >B
+			                    <img src="http://localhost:8080/ferrecampana/public/images/icons/delete.png" width="30px" style="display:inline-block" class="img-responsive" >
 		                    </a>
 			            </table-cell>
 			        </table-row>
@@ -50,44 +50,43 @@
 			    </table-byte>
 			 </div>
 			 <div class="" v-if="options == 1 || options == 2">
-			 	<div class="form-group has-feedback" :class="form.code == '' ? 'has-error' : 'has-success'">
-				  <label class="control-label" for="code">Código del producto</label>
-				  <input type="text" class="form-control" id="code" v-model="form.code" aria-describedby="inputSuccess2Status">
-				  <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-				  <span id="inputSuccess2Status" class="sr-only">(success)</span>
-				</div>
-				<div class="form-group has-feedback" :class="form.name == '' ? 'has-error' : 'has-success'">
+			 	<div class="col-sm-3 form-group">
 				  <label class="control-label" for="name">Nombre del producto</label>
-				  <input type="text" class="form-control" id="name" v-model="form.name" aria-describedby="inputWarning2Status">
-				  <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
-				  <span id="inputWarning2Status" class="sr-only">(warning)</span>
+				  <input type="text" class="form-control" id="name" v-model="form.name">
 				</div>
-				<div class="form-group has-feedback" :class="form.stock == '' ? 'has-error' : 'has-success'">
+				<div class="col-sm-3 form-group">
+				  <label class="control-label" for="code">Código del producto</label>
+				  <input type="text" class="form-control" id="code" v-model="form.code" >
+				</div>
+				<div class="col-sm-3 form-group" >
 				  <label class="control-label" for="stock">Existencia</label>
-				  <input type="text" class="form-control" id="stock" v-model="form.stock" aria-describedby="inputError2Status">
-				  <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-				  <span id="inputError2Status" class="sr-only">(error)</span>
+				  <input type="text" class="form-control" id="stock" v-model="form.stock">
 				</div>
-				<div class="form-group has-feedback" :class="form.unity == '' ? 'has-error' : 'has-success'">
+				<div class="col-sm-3 form-group">
 				  <label class="control-label" for="unity">Unidad</label>
-				  <input type="text" class="form-control" id="unity" v-model="form.unity" aria-describedby="inputSuccess2Status">
-				  <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-				  <span id="inputSuccess2Status" class="sr-only">(success)</span>
+				  <input type="text" class="form-control" id="unity" v-model="form.unity" >
 				</div>
-				<div class="form-group has-feedback" :class="form.id_categoria == '' ? 'has-error' : 'has-success'">
-					<label class="control-label" for="unity">Categoría</label>
-					<select class="form-control" v-model="form.id_categoria">
+				<div class="col-sm-4 form-group">
+					<label class="control-label" for="categoria">Categoría</label>
+					<select class="form-control" v-model="form.id_categoria" id="categoria" name="categoria">
 					  <option value="">Seleccione</option>
 					  <option v-for="categoria in categoriasP" v-bind:value="categoria.code" >
 					  {{ categoria.descripcion_categoria }}
 					  </option>
 					</select>
 				</div>
-				<div class="form-group has-feedback" :class="form.price == '' ? 'has-error' : 'has-success'">
+				<div class="col-sm-4 form-group">
+					<label class="control-label" for="proveedor">Proveedores</label>
+					<select class="form-control" v-model="form.id_proveedor" id="proveedor" name="proveedor">
+					  <option value="">Seleccione</option>
+					  <option v-for="(proveedor, i) in proveedorP" :key="i" value="proveedor.id">
+					  {{ proveedor.name }}
+					  </option>
+					</select>
+				</div>
+				<div class="form-group col-sm-4">
 				  <label class="control-label" for="price">Precio</label>
-				  <input type="text" class="form-control" id="price" v-model="form.price" aria-describedby="inputSuccess2Status">
-				  <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-				  <span id="inputSuccess2Status" class="sr-only">(success)</span>
+				  <input type="text" class="form-control" name="price" id="price" v-model="form.price" >
 				</div>
 				<div class="form-group">
 					<p>
@@ -115,22 +114,29 @@
 			return {
 				options: 0,
 				reg: 0,
+				urlBase: urlBase,
 	            form: {
 	            	id: "",
 	            	code: "",
 	            	name: "",
 	            	stock: "",
 	            	id_categoria: "",
+	            	id_proveedor: "",
 	            	unity: "",
 	            	price: ""
 	            },
 	            categoriasP: [],
+	            proveedorP: [],
 	            dataTable: [],
 	            filters: []
 			}
 		},
 		props: {
 			productos: {
+				type: Array,
+				default: []
+			},
+			proveedor: {
 				type: Array,
 				default: []
 			},
@@ -153,16 +159,16 @@
 	            	name: "",
 	            	stock: "",
 	            	id_categoria: "",
+	            	id_proveedor: "",
 	            	unity: "",
 	            	price: ""
 	            }
 			},
 			_create() {
-				axios.post("", this.form)
+				axios.post(this.urlBase+`intranet/productos/`, this.form)
 				.then( resp => {
 					this._showAlert(resp.data.text, "success")
 					this.options = 0
-					this._reloadTable()
 				})
 				.catch(error => {
 					this._showAlert(error.data.error, "error")
@@ -183,11 +189,10 @@
 				this.options = 2
 			},
 			_updated(){
-				axios.put(`productos/${this.form.id}`, this.form)
+				axios.put(`intranet/productos/` + this.form.id, this.form)
 				.then( resp => {
 					this._showAlert(resp.data.text, "success")
 					this.options = 0
-					this._reloadTable()
 				})
 				.catch(error => {
 					this._showAlert(error.data.error, "error")
@@ -208,7 +213,6 @@
 					    swal(resp.data.text, {
 					      icon: "success",
 					    });
-					    this._reloadTable()
 				    })
 				    .catch( erro => {
 				    	swal("Lo sentimos! ha ocurrido un error!", {
@@ -217,15 +221,6 @@
 				    })
 				  }
 				});
-			},
-			_reloadTable() {
-				axios.get("productos-all")
-				.then( resp => {
-					this.dataTable = resp.data
-				})
-				.catch( erro => {
-
-				})
 			},
 			_showAlert(text, type) {
 		        swal({
@@ -240,6 +235,7 @@
 		mounted() {
 			this.dataTable = this.productos
 			this.categoriasP = this.categorias
+			this.proveedorP = this.proveedor
 		}
 	}
 </script>

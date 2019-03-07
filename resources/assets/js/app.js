@@ -17,8 +17,6 @@
 	import swal from 'sweetalert'
 	import Chart from 'chart.js'
 	
-
-	
 	/**
 	 * Next, we will create a fresh Vue application instance and attach it to
 	 * the page. Then, you may begin adding components to this application
@@ -48,6 +46,8 @@
 	Vue.component('password-index', require('./components/Admin/Perfil/PasswordChange'));
 	//Productos
 	Vue.component('productos-index', require('./components/Admin/Productos/IndexProductos'));
+	//Productos
+	Vue.component('proveedor-index', require('./components/Admin/Proveedor/IndexProveedor'));
 	//Recepcion
 	Vue.component('recepcion-index', require('./components/Admin/Recepcion/IndexRecepcion'));
 	//Requisicion
@@ -64,6 +64,10 @@
 	Vue.component("table-cell", require("./components/Admin/Table/TableCell"));
 
 
+	window.urlBase = `${window.location.protocol}//${window.location.hostname}:8080/ferrecampana/public/`;
+
+	window.axios.defaults.baseURL = urlBase;
+ 	
  	window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
     let token = document.head.querySelector('meta[name="csrf-token"]');

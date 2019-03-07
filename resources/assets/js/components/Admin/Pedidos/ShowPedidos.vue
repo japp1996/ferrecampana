@@ -1,6 +1,19 @@
 <template id="template-pedidos-index-show">
 	<div>
 	    <div class="container">
+			<div id="myModal" class="modal_ferre">
+			  <!-- Modal content -->
+			  <div class="modal-content">
+			  	<div class="modal-header">
+				  <span class="close">&times;</span>
+				    <h3>Detalles del Pedido</h3>
+				 </div>
+				 <div class="modal-body" id="modal-body">
+				    
+				 </div>
+			  </div>
+
+			</div>
 	       <div class="row">
             <div class="col-sm-12 center-align">
                 <h1 v-if="options == 0">Pedidos</h1>
@@ -26,11 +39,11 @@
 			            <table-cell>{{ item.usuario.name }}</table-cell>
 			            <table-cell>{{ item.created_at }}</table-cell>
 			            <table-cell>
-		                    <a  @click="_edit(item)">
-			                    <img class="img-responsive" >E		            		
-			            	</a>
-			            	<a @click="_delete(item.id)">
-			                    <img class="img-responsive" >B
+		                    <a @click="_delete(item.id)">
+			                    <img src="http://localhost:8080/ferrecampana/public/images/icons/delete.png" class="img-responsive" width="30px" style="display:inline-block">
+		                    </a>
+		                    <a @click="_see(item)" :id="'myBtn'+item.id">
+			                    <img src="http://localhost:8080/ferrecampana/public/images/icons/see.png" class="img-responsive" width="30px" style="display:inline-block">
 		                    </a>
 			            </table-cell>
 			        </table-row>
@@ -67,8 +80,46 @@
 		 </div>
 		</div>
 	</div>
+	<!-- The Modal -->
 </template>
+<style>
+	.modal_ferre {
+	    display: none; /* Hidden by default */
+	    position: fixed; /* Stay in place */
+	    z-index: 1; /* Sit on top */
+	    left: 0;
+	    top: 0;
+	    width: 100%; /* Full width */
+	    height: 100%; /* Full height */
+	    overflow: auto; /* Enable scroll if needed */
+	    background-color: rgb(0,0,0); /* Fallback color */
+	    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	}
 
+	/* Modal Content/Box */
+	.modal-content {
+	    background-color: #fefefe;
+	    margin: 15% auto; /* 15% from the top and centered */
+	    padding: 20px;
+	    border: 1px solid #888;
+	    width: 80%; /* Could be more or less, depending on screen size */
+	}
+
+	/* The Close Button */
+	.close {
+	    color: #aaa;
+	    float: right;
+	    font-size: 28px;
+	    font-weight: bold;
+	}
+
+	.close:hover,
+	.close:focus {
+	    color: black;
+	    text-decoration: none;
+	    cursor: pointer;
+	}
+</style>
 <script>
 	export default {
 		template: "#template-pedidos-index-show",
@@ -77,12 +128,38 @@
 				options: 0,
 				form: {},
 				dataTable: [],
-				filters: []	
+				filters: [],
+				modal: {}
 			}
 		},
 		methods: {
 			_edit(item) {
 
+			},
+			_see(item) {
+				var modal = document.getElementById('myModal');
+				// Get the button that opens the modal
+				var btn = document.getElementById("myBtn"+item.id);
+				// Get the <span> element that closes the modal
+				var span = document.getElementsByClassName("close")[0];
+				// When the user clicks on the button, open the modal 
+				btn.onclick = function() {
+				    document.getElementById("modal-body").innerHTML = "";
+				    item.detalles.forEach((el) => {
+				    	document.getElementById("modal-body").innerHTML += "<p>Producto: " + el.id + " Cantidad: " + el.cantidad + " Precio: " + el.precio + "</p>";
+				    })
+				    modal.style.display = "block";				    
+				}
+				// When the user clicks on <span> (x), close the modal
+				span.onclick = function() {
+				    modal.style.display = "none";
+				}
+				// When the user clicks anywhere outside of the modal, close it
+				window.onclick = function(event) {
+				    if (event.target == modal) {
+				        modal.style.display = "none";
+				    }
+				}
 			},
 			_delete(id) {
 				swal({
@@ -126,6 +203,7 @@
 			}
 		},
 		mounted() {	
+			console.log(this.url)
 			this.dataTable = this.pedidos
 		}
 	}

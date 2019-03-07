@@ -10,7 +10,7 @@ window._ = require('lodash');
 try {
     window.$ = window.jQuery = require('jquery');
 
-    require('bootstrap-sass');
+    //require('bootstrap-sass');
 } catch (e) {}
 
 /**
@@ -22,6 +22,10 @@ try {
 window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+window.urlBase = `${window.location.protocol}8080//${window.location.hostname}/ferrecampana/public/`;
+
+window.axios.defaults.baseURL = urlBase;
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that

@@ -42,7 +42,11 @@ class PedidoController extends Controller
             $detalles->cantidad = $key['cantidad'];
             $detalles->precio = $key['precio'];
             $detalles->save();
+            $producto = Producto::find($key['id_producto']);
+            $producto->stock = $producto->stock - $key['cantidad'];
+            $producto->save();
         }
+
         $auditoria = new Auditoria;
         $auditoria->number = 123456789;
         $auditoria->operacion = 'REGISTRO';
@@ -73,14 +77,22 @@ class PedidoController extends Controller
     }
     
     public function destroy($id) {
-    	$destroy = Pedido::find($id);
+        $destroy = Pedido::find($id);
+
+        $detalles = DetallesPedido::where('id_pedido', $id)->get();
+        foreach ($detalles as $key) {
+            $producto = Producto::find($key['id_producto']);
+            $producto->stock = $producto->stock + $key['cantidad'];
+            $producto->save();        
+        }
+        
         $destroy->id_estado = '1';
         $destroy->save();
         $auditoria = new Auditoria;
         $auditoria->number = 123456789;
         $auditoria->operacion = 'BORRADO';
         $auditoria->rama = 'PEDIDO';
-        $auditoria->detalles_operacion = 'Borrado de un pedido con el id: '.$orden->id;
+        $auditoria->detalles_operacion = 'Borrado de un pedido con el id: '.$id;
         $auditoria->save();
         return response()->json(['result' => true, 'text' => 'Genial! Tu Pedido ha sido borrado!']);
     }

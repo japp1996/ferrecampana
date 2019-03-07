@@ -30,10 +30,10 @@ class UsuarioController extends Controller
         $users->save();
         
         $auditoria = new Auditoria;
-        $auditoria->number = Auth::user()->number;
+        $auditoria->number = $request->number;
         $auditoria->operacion = 'REGISTRO';
         $auditoria->rama = 'USUARIO';
-        $auditoria->detalles_operacion = 'Registro de un nuevo usuario bajo C.I: '.$user->number.' ';
+        $auditoria->detalles_operacion = 'Registro de un nuevo usuario bajo C.I: '.$users->number.' ';
         $auditoria->save();
         return response()->json(['result' => true, 'text' => 'Registro completado']);
     }

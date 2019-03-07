@@ -26,10 +26,10 @@
 			            <table-cell>{{ item.descripcion_categoria }}</table-cell>
 			            <table-cell>
 		                    <a  @click="_edit(item)">
-			                    <img class="img-responsive" >E		            		
+			                    <img src="http://localhost:8080/ferrecampana/public/images/icons/edit.png" width="30px" style="display:inline-block"  class="img-responsive">            		
 			            	</a>
 			            	<a @click="_delete(item.id)">
-			                    <img class="img-responsive" >B
+			                    <img src="http://localhost:8080/ferrecampana/public/images/icons/delete.png" width="30px" style="display:inline-block"  class="img-responsive" >
 		                    </a>
 			            </table-cell>
 			        </table-row>

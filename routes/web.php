@@ -1,5 +1,4 @@
 <?php
-	use Auth;
 
 	//PUBLIC
 	Route::resource('/', 'HomeController');
@@ -31,6 +30,10 @@
 		Route::resource('productos', 'ProductoController');
 		Route::get('productos-all','ProductoController@get');
 		Route::get('productos-excel', 'ProductoController@excel');
+		//Proveedores
+		Route::resource('proveedores', 'ProveedorController');
+		Route::get('proveedores-all','ProveedorController@get');
+		Route::get('proveedores-excel', 'ProveedorController@excel');
 		//Categorias
 		Route::resource('categorias', 'CategoriaController');
 		Route::get('categorias-all','CategoriaController@get');
@@ -51,7 +54,6 @@
 		Route::resource('orden', 'OrdenCompraController');
 		Route::get('orden-all', 'OrdenCompraController@show');
 		Route::get('orden-get', 'OrdenCompraController@get');
-		Route::get('orden-getr', 'OrdenCompraController@getr');
 		//Recepcion
 		Route::resource('recepcion', 'RecepcionController');
 		Route::get('recepcion-all', 'RecepcionController@show');

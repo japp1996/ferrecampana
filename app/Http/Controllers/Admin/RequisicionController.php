@@ -17,9 +17,10 @@ class RequisicionController extends Controller
     {
         $requisicion = Requisicion::with(['detalles']) 
                 ->get();
-        $productos = Producto::select('productos.id','productos.code as idP', 'productos.name', 'productos.id_categoria', 'productos.unity', 'categorias.code', 'categorias.descripcion_categoria')
+        $productos = Producto::select('productos.id','productos.code as idP', 'productos.name', 'productos.id_categoria', 'productos.unity', 'productos.stock', 'categorias.code', 'categorias.descripcion_categoria')
             ->join('categorias','productos.id_categoria', 'categorias.code')
             ->where('productos.status', '1')
+            ->where('productos.stock', '<', '11')
             ->get();
         $categorias = Categoria::get();
         return view('admin.requisicion.index')

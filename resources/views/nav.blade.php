@@ -20,7 +20,7 @@
 						<li><a href="{{ url('products/') }}" title="herramientas de trabajo">Productos</a></li>
 						<li><a href="{{ url('usuario/') }}" title="registro ferretería la campana">Registro</a></li>
 						<!--li ><a href="noticias.html" title="Noticias de ferreterías">Noticias</a></li-->
-						<li><a href="{{ url('contact/') }}" title="contactar con ferreterías">Contacto</a></li>
+						<!--li><a href="{{ url('contact/') }}" title="contactar con ferreterías">Contacto</a></li-->
 					</ul>
 				</nav>
 				<div class="tel">

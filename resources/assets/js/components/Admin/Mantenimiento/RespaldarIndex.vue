@@ -37,7 +37,11 @@
 			_backup() {
 				axios.post("",this.form)
 				.then(resp => {
-					swal("",resp.data.text,"success")
+					if (resp.data.result) {
+						swal("",resp.data.text,"success")
+					} else {
+						swal("",resp.data.text,"warning")
+					}
 					this.form = {
 						server: "",
 						user: "",
