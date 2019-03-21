@@ -69,7 +69,7 @@
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-1">
 					<h1 class="with-hr-left text-left">Tu mejor ferretería</h1>
-					<p class="subtitle">Ferretería la Campana, C.A. es una tiendas dedicadas a la venta de productos de ferretería, artículos para el hogar, jardín, hogar, material de construcción y suministros.</p>
+					<p class="subtitle">Ferretería la Campana, C.A. es una tiendas dedicadas a la venta de productos de ferretería, artículos para el hogar, jardín, material de construcción y suministros.</p>
 					<p>Nuestra misión: Dar el mejor servicio mediante la atención cordial a los clientes. Nos adaptamos a las necesidades y expectativas de los mismos con unos precios muy competitivos, aportando como valor añadido una cercanía y proximidad Real al cliente y una calidad en productos. </p>				<!--a href="quienes-somos.html" title="ferbric, profesionales del bricolaje" class="btn btn-submit btn-lg">Ver más</a-->
 				</div>
 				
@@ -80,7 +80,7 @@
 	<section class="home-ventajas">
 		<div class="container">
 			<h2 class="with-hr-center">Nuestras ventajas</h2>
-			<div class="text-center"><p class="subtitle">FERBRIC es una cadena de tiendas dedicadas a la venta de productos de ferretería</p></div>
+			<div class="text-center"><p class="subtitle">La Ferreteria la campana es una tienda dedicada a la venta de productos de ferretería</p></div>
 			<div class="row">
 				<div class="ventaja col-xs-12 col-sm-12 col-md-6">
 					<span class="icon-reseller"></span>

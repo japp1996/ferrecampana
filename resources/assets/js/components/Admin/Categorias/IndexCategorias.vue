@@ -15,7 +15,7 @@
 	        <div class="col-md-12">
 	         <div class="datagrid" v-if="options == 0">
 				<table-byte :set-table="dataTable" :filters="['descripcion_categoria']">
-			        <table-row slot="table-head" slot-scope="{ item }">
+			        <table-row slot="table-head">
 			            <table-head>Código</table-head>
 			            <table-head>Categorias</table-head>
 			            <table-head>Acciones</table-head>
@@ -42,13 +42,13 @@
 			    </table-byte>
 			 </div>
 			 			 <div class="" v-if="options == 1 || options == 2">
-			 	<div class="form-group has-feedback" :class="form.code == '' ? 'has-error' : 'has-success'">
+			 	<div class="col-md-6 form-group has-feedback" :class="form.code == '' ? 'has-error' : 'has-success'">
 				  <label class="control-label" for="code">Código de categoría</label>
 				  <input type="text" class="form-control" id="code" v-model="form.code" aria-describedby="inputSuccess2Status">
 				  <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 				  <span id="inputSuccess2Status" class="sr-only">(success)</span>
 				</div>
-				<div class="form-group has-feedback" :class="form.descripcion == '' ? 'has-error' : 'has-success'">
+				<div class="col-md-6 form-group has-feedback" :class="form.descripcion == '' ? 'has-error' : 'has-success'">
 				  <label class="control-label" for="name">Nombre de la categoría</label>
 				  <input type="text" class="form-control" id="name" v-model="form.descripcion" aria-describedby="inputWarning2Status">
 				  <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
@@ -77,13 +77,13 @@
 		data() {
 			return {
 				options: 0,
-	            form: {
-	            	id: "",
-	            	code: "",
-	            	descripcion: ""
-	            },
-	            dataTable: [],
-	            filters: []
+				form: {
+					id: "",
+					code: "",
+					descripcion: ""
+				},
+				dataTable: [],
+				filters: []
 			}
 		},
 		props: {
@@ -103,7 +103,7 @@
 	            }
 			},
 			_create() {
-				axios.post("", this.form)
+				axios.post("intranet/categorias", this.form)
 				.then( resp => {
 					this._showAlert(resp.data.text, "success")
 					this.options = 0
@@ -121,14 +121,18 @@
 				this.options = 2
 			},
 			_updated() {
-				axios.put(`categorias/${this.form.id}`, this.form)
+				axios.put(`intranet/categorias/${this.form.id}`, this.form)
 				.then( resp => {
 					this._showAlert(resp.data.text, "success")
 					this.options = 0
 					this._reloadTable()
 				})
 				.catch(error => {
-					this._showAlert(error.data.error, "error")
+					let msg = "Disculpe ha ocurrido un error"
+					if (error.response.status == 422) {
+						msg = error.response.data.error
+					}
+					this._showAlert(msg, "error")
 				})
 			},
 			_delete(id) {
@@ -141,7 +145,7 @@
 				})
 				.then((willDelete) => {
 				  if (willDelete) {
-				    axios.delete(`categorias/`+id)
+				    axios.delete(`intranet/categorias/`+id)
 				    .then( resp => {
 					    swal(resp.data.text, {
 					      icon: "success",
@@ -157,7 +161,7 @@
 				});
 			},
 			_reloadTable() {
-				axios.get("categorias-all")
+				axios.post("intranet/categorias-all")
 				.then( resp => {
 					this.dataTable = resp.data
 					console.log(this.dataTable)

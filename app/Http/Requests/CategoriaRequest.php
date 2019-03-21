@@ -26,8 +26,8 @@ class CategoriaRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'required',
-            'descripcion' => 'required'
+            'code' => 'required|string|max:15',
+            'descripcion' => 'required|string|max:60'
         ];
     }
 
@@ -42,7 +42,9 @@ class CategoriaRequest extends FormRequest
     public function messages()
     {
         return [
-            'required' => 'Debe completar los campos en :attribute'
+            'required' => 'Debe completar los campos en :attribute',
+            'string' => 'Debe ser una cadena de texto',
+            'max' => ':attribute acepta un máximo de :max caracteres',
         ];
     }
 

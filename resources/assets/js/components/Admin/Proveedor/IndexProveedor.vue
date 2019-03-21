@@ -17,7 +17,7 @@
             <div class="col-sm-12 col-md-12">
 	         <div class="datagrid" v-if="options == 0">
 				<table-byte :set-table="dataTable" :filters="['name']">
-			        <table-row slot="table-head" slot-scope="{ item }">
+			        <table-row slot="table-head">
 			            <table-head>ID</table-head>
 			            <table-head>Nombre del proveedor</table-head>
 			            <table-head>Status</table-head>
