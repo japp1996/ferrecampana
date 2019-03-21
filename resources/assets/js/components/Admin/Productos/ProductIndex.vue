@@ -21,7 +21,7 @@
                     </div>
 
                     <table-byte :set-table="dataTable" :filters="['name']">
-                        <table-row slot="table-head" slot-scope="{ item }">
+                        <table-row slot="table-head">
                             <table-head>Producto</table-head>
                             <table-head>Acciones</table-head>
                         </table-row>
@@ -183,16 +183,16 @@
                     <h3>Imagenen Principal</h3>
                 </div>
 
-                <div class="col s12 m6" v-for="(img, i) in modal.data.images" :key="'img-main' + i" v-if="img.main == 1">
-                    <img class="img-products" :src="`img/products/${img.file}` | asset" alt="">
+                <div class="col s12 m6" v-for="(img, i) in modal.data.images" :key="'img-main' + i" >
+                    <img class="img-products" v-if="img.main == 1" :src="`img/products/${img.file}` | asset" alt="">
                 </div>
 
                 <div class="col s12">
                     <h3>Imagenenes Secundarias</h3>
                 </div>
 
-                <div class="col s12 m6" v-for="(img, i) in modal.data.images" :key="'img-main' + i" v-if="img.main == 0">
-                    <img class="img-products" :src="`img/products/${img.file}` | asset" alt="">
+                <div class="col s12 m6" v-for="(img, i) in modal.data.images" :key="'img-main' + i" >
+                    <img class="img-products" v-if="img.main == 0" :src="`img/products/${img.file}` | asset" alt="">
                 </div>
             </template>
 

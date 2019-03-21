@@ -9,8 +9,9 @@ use App\Models\Producto;
 use App\Models\Categoria;
 use App\Models\Auditoria;
 use App\Models\Proveedor;
-use Exporter;
+use Dompdf\Dompdf;
 use Carbon\Carbon;
+use Exporter;
 
 class ProductoController extends Controller
 {
@@ -100,6 +101,21 @@ class ProductoController extends Controller
                 ->get();
         $excel = Exporter::make('Excel');
         $excel->load($productos);
-        return $excel->stream("excel_".Carbon::now());
+        return $excel->stream("excel_".Carbon::now().".xlsx");
+    }
+
+    public function pdf()
+    {
+        $productos = Producto::select('productos.id','productos.code','productos.name', 'productos.price','productos.stock', 'productos.unity','categorias.descripcion_categoria','categorias.code as codecat')->join('categorias' ,'productos.id_categoria', 'categorias.code')->where('productos.status', '1')
+                ->get();
+        $productos = view('admin.productos.pdf')->with(['productos'=>$productos]);
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($productos);
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'landscape');
+        // Render the HTML as PDF
+        $dompdf->render();
+        // Output the generated PDF to Browser
+        return $dompdf->stream();
     }
 }

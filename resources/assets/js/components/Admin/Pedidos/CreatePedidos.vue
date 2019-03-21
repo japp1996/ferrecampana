@@ -20,7 +20,7 @@
 									    <div id="cart">
 									    	<span class="empty" v-if="carrito.length == 0">No hay nada añadido.</span>  
 									    	<ul v-if="carrito.length > 0" class="list-group">
-											  <li class="list-group-item" v-for="(cart, i) in carrito">
+											  <li class="list-group-item" v-for="(cart, i) in carrito" :key="i">
 											    <!--span class="badge" v-on:click="_splice(i)">X</span-->
 											    <span class="badge">{{ cart.cantidad }}</span>
 											    {{ cart.name }}
@@ -31,7 +31,7 @@
 									    
 									    <h3>CATEGORIAS</h3>
 								    	<ul>
-								        	<li v-for="item in dataCategory" @click="category(item.code)"><a><span></span>{{ item.descripcion_categoria }}</a></li>
+								        	<li v-for="(item,i) in dataCategory"  :key="i" @click="category(item.code)"><a><span></span>{{ item.descripcion_categoria }}</a></li>
 								        </ul>
 									</div>
 								</div>
@@ -64,7 +64,7 @@
 								<div class="col-md-12">
 						         <div class="datagrid" v-if="options == 0 || options == 1">
 									<table-byte :set-table="dataTable" :filters="['name','descripcion_categoria']">
-								        <table-row slot="table-head" slot-scope="{ item }">
+								        <table-row slot="table-head">
 								            <table-head>Producto</table-head>
 								            <table-head>Categoria</table-head>
 								            <table-head>Existencia</table-head>
@@ -149,7 +149,6 @@
 		},
 		methods: {
 			_addCart(item) {
-				console.log(item)
 				if (item.cantidad == 0 || item.cantidad == "") {
 					swal("","Debe seleccionar una cantidad ","info")
 					return false;
@@ -180,7 +179,7 @@
 				this.carrito.splice(i,1)
 			},
 			_create() {
-				axios.post("",this.carrito)
+				axios.post("intranet/pedidos",this.carrito)
 				.then(resp => {
 					swal("",resp.data.text,"success")
 					this.carrito = []

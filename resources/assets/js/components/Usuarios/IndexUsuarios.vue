@@ -34,7 +34,7 @@
 
 								<li class="col-xs-12 col-sm-12 col-md-6"><input v-model="form.phone" name="telefono" type="tel" id="telefono" placeholder="Teléfono*" required/></li>
 
-								<li class="col-xs-12 col-sm-12"><textarea v-model="form.address" name="direccion" type="tel" id="direccion" placeholder="Dirección*" required/></textarea></li>
+								<li class="col-xs-12 col-sm-12"><textarea v-model="form.address" name="direccion" type="tel" id="direccion" placeholder="Dirección*" required></textarea></li>
 
 								<li class="col-xs-12 col-sm-12 col-md-12"><input v-model="form.date" name="fechanac" type="date" id="fechanac" placeholder="fecha*" required/></li>
 								
@@ -96,9 +96,12 @@
 						icon: "success",
 						button: false
 					})
+					this.form = {}
+					setTimeout((e)=> {
+						window.location = "login"
+					},1000)
 			  	})
 			  	.catch(error => {
-			  		console.log("catch", error.response.status)
 			  		let message = "Disculpe, ha ocurrido un error";
 			  		if (error.response.status == 422) {
 			  			message = error.response.data.error;

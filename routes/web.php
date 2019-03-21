@@ -28,8 +28,9 @@
 		Route::get('dashboard', 'DashboardController@index');
 		//Productos
 		Route::resource('productos', 'ProductoController');
-		Route::get('productos-all','ProductoController@get');
+		Route::post('productos-all','ProductoController@get');
 		Route::get('productos-excel', 'ProductoController@excel');
+		Route::get('productos-pdf', 'ProductoController@pdf');
 		//Proveedores
 		Route::resource('proveedores', 'ProveedorController');
 		Route::post('proveedores-all','ProveedorController@get');

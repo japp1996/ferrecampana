@@ -30,7 +30,7 @@ class UsuarioRequest extends FormRequest
             "number" => "unique:users|required|numeric|max:999999999|min:100000",
             "name" => "required",
             "password" => "required|min:8",
-            "password2" => "required|min:8",
+            "password2" => "required|min:8|same:password",
             "email" => "unique:users|required|email",
             "phone" => "unique:users|required",
             "address" => "required",
@@ -63,7 +63,8 @@ class UsuarioRequest extends FormRequest
             'numeric' => 'El campo :attribute debe contener sólo números',
             'date' => 'El campo :attribute no tiene formato de fecha',
             'email' => 'El campo :attribute debe ser email',
-            'max' => 'El campo :attribute debe ser mayor a :max'
+            'max' => 'El valor mas alto permitido en :attribute es de :max',
+            'same' => 'Las contraseñas no cohinciden'
         ];
     }
 

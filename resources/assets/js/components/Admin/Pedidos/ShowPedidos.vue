@@ -27,7 +27,7 @@
 	        <div class="col-md-12">
 	         <div class="datagrid" v-if="options == 0">
 				<table-byte :set-table="dataTable" :filters="['usuario.name']">
-			        <table-row slot="table-head" slot-scope="{ item }">
+			        <table-row slot="table-head">
 			            <table-head>No.</table-head>
 			            <table-head>Cliente</table-head>
 			            <table-head>Fecha</table-head>
@@ -171,7 +171,7 @@
 				})
 				.then((willDelete) => {
 				  if (willDelete) {
-				    axios.delete(`pedidos/`+id)
+				    axios.delete(`intranet/pedidos/`+id)
 				    .then( resp => {
 					    swal(resp.data.text, {
 					      icon: "success",
@@ -187,7 +187,7 @@
 				});
 			},
 			_reloadTable() {
-				axios.get("pedidos-get")
+				axios.get("intranet/pedidos-get")
 				.then( resp => {
 					this.dataTable = resp.data
 				})

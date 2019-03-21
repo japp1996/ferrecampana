@@ -199,20 +199,26 @@
 				})
 			},
 			_delete(id) {
-
-				let index = this.dataTable.findIndex(e => {
-	                return e.id == id
-	            })
-
-				axios.delete("intranet/proveedores/" + this.form.id)
-				.then(resp => {
-					this._showAlert(resp.data.text, "success")
-					this.options = 0
-					this.dataTable.splice(index, 1)
+				swal({
+				  title: "¿Estás seguro?",
+				  text: "Una vez borrado, no podrás revertir esta acción!",
+				  icon: "warning",
+				  buttons: true,
+				  dangerMode: true,
 				})
-				.catch(erro => {
-					this._showAlert(erro.data.error, "success")
-				})
+				.then((willDelete) => {
+				  if (willDelete) {
+						axios.delete("intranet/proveedores/" + id)
+						.then(resp => {
+							this._showAlert(resp.data.text, "success")
+							this.options = 0
+							this._get_table()
+						})
+						.catch(erro => {
+							this._showAlert(erro.data.error, "success")
+						})
+					}
+				});				
 			},
 			_showAlert(text, type) {
 		        swal({

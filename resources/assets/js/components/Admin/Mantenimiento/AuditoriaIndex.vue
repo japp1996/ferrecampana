@@ -10,7 +10,7 @@
 	        <div class="col-md-12">
 		         <div class="datagrid">
 					<table-byte :set-table="dataTable" :filters="['accion']">
-				        <table-row slot="table-head" slot-scope="{ item }">
+				        <table-row slot="table-head">
 				            <table-head>N°</table-head>
 				            <table-head>Usuario</table-head>
 				            <table-head>Accion</table-head>

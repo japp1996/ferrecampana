@@ -27,7 +27,7 @@
 	        <div class="col-md-12">
 	         <div class="datagrid" v-if="options == 0">
 				<table-byte :set-table="dataTable" :filters="['usuario.name']">
-			        <table-row slot="table-head" slot-scope="{ item }">
+			        <table-row slot="table-head">
 			            <table-head>No.</table-head>
 			            <table-head>Cliente</table-head>
 			            <table-head>Fecha</table-head>
@@ -135,6 +135,7 @@
 
 			},
 			_see(item) {
+				console.log(item)
 				var modal = document.getElementById('myModal');
 				// Get the button that opens the modal
 				var btn = document.getElementById("myBtn"+item.id);
@@ -144,7 +145,8 @@
 				btn.onclick = function() {
 				    document.getElementById("modal-body").innerHTML = "";
 				    item.detalles.forEach((el) => {
-				    	document.getElementById("modal-body").innerHTML += "<p>Producto: " + el.id + " Cantidad: " + el.cantidad + " Precio: " + el.precio + "</p>";
+							console.log(el)
+				    	document.getElementById("modal-body").innerHTML += "<p>Producto: " + el.id + " Cantidad: " + el.cantidad_requisicion + " Precio: " + el.productos.price + "</p>";
 				    })
 				    modal.style.display = "block";				    
 				}
@@ -169,7 +171,7 @@
 				})
 				.then((willDelete) => {
 				  if (willDelete) {
-				    axios.delete(`requisicion/`+id)
+				    axios.delete(`intranet/requisicion/`+id)
 				    .then( resp => {
 					    swal(resp.data.text, {
 					      icon: "success",
@@ -185,7 +187,7 @@
 				});
 			},
 			_reloadTable() {
-				axios.get("requisicion-get")
+				axios.get("intranet/requisicion-get")
 				.then( resp => {
 					this.dataTable = resp.data
 				})

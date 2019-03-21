@@ -176,7 +176,10 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        
+        
+        //Excel
+        Cyberduck\LaravelExcel\ExcelServiceProvider::class,
     ],
 
     /*

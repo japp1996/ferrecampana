@@ -35,7 +35,7 @@
 		},
 		methods: {
 			_backup() {
-				axios.post("",this.form)
+				axios.post("intranet/respaldar",this.form)
 				.then(resp => {
 					if (resp.data.result) {
 						swal("",resp.data.text,"success")

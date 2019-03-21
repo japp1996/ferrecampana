@@ -73612,7 +73612,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		_backup: function _backup() {
 			var _this = this;
 
-			axios.post("", this.form).then(function (resp) {
+			axios.post("intranet/respaldar", this.form).then(function (resp) {
 				if (resp.data.result) {
 					swal("", resp.data.text, "success");
 				} else {
@@ -73867,7 +73867,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	methods: {
 		_restore: function _restore() {
-			console.log(this.form.database);
 
 			var formData = new FormData();
 			formData.append("server", this.form.server);
@@ -73877,7 +73876,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			var imagefile = document.querySelector('#file');
 			formData.append("image", imagefile.files[0]);
 
-			axios.post('', formData, {
+			axios.post('intranet/restaurar', formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data'
 				}
@@ -74107,30 +74106,6 @@ var render = function() {
                   attrs: { "set-table": _vm.dataTable, filters: ["accion"] },
                   scopedSlots: _vm._u([
                     {
-                      key: "table-head",
-                      fn: function(ref) {
-                        var item = ref.item
-                        return _c(
-                          "table-row",
-                          {},
-                          [
-                            _c("table-head", [_vm._v("N°")]),
-                            _vm._v(" "),
-                            _c("table-head", [_vm._v("Usuario")]),
-                            _vm._v(" "),
-                            _c("table-head", [_vm._v("Accion")]),
-                            _vm._v(" "),
-                            _c("table-head", [_vm._v("Rama")]),
-                            _vm._v(" "),
-                            _c("table-head", [_vm._v("Detalle")]),
-                            _vm._v(" "),
-                            _c("table-head", [_vm._v("Fecha")])
-                          ],
-                          1
-                        )
-                      }
-                    },
-                    {
                       key: "table-row",
                       fn: function(ref) {
                         var item = ref.item
@@ -74159,6 +74134,25 @@ var render = function() {
                   ])
                 },
                 [
+                  _c(
+                    "table-row",
+                    { attrs: { slot: "table-head" }, slot: "table-head" },
+                    [
+                      _c("table-head", [_vm._v("N°")]),
+                      _vm._v(" "),
+                      _c("table-head", [_vm._v("Usuario")]),
+                      _vm._v(" "),
+                      _c("table-head", [_vm._v("Accion")]),
+                      _vm._v(" "),
+                      _c("table-head", [_vm._v("Rama")]),
+                      _vm._v(" "),
+                      _c("table-head", [_vm._v("Detalle")]),
+                      _vm._v(" "),
+                      _c("table-head", [_vm._v("Fecha")])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
                   _c(
                     "table-row",
                     { attrs: { slot: "empty-rows" }, slot: "empty-rows" },
@@ -74408,7 +74402,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 	methods: {
 		_addCart: function _addCart(item) {
-			console.log(item);
 			if (item.cantidad == 0 || item.cantidad == "") {
 				swal("", "Debe seleccionar una cantidad ", "info");
 				return false;
@@ -74441,7 +74434,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		_create: function _create() {
 			var _this = this;
 
-			axios.post("", this.carrito).then(function (resp) {
+			axios.post("intranet/pedidos", this.carrito).then(function (resp) {
 				swal("", resp.data.text, "success");
 				_this.carrito = [];
 			}).catch(function (erro) {
@@ -74537,7 +74530,7 @@ var render = function() {
                             _vm._l(_vm.carrito, function(cart, i) {
                               return _c(
                                 "li",
-                                { staticClass: "list-group-item" },
+                                { key: i, staticClass: "list-group-item" },
                                 [
                                   _c("span", { staticClass: "badge" }, [
                                     _vm._v(_vm._s(cart.cantidad))
@@ -74574,10 +74567,11 @@ var render = function() {
                     _vm._v(" "),
                     _c(
                       "ul",
-                      _vm._l(_vm.dataCategory, function(item) {
+                      _vm._l(_vm.dataCategory, function(item, i) {
                         return _c(
                           "li",
                           {
+                            key: i,
                             on: {
                               click: function($event) {
                                 _vm.category(item.code)
@@ -74614,34 +74608,6 @@ var render = function() {
                                 filters: ["name", "descripcion_categoria"]
                               },
                               scopedSlots: _vm._u([
-                                {
-                                  key: "table-head",
-                                  fn: function(ref) {
-                                    var item = ref.item
-                                    return _c(
-                                      "table-row",
-                                      {},
-                                      [
-                                        _c("table-head", [_vm._v("Producto")]),
-                                        _vm._v(" "),
-                                        _c("table-head", [_vm._v("Categoria")]),
-                                        _vm._v(" "),
-                                        _c("table-head", [
-                                          _vm._v("Existencia")
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("table-head", [_vm._v("Unidad")]),
-                                        _vm._v(" "),
-                                        _c("table-head", [_vm._v("Precio")]),
-                                        _vm._v(" "),
-                                        _c("table-head", [_vm._v("Agregar")]),
-                                        _vm._v(" "),
-                                        _c("table-head", [_vm._v("Cantidad")])
-                                      ],
-                                      1
-                                    )
-                                  }
-                                },
                                 {
                                   key: "table-row",
                                   fn: function(ref) {
@@ -74737,6 +74703,30 @@ var render = function() {
                               ])
                             },
                             [
+                              _c(
+                                "table-row",
+                                {
+                                  attrs: { slot: "table-head" },
+                                  slot: "table-head"
+                                },
+                                [
+                                  _c("table-head", [_vm._v("Producto")]),
+                                  _vm._v(" "),
+                                  _c("table-head", [_vm._v("Categoria")]),
+                                  _vm._v(" "),
+                                  _c("table-head", [_vm._v("Existencia")]),
+                                  _vm._v(" "),
+                                  _c("table-head", [_vm._v("Unidad")]),
+                                  _vm._v(" "),
+                                  _c("table-head", [_vm._v("Precio")]),
+                                  _vm._v(" "),
+                                  _c("table-head", [_vm._v("Agregar")]),
+                                  _vm._v(" "),
+                                  _c("table-head", [_vm._v("Cantidad")])
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
                               _c(
                                 "table-row",
                                 {
@@ -75087,7 +75077,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				dangerMode: true
 			}).then(function (willDelete) {
 				if (willDelete) {
-					axios.delete("pedidos/" + id).then(function (resp) {
+					axios.delete("intranet/pedidos/" + id).then(function (resp) {
 						swal(resp.data.text, {
 							icon: "success"
 						});
@@ -75103,7 +75093,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		_reloadTable: function _reloadTable() {
 			var _this2 = this;
 
-			axios.get("pedidos-get").then(function (resp) {
+			axios.get("intranet/pedidos-get").then(function (resp) {
 				_this2.dataTable = resp.data;
 			}).catch(function (erro) {});
 		}
@@ -75180,26 +75170,6 @@ var render = function() {
                       },
                       scopedSlots: _vm._u([
                         {
-                          key: "table-head",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return _c(
-                              "table-row",
-                              {},
-                              [
-                                _c("table-head", [_vm._v("No.")]),
-                                _vm._v(" "),
-                                _c("table-head", [_vm._v("Cliente")]),
-                                _vm._v(" "),
-                                _c("table-head", [_vm._v("Fecha")]),
-                                _vm._v(" "),
-                                _c("table-head", [_vm._v("Acciones")])
-                              ],
-                              1
-                            )
-                          }
-                        },
-                        {
                           key: "table-row",
                           fn: function(ref) {
                             var item = ref.item
@@ -75275,6 +75245,21 @@ var render = function() {
                       ])
                     },
                     [
+                      _c(
+                        "table-row",
+                        { attrs: { slot: "table-head" }, slot: "table-head" },
+                        [
+                          _c("table-head", [_vm._v("No.")]),
+                          _vm._v(" "),
+                          _c("table-head", [_vm._v("Cliente")]),
+                          _vm._v(" "),
+                          _c("table-head", [_vm._v("Fecha")]),
+                          _vm._v(" "),
+                          _c("table-head", [_vm._v("Acciones")])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
                       _c(
                         "table-row",
                         { attrs: { slot: "empty-rows" }, slot: "empty-rows" },
@@ -75662,6 +75647,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	template: "#template-orden-compra-index",
@@ -75720,7 +75706,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				dangerMode: true
 			}).then(function (importar) {
 				if (importar) {
-					axios.post("", item).then(function (resp) {
+					axios.post("intranet/orden", item).then(function (resp) {
 						swal(resp.data.text, {
 							icon: "success"
 						});
@@ -75745,7 +75731,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				dangerMode: true
 			}).then(function (willDelete) {
 				if (willDelete) {
-					axios.delete("orden/" + id).then(function (resp) {
+					axios.delete("intranet/orden/" + id).then(function (resp) {
 						swal(resp.data.text, {
 							icon: "success"
 						});
@@ -75761,14 +75747,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		_reloadTable: function _reloadTable() {
 			var _this3 = this;
 
-			axios.get("orden-getr").then(function (resp) {
+			axios.get("intranet/orden-getr").then(function (resp) {
 				_this3.requisicion = resp.data;
 				_this3.dataTable = resp.data;
 			}).catch(function (erro) {}).then(function (res) {
 				console.log(res);
 			});
 
-			axios.get("orden-get").then(function (resp) {
+			axios.get("intranet/orden-get").then(function (resp) {
 				_this3.orden = resp.data;
 				_this3.dataTable = resp.data;
 			}).catch(function (erro) {}).then(function (res) {
@@ -75866,26 +75852,6 @@ var render = function() {
                       },
                       scopedSlots: _vm._u([
                         {
-                          key: "table-head",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return _c(
-                              "table-row",
-                              {},
-                              [
-                                _c("table-head", [_vm._v("No.")]),
-                                _vm._v(" "),
-                                _c("table-head", [_vm._v("Cliente")]),
-                                _vm._v(" "),
-                                _c("table-head", [_vm._v("Fecha")]),
-                                _vm._v(" "),
-                                _c("table-head", [_vm._v("Acciones")])
-                              ],
-                              1
-                            )
-                          }
-                        },
-                        {
                           key: "table-row",
                           fn: function(ref) {
                             var item = ref.item
@@ -75977,6 +75943,27 @@ var render = function() {
                       ])
                     },
                     [
+                      _c(
+                        "table-row",
+                        { attrs: { slot: "table-head" }, slot: "table-head" },
+                        [
+                          _vm.options == 0
+                            ? _c("table-head", [_vm._v("ORDEN.")])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.options == 1 || _vm.options == 2
+                            ? _c("table-head", [_vm._v("REQ.")])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c("table-head", [_vm._v("Cliente")]),
+                          _vm._v(" "),
+                          _c("table-head", [_vm._v("Fecha")]),
+                          _vm._v(" "),
+                          _c("table-head", [_vm._v("Acciones")])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
                       _c(
                         "table-row",
                         { attrs: { slot: "empty-rows" }, slot: "empty-rows" },
@@ -77259,6 +77246,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 //import ProductForm from './ProductForm';
 //import ProductEdit from './ProductEdit';
@@ -77325,11 +77318,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			axios.post(this.urlBase + "intranet/productos/", this.form).then(function (resp) {
 				_this._showAlert(resp.data.text, "success");
 				_this.options = 0;
+				_this._data_table();
 			}).catch(function (error) {
-				_this._showAlert(error.data.error, "error");
+				var msg = "Disculpe ha ocurrido un error";
+				if (error.response.status = 422) {
+					msg = error.response.data.error;
+				}
+				_this._showAlert(msg, "error");
 			});
 		},
 		_view: function _view(item) {},
+		_data_table: function _data_table() {
+			var _this2 = this;
+
+			axios.post('intranet/productos-all').then(function (res) {
+				_this2.dataTable = res.data;
+			}).cathc(function (err) {});
+		},
 		_edit: function _edit(item) {
 			this.form.id = item.id;
 			this.form.code = item.code;
@@ -77342,16 +77347,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			this.options = 2;
 		},
 		_updated: function _updated() {
-			var _this2 = this;
+			var _this3 = this;
 
 			axios.put("intranet/productos/" + this.form.id, this.form).then(function (resp) {
-				_this2._showAlert(resp.data.text, "success");
-				_this2.options = 0;
+				_this3._showAlert(resp.data.text, "success");
+				_this3.options = 0;
+				_this3._data_table();
 			}).catch(function (error) {
-				_this2._showAlert(error.data.error, "error");
+				var msg = "Disculpe ha ocurrido un error";
+				if (error.response.status = 422) {
+					msg = error.response.data.error;
+				}
+				_this3._showAlert(msg, "error");
 			});
 		},
 		_delete: function _delete(id) {
+			var _this4 = this;
+
 			swal({
 				title: "¿Estás seguro?",
 				text: "Una vez borrado, no podrás revertir esta acción!",
@@ -77360,14 +77372,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				dangerMode: true
 			}).then(function (willDelete) {
 				if (willDelete) {
-					axios.delete("productos/" + id).then(function (resp) {
-						swal(resp.data.text, {
-							icon: "success"
-						});
+					axios.delete("intranet/productos/" + id).then(function (resp) {
+						swal('', 'Borrado con éxito', "success");
+						_this4._data_table();
 					}).catch(function (erro) {
-						swal("Lo sentimos! ha ocurrido un error!", {
-							icon: "error"
-						});
+						swal("", "Lo sentimos! ha ocurrido un error!", "error");
 					});
 				}
 			});
@@ -77447,6 +77456,10 @@ var render = function() {
             : _vm._e()
         ]),
         _vm._v(" "),
+        _vm._m(0),
+        _vm._v(" "),
+        _vm._m(1),
+        _vm._v(" "),
         _c("div", { staticClass: "col-sm-12 col-md-12" }, [
           _vm.options == 0
             ? _c(
@@ -77458,30 +77471,6 @@ var render = function() {
                     {
                       attrs: { "set-table": _vm.dataTable, filters: ["name"] },
                       scopedSlots: _vm._u([
-                        {
-                          key: "table-head",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return _c(
-                              "table-row",
-                              {},
-                              [
-                                _c("table-head", [_vm._v("Producto")]),
-                                _vm._v(" "),
-                                _c("table-head", [_vm._v("Categoria")]),
-                                _vm._v(" "),
-                                _c("table-head", [_vm._v("Unidad")]),
-                                _vm._v(" "),
-                                _c("table-head", [_vm._v("Existencia")]),
-                                _vm._v(" "),
-                                _c("table-head", [_vm._v("Precio")]),
-                                _vm._v(" "),
-                                _c("table-head", [_vm._v("Acciones")])
-                              ],
-                              1
-                            )
-                          }
-                        },
                         {
                           key: "table-row",
                           fn: function(ref) {
@@ -77559,6 +77548,25 @@ var render = function() {
                       ])
                     },
                     [
+                      _c(
+                        "table-row",
+                        { attrs: { slot: "table-head" }, slot: "table-head" },
+                        [
+                          _c("table-head", [_vm._v("Producto")]),
+                          _vm._v(" "),
+                          _c("table-head", [_vm._v("Categoria")]),
+                          _vm._v(" "),
+                          _c("table-head", [_vm._v("Unidad")]),
+                          _vm._v(" "),
+                          _c("table-head", [_vm._v("Existencia")]),
+                          _vm._v(" "),
+                          _c("table-head", [_vm._v("Precio")]),
+                          _vm._v(" "),
+                          _c("table-head", [_vm._v("Acciones")])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
                       _c(
                         "table-row",
                         { attrs: { slot: "empty-rows" }, slot: "empty-rows" },
@@ -77749,10 +77757,10 @@ var render = function() {
                         _vm._v("Seleccione")
                       ]),
                       _vm._v(" "),
-                      _vm._l(_vm.categoriasP, function(categoria) {
+                      _vm._l(_vm.categoriasP, function(categoria, i) {
                         return _c(
                           "option",
-                          { domProps: { value: categoria.code } },
+                          { key: i, domProps: { value: categoria.code } },
                           [
                             _vm._v(
                               "\n\t\t\t\t\t  " +
@@ -77818,7 +77826,7 @@ var render = function() {
                       _vm._l(_vm.proveedorP, function(proveedor, i) {
                         return _c(
                           "option",
-                          { key: i, attrs: { value: "proveedor.id" } },
+                          { key: i, domProps: { value: proveedor.id } },
                           [
                             _vm._v(
                               "\n\t\t\t\t\t  " +
@@ -77903,7 +77911,38 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-12 container-btn-add" }, [
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-success",
+          attrs: { href: "productos-excel", target: "_blank" }
+        },
+        [_vm._v("EXPORTAR EXCEL")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-12 container-btn-add" }, [
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-danger",
+          attrs: { href: "productos-pdf", target: "_blank" }
+        },
+        [_vm._v("EXPORTAR PDF")]
+      )
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -78168,16 +78207,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		_delete: function _delete(id) {
 			var _this4 = this;
 
-			var index = this.dataTable.findIndex(function (e) {
-				return e.id == id;
-			});
-
-			axios.delete("intranet/proveedores/" + this.form.id).then(function (resp) {
-				_this4._showAlert(resp.data.text, "success");
-				_this4.options = 0;
-				_this4.dataTable.splice(index, 1);
-			}).catch(function (erro) {
-				_this4._showAlert(erro.data.error, "success");
+			swal({
+				title: "¿Estás seguro?",
+				text: "Una vez borrado, no podrás revertir esta acción!",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true
+			}).then(function (willDelete) {
+				if (willDelete) {
+					axios.delete("intranet/proveedores/" + id).then(function (resp) {
+						_this4._showAlert(resp.data.text, "success");
+						_this4.options = 0;
+						_this4._get_table();
+					}).catch(function (erro) {
+						_this4._showAlert(erro.data.error, "success");
+					});
+				}
 			});
 		},
 		_showAlert: function _showAlert(text, type) {
@@ -79566,7 +79611,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		_create: function _create() {
 			var _this = this;
 
-			axios.post("", this.carrito).then(function (resp) {
+			axios.post("intranet/requisicion", this.carrito).then(function (resp) {
 				swal("", resp.data.text, "success");
 				_this.carrito = [];
 			}).catch(function (erro) {
@@ -79661,7 +79706,7 @@ var render = function() {
                             _vm._l(_vm.carrito, function(cart, i) {
                               return _c(
                                 "li",
-                                { staticClass: "list-group-item" },
+                                { key: i, staticClass: "list-group-item" },
                                 [
                                   _c("span", { staticClass: "badge" }, [
                                     _vm._v(_vm._s(cart.cantidad))
@@ -79698,10 +79743,11 @@ var render = function() {
                     _vm._v(" "),
                     _c(
                       "ul",
-                      _vm._l(_vm.dataCategory, function(item) {
+                      _vm._l(_vm.dataCategory, function(item, i) {
                         return _c(
                           "li",
                           {
+                            key: i,
                             on: {
                               click: function($event) {
                                 _vm.category(item.code)
@@ -79738,34 +79784,6 @@ var render = function() {
                                 filters: ["name", "descripcion_categoria"]
                               },
                               scopedSlots: _vm._u([
-                                {
-                                  key: "table-head",
-                                  fn: function(ref) {
-                                    var item = ref.item
-                                    return _c(
-                                      "table-row",
-                                      {},
-                                      [
-                                        _c("table-head", [_vm._v("Producto")]),
-                                        _vm._v(" "),
-                                        _c("table-head", [_vm._v("Categoria")]),
-                                        _vm._v(" "),
-                                        _c("table-head", [
-                                          _vm._v("Existencia")
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("table-head", [_vm._v("Unidad")]),
-                                        _vm._v(" "),
-                                        _c("table-head", [_vm._v("Precio")]),
-                                        _vm._v(" "),
-                                        _c("table-head", [_vm._v("Agregar")]),
-                                        _vm._v(" "),
-                                        _c("table-head", [_vm._v("Cantidad")])
-                                      ],
-                                      1
-                                    )
-                                  }
-                                },
                                 {
                                   key: "table-row",
                                   fn: function(ref) {
@@ -79861,6 +79879,30 @@ var render = function() {
                               ])
                             },
                             [
+                              _c(
+                                "table-row",
+                                {
+                                  attrs: { slot: "table-head" },
+                                  slot: "table-head"
+                                },
+                                [
+                                  _c("table-head", [_vm._v("Producto")]),
+                                  _vm._v(" "),
+                                  _c("table-head", [_vm._v("Categoria")]),
+                                  _vm._v(" "),
+                                  _c("table-head", [_vm._v("Existencia")]),
+                                  _vm._v(" "),
+                                  _c("table-head", [_vm._v("Unidad")]),
+                                  _vm._v(" "),
+                                  _c("table-head", [_vm._v("Precio")]),
+                                  _vm._v(" "),
+                                  _c("table-head", [_vm._v("Agregar")]),
+                                  _vm._v(" "),
+                                  _c("table-head", [_vm._v("Cantidad")])
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
                               _c(
                                 "table-row",
                                 {
@@ -80141,6 +80183,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	methods: {
 		_edit: function _edit(item) {},
 		_see: function _see(item) {
+			console.log(item);
 			var modal = document.getElementById('myModal');
 			// Get the button that opens the modal
 			var btn = document.getElementById("myBtn" + item.id);
@@ -80150,7 +80193,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			btn.onclick = function () {
 				document.getElementById("modal-body").innerHTML = "";
 				item.detalles.forEach(function (el) {
-					document.getElementById("modal-body").innerHTML += "<p>Producto: " + el.id + " Cantidad: " + el.cantidad + " Precio: " + el.precio + "</p>";
+					console.log(el);
+					document.getElementById("modal-body").innerHTML += "<p>Producto: " + el.id + " Cantidad: " + el.cantidad_requisicion + " Precio: " + el.productos.price + "</p>";
 				});
 				modal.style.display = "block";
 			};
@@ -80176,7 +80220,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				dangerMode: true
 			}).then(function (willDelete) {
 				if (willDelete) {
-					axios.delete("requisicion/" + id).then(function (resp) {
+					axios.delete("intranet/requisicion/" + id).then(function (resp) {
 						swal(resp.data.text, {
 							icon: "success"
 						});
@@ -80192,7 +80236,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		_reloadTable: function _reloadTable() {
 			var _this2 = this;
 
-			axios.get("requisicion-get").then(function (resp) {
+			axios.get("intranet/requisicion-get").then(function (resp) {
 				_this2.dataTable = resp.data;
 			}).catch(function (erro) {});
 		}
@@ -80267,26 +80311,6 @@ var render = function() {
                         filters: ["usuario.name"]
                       },
                       scopedSlots: _vm._u([
-                        {
-                          key: "table-head",
-                          fn: function(ref) {
-                            var item = ref.item
-                            return _c(
-                              "table-row",
-                              {},
-                              [
-                                _c("table-head", [_vm._v("No.")]),
-                                _vm._v(" "),
-                                _c("table-head", [_vm._v("Cliente")]),
-                                _vm._v(" "),
-                                _c("table-head", [_vm._v("Fecha")]),
-                                _vm._v(" "),
-                                _c("table-head", [_vm._v("Acciones")])
-                              ],
-                              1
-                            )
-                          }
-                        },
                         {
                           key: "table-row",
                           fn: function(ref) {
@@ -80363,6 +80387,21 @@ var render = function() {
                       ])
                     },
                     [
+                      _c(
+                        "table-row",
+                        { attrs: { slot: "table-head" }, slot: "table-head" },
+                        [
+                          _c("table-head", [_vm._v("No.")]),
+                          _vm._v(" "),
+                          _c("table-head", [_vm._v("Cliente")]),
+                          _vm._v(" "),
+                          _c("table-head", [_vm._v("Fecha")]),
+                          _vm._v(" "),
+                          _c("table-head", [_vm._v("Acciones")])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
                       _c(
                         "table-row",
                         { attrs: { slot: "empty-rows" }, slot: "empty-rows" },
@@ -80678,6 +80717,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	props: {},
 	methods: {
 		ajax: function ajax() {
+			var _this = this;
+
 			var formData = new FormData();
 			formData.append("tipodoc", this.form.tipodoc);
 			formData.append("number", this.form.number);
@@ -80699,8 +80740,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					icon: "success",
 					button: false
 				});
+				_this.form = {};
+				setTimeout(function (e) {
+					window.location = "login";
+				}, 1000);
 			}).catch(function (error) {
-				console.log("catch", error.response.status);
 				var message = "Disculpe, ha ocurrido un error";
 				if (error.response.status == 422) {
 					message = error.response.data.error;

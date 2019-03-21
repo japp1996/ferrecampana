@@ -14,10 +14,16 @@
                 <button v-if="options == 0" class="btn btn-danger" ><a href="productos/pdf" target="_blank"> Exportar PDF </a></button-->
                 <button v-if="options == 1 || options == 2" class="btn btn-success" @click="options = 0">Volver</button>
             </div>
+						<div class="col-sm-12 container-btn-add" >
+								<a href="productos-excel" class="btn btn-success" target="_blank">EXPORTAR EXCEL</a>
+						</div>
+						<div class="col-sm-12 container-btn-add" >
+								<a href="productos-pdf" class="btn btn-danger" target="_blank">EXPORTAR PDF</a>
+						</div>
             <div class="col-sm-12 col-md-12">
 	         <div class="datagrid" v-if="options == 0">
 				<table-byte :set-table="dataTable" :filters="['name']">
-			        <table-row slot="table-head" slot-scope="{ item }">
+			        <table-row slot="table-head">
 			            <table-head>Producto</table-head>
 			            <table-head>Categoria</table-head>
 			            <table-head>Unidad</table-head>
@@ -70,7 +76,7 @@
 					<label class="control-label" for="categoria">Categoría</label>
 					<select class="form-control" v-model="form.id_categoria" id="categoria" name="categoria">
 					  <option value="">Seleccione</option>
-					  <option v-for="categoria in categoriasP" v-bind:value="categoria.code" >
+					  <option v-for="(categoria,i) in categoriasP" :key="i" v-bind:value="categoria.code" >
 					  {{ categoria.descripcion_categoria }}
 					  </option>
 					</select>
@@ -79,7 +85,7 @@
 					<label class="control-label" for="proveedor">Proveedores</label>
 					<select class="form-control" v-model="form.id_proveedor" id="proveedor" name="proveedor">
 					  <option value="">Seleccione</option>
-					  <option v-for="(proveedor, i) in proveedorP" :key="i" value="proveedor.id">
+					  <option v-for="(proveedor, i) in proveedorP" :key="i" :value="proveedor.id">
 					  {{ proveedor.name }}
 					  </option>
 					</select>
@@ -169,13 +175,26 @@
 				.then( resp => {
 					this._showAlert(resp.data.text, "success")
 					this.options = 0
+					this._data_table()
 				})
 				.catch(error => {
-					this._showAlert(error.data.error, "error")
+					let msg = "Disculpe ha ocurrido un error"
+					if (error.response.status = 422) {
+						msg = error.response.data.error
+					}
+					this._showAlert(msg, "error")
 				})
 			},
 			_view(item) {
 
+			},
+			_data_table() {
+				axios.post('intranet/productos-all')
+				.then(res=> {
+					this.dataTable = res.data
+				}).cathc(err=> {
+
+				})
 			},
 			_edit(item) {
 				this.form.id = item.id
@@ -193,9 +212,14 @@
 				.then( resp => {
 					this._showAlert(resp.data.text, "success")
 					this.options = 0
+					this._data_table()
 				})
 				.catch(error => {
-					this._showAlert(error.data.error, "error")
+					let msg = "Disculpe ha ocurrido un error"
+					if (error.response.status = 422) {
+						msg = error.response.data.error
+					}
+					this._showAlert(msg, "error")
 				})
 			},
 			_delete(id) {
@@ -208,16 +232,11 @@
 				})
 				.then((willDelete) => {
 				  if (willDelete) {
-				    axios.delete(`productos/`+id)
-				    .then( resp => {
-					    swal(resp.data.text, {
-					      icon: "success",
-					    });
-				    })
-				    .catch( erro => {
-				    	swal("Lo sentimos! ha ocurrido un error!", {
-					      icon: "error",
-					    });
+				    axios.delete(`intranet/productos/`+id).then(resp => {
+					    swal('','Borrado con éxito',"success");
+							this._data_table()
+				    }).catch(erro => {
+				    	swal("","Lo sentimos! ha ocurrido un error!", "error");
 				    })
 				  }
 				});

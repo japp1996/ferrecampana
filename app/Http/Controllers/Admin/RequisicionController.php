@@ -86,7 +86,7 @@ class RequisicionController extends Controller
         $auditoria->number = 123456789;
         $auditoria->operacion = 'BORRADO';
         $auditoria->rama = 'REQUISICION';
-        $auditoria->detalles_operacion = 'Borrado de una requisición: '.$requisicion->id.' ';
+        $auditoria->detalles_operacion = 'Borrado de una requisición: '.$id.' ';
         $auditoria->save();
         return response()->json(['result' => true, 'text' => 'Genial! Tu Requisicion ha sido borrada!']);
     }

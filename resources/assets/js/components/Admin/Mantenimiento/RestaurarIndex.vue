@@ -36,7 +36,6 @@
 		},
 		methods: {
 			_restore() {
-				console.log(this.form.database)
 				
 				var formData = new FormData();
 				formData.append("server", this.form.server);
@@ -46,7 +45,7 @@
 				var imagefile = document.querySelector('#file');
 				formData.append("image", imagefile.files[0]);
 
-			    axios.post('', formData, {
+			    axios.post('intranet/restaurar', formData, {
 			        headers: {
 			          'Content-Type': 'multipart/form-data'
 			        }
