@@ -15,7 +15,7 @@
 	        <div class="col-md-12">
 	         <div class="datagrid" v-if="options == 0">
 				<table-byte :set-table="dataTable" :filters="['descripcion_estado']">
-			        <table-row slot="table-head" slot-scope="{ item }">
+			        <table-row slot="table-head">
 			            <table-head>Estados de Pedidos</table-head>
 			            <table-head>Acciones</table-head>
 			        </table-row>
@@ -40,13 +40,13 @@
 			    </table-byte>
 			 </div>
 			 	<div class="" v-if="options == 1 || options == 2">
-					<div class="form-group has-feedback" :class="form.descripcion_estado == '' ? 'has-error' : 'has-success'">
+					<div class="col-md-3 form-group has-feedback" :class="form.descripcion_estado == '' ? 'has-error' : 'has-success'">
 					  <label class="control-label" for="name">Nombre del estado</label>
 					  <input type="text" class="form-control" id="name" v-model="form.descripcion_estado" aria-describedby="inputWarning2Status">
 					  <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
 					  <span id="inputWarning2Status" class="sr-only">(warning)</span>
 					</div>
-					<div class="form-group">
+					<div class="col-md-12 form-group">
 						<p>
 							<button v-if="reg == 0" class="btn btn-success btn-lg" @click="_create()">
 								Crear
@@ -94,7 +94,7 @@
 	            }
 			},
 			_create() {
-				axios.post("", this.form)
+				axios.post("intranet/estado", this.form)
 				.then( resp => {
 					this._showAlert(resp.data.text, "success")
 					this.options = 0
@@ -111,7 +111,7 @@
 				this.options = 2
 			},
 			_updated(){
-				axios.put(`estado/${this.form.id}`, this.form)
+				axios.put(`intranet/estado/${this.form.id}`, this.form)
 				.then( resp => {
 					this._showAlert(resp.data.text, "success")
 					this.options = 0
@@ -131,7 +131,7 @@
 				})
 				.then((willDelete) => {
 				  if (willDelete) {
-				    axios.delete(`estado/`+id)
+				    axios.delete(`intranet/estado/`+id)
 				    .then( resp => {
 					    swal(resp.data.text, {
 					      icon: "success",
@@ -147,7 +147,7 @@
 				});
 			},
 			_create() {
-				axios.post("", this.form)
+				axios.post("intranet/estado", this.form)
 				.then( resp => {
 					this._showAlert(resp.data.text, "success")
 					this.options = 0
@@ -158,7 +158,7 @@
 				})
 			},
 			_reloadTable() {
-				axios.get("estado-all")
+				axios.get("intranet/estado-all")
 				.then( resp => {
 					this.dataTable = resp.data
 				})

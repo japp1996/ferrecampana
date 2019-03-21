@@ -32,11 +32,11 @@
 		Route::get('productos-excel', 'ProductoController@excel');
 		//Proveedores
 		Route::resource('proveedores', 'ProveedorController');
-		Route::get('proveedores-all','ProveedorController@get');
+		Route::post('proveedores-all','ProveedorController@get');
 		Route::get('proveedores-excel', 'ProveedorController@excel');
 		//Categorias
 		Route::resource('categorias', 'CategoriaController');
-		Route::get('categorias-all','CategoriaController@get');
+		Route::post('categorias-all','CategoriaController@get');
 		//Usuarios
 		Route::resource('usuarios', 'UsuarioController');
 		//Pedido

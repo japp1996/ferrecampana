@@ -17,15 +17,13 @@
             <div class="col-sm-12 col-md-12">
 	         <div class="datagrid" v-if="options == 0">
 				<table-byte :set-table="dataTable" :filters="['name']">
-			        <table-row slot="table-head" slot-scope="{ item }">
-			            <table-head>ID</table-head>
+			        <table-row slot="table-head">
 			            <table-head>Nombre del proveedor</table-head>
 			            <table-head>Status</table-head>
 			            <table-head>Acciones</table-head>
 			        </table-row>
 
 			        <table-row slot="table-row" slot-scope="{ item }">
-			            <table-cell>{{ item.id }}</table-cell>
 			            <table-cell>{{ item.name }}</table-cell>
 			            <table-cell>{{ item.status == 1 ? 'Activo' : 'Inactivo' }}</table-cell>
 			            <table-cell>
@@ -47,7 +45,7 @@
 			 </div>
 			 <div class="" v-if="options == 1 || options == 2">
 			 	<div class="col-sm-4 form-group has-feedback">
-				  <label class="control-label" for="name">Nombre</label>
+				  <label class="control-label" for="name">Nombre o Razon Social</label>
 				  <input type="text" class="form-control" id="name" v-model="form.name" aria-describedby="inputSuccess2Status">
 				  <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 				  <span id="inputSuccess2Status" class="sr-only">(success)</span>
@@ -59,26 +57,32 @@
 				  <span id="inputWarning2Status" class="sr-only">(warning)</span>
 				</div>
 				<div class="col-sm-4 form-group has-feedback">
-				  <label class="control-label" for="description">Descripción</label>
-				  <input type="text" class="form-control" id="description" v-model="form.description" aria-describedby="inputWarning2Status">
-				  <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
-				  <span id="inputWarning2Status" class="sr-only">(warning)</span>
-				</div>
-				<div class="col-sm-4 form-group has-feedback">
 				  <label class="control-label" for="contact_name">Nombre de contacto</label>
 				  <input type="text" class="form-control" id="contact_name" v-model="form.contact_name" aria-describedby="inputWarning2Status">
 				  <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
 				  <span id="inputWarning2Status" class="sr-only">(warning)</span>
 				</div>
 				<div class="col-sm-4 form-group has-feedback">
-				  <label class="control-label" for="address">Dirección</label>
-				  <input type="text" class="form-control" id="address" v-model="form.address" aria-describedby="inputWarning2Status">
+				  <label class="control-label" for="description">Descripción</label>
+				  <input type="text" class="form-control" id="description" v-model="form.description" aria-describedby="inputWarning2Status">
+				  <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
+				  <span id="inputWarning2Status" class="sr-only">(warning)</span>
+				</div>
+				<div class="col-sm-4 form-group has-feedback">
+				  <label class="control-label" for="email">Email</label>
+				  <input type="text" class="form-control" id="email" v-model="form.email" aria-describedby="inputWarning2Status">
 				  <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
 				  <span id="inputWarning2Status" class="sr-only">(warning)</span>
 				</div>
 				<div class="col-sm-4 form-group has-feedback">
 				  <label class="control-label" for="phone">Teléfono</label>
 				  <input type="text" class="form-control" id="phone" v-model="form.phone" aria-describedby="inputWarning2Status">
+				  <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
+				  <span id="inputWarning2Status" class="sr-only">(warning)</span>
+				</div>
+				<div class="col-sm-12 form-group has-feedback">
+				  <label class="control-label" for="address">Dirección</label>
+				  <textarea type="text" class="form-control" id="address" v-model="form.address" aria-describedby="inputWarning2Status"></textarea>
 				  <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
 				  <span id="inputWarning2Status" class="sr-only">(warning)</span>
 				</div>
@@ -145,22 +149,29 @@
 				this.reg = 1
 			},
 			_create() {
-				axios.post("", this.form)
+				axios.post("intranet/proveedores", this.form)
 				.then( resp => {
 					this._showAlert(resp.data.text, "success")
 					this.options = 0
-					this.dataTable.push(this.form)
+					this._get_table()
 				})
 				.catch(error => {
-					
-					this._showAlert(error.data.error, "error")
+					let msg = "Disculpe ha ocurrido un error"
+					if (error.response.status == 422) {
+						msg = error.response.data.error
+					} 
+					this._showAlert(msg, "error")
+				})
+			},
+			_get_table(){
+				axios.post('intranet/proveedores-all')
+				.then(res=> {
+					this.dataTable = res.data.data
+				}).cathc(err=> {
+
 				})
 			},
 			_updated() {
-				let index = this.dataTable.findIndex(e => {
-	                return e.id == this.form.id
-	            })
-
 				let formData = new FormData;
 				formData.append('id', this.form.id)
 				formData.append('dni', this.form.dni)
@@ -176,11 +187,15 @@
 				axios.post("intranet/proveedores/" + this.form.id, formData)
 				.then( resp => {
 					this._showAlert(resp.data.text, "success")
-					this.dataTable[index] = this.form
 					this.options = 0
+					this._get_table()
 				})
 				.catch(error => {
-					this._showAlert(error.data.error, "error")
+					let msg = "Disculpe ha ocurrido un error"
+					if (error.response.status == 422) {
+						msg = error.response.data.error
+					} 
+					this._showAlert(msg, "error")
 				})
 			},
 			_delete(id) {

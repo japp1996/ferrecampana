@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Proveedor;
+use App\Http\Requests\ProveedorRequest;
 
 class ProveedorController extends Controller
 {
@@ -19,7 +20,7 @@ class ProveedorController extends Controller
     	
     }
 
-    public function store(Request $request)
+    public function store(ProveedorRequest $request)
     {
     	$prov = new Proveedor;
     	$prov->dni = $request->dni;
@@ -35,7 +36,7 @@ class ProveedorController extends Controller
     	}
     }
 
-    public function update(Request $request, $id)
+    public function update(ProveedorRequest $request, $id)
     {
     	$prov = Proveedor::find($id);
     	$prov->dni = $request->dni;
@@ -50,12 +51,18 @@ class ProveedorController extends Controller
     	}
     }
 
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
-    	$prov = Proveedor::find($request->id);
+    	$prov = Proveedor::find($id);
     	$prov->status = 2;
     	if ($prov->save()) {
     		return response()->json(['result' => true, 'text' => 'Proveedor Borrado con éxito']);
     	}
-    }
+	}
+	
+	public function get()
+	{
+		$proveedor = Proveedor::where('status', '!=', 2)->get();
+    	return response()->json(['data' => $proveedor]);
+	}
 }
