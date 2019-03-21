@@ -5,9 +5,8 @@
 	 * building robust, powerful web applications using Vue and Laravel.
 	 */
 
-	//require('./bootstrap');
+	require('./bootstrap');
 	window.Vue = require('vue');
-	window.axios = require('axios');
 	// Filters
 	//import money from './filters/money'
 	//import amountInLetters from './filters/amount-in-letters'
@@ -63,19 +62,6 @@
 	Vue.component('table-head', require("./components/Admin/Table/TableHead"));
 	Vue.component("table-cell", require("./components/Admin/Table/TableCell"));
 
-
-	window.urlBase = `${window.location.protocol}//${window.location.hostname}:8080/ferrecampana/public/`;
-
-	window.axios.defaults.baseURL = urlBase;
- 	
- 	window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
-    let token = document.head.querySelector('meta[name="csrf-token"]');
- 	if (token) {
-        window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-    } else {
-        console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
-    }
     
 	const app = new Vue({
 	    el: '#app',

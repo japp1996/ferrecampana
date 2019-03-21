@@ -23,7 +23,7 @@ window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-window.urlBase = `${window.location.protocol}8080//${window.location.hostname}/ferrecampana/public/`;
+window.urlBase = `${window.location.protocol}//${window.location.hostname}:8000/`;
 
 window.axios.defaults.baseURL = urlBase;
 
