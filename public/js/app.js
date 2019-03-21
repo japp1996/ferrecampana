@@ -78067,6 +78067,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	template: "#template-proveedor-index",
@@ -78116,21 +78120,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		_create: function _create() {
 			var _this = this;
 
-			axios.post("", this.form).then(function (resp) {
+			axios.post("intranet/proveedores", this.form).then(function (resp) {
 				_this._showAlert(resp.data.text, "success");
 				_this.options = 0;
-				_this.dataTable.push(_this.form);
+				_this._get_table();
 			}).catch(function (error) {
-
-				_this._showAlert(error.data.error, "error");
+				var msg = "Disculpe ha ocurrido un error";
+				if (error.response.status == 422) {
+					msg = error.response.data.error;
+				}
+				_this._showAlert(msg, "error");
 			});
 		},
-		_updated: function _updated() {
+		_get_table: function _get_table() {
 			var _this2 = this;
 
-			var index = this.dataTable.findIndex(function (e) {
-				return e.id == _this2.form.id;
-			});
+			axios.post('intranet/proveedores-all').then(function (res) {
+				_this2.dataTable = res.data.data;
+			}).cathc(function (err) {});
+		},
+		_updated: function _updated() {
+			var _this3 = this;
 
 			var formData = new FormData();
 			formData.append('id', this.form.id);
@@ -78144,26 +78154,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			formData.append('_method', 'PUT');
 
 			axios.post("intranet/proveedores/" + this.form.id, formData).then(function (resp) {
-				_this2._showAlert(resp.data.text, "success");
-				_this2.dataTable[index] = _this2.form;
-				_this2.options = 0;
+				_this3._showAlert(resp.data.text, "success");
+				_this3.options = 0;
+				_this3._get_table();
 			}).catch(function (error) {
-				_this2._showAlert(error.data.error, "error");
+				var msg = "Disculpe ha ocurrido un error";
+				if (error.response.status == 422) {
+					msg = error.response.data.error;
+				}
+				_this3._showAlert(msg, "error");
 			});
 		},
 		_delete: function _delete(id) {
-			var _this3 = this;
+			var _this4 = this;
 
 			var index = this.dataTable.findIndex(function (e) {
 				return e.id == id;
 			});
 
 			axios.delete("intranet/proveedores/" + this.form.id).then(function (resp) {
-				_this3._showAlert(resp.data.text, "success");
-				_this3.options = 0;
-				_this3.dataTable.splice(index, 1);
+				_this4._showAlert(resp.data.text, "success");
+				_this4.options = 0;
+				_this4.dataTable.splice(index, 1);
 			}).catch(function (erro) {
-				_this3._showAlert(erro.data.error, "success");
+				_this4._showAlert(erro.data.error, "success");
 			});
 		},
 		_showAlert: function _showAlert(text, type) {
@@ -78264,8 +78278,6 @@ var render = function() {
                               "table-row",
                               {},
                               [
-                                _c("table-cell", [_vm._v(_vm._s(item.id))]),
-                                _vm._v(" "),
                                 _c("table-cell", [_vm._v(_vm._s(item.name))]),
                                 _vm._v(" "),
                                 _c("table-cell", [
@@ -78337,8 +78349,6 @@ var render = function() {
                         "table-row",
                         { attrs: { slot: "table-head" }, slot: "table-head" },
                         [
-                          _c("table-head", [_vm._v("ID")]),
-                          _vm._v(" "),
                           _c("table-head", [_vm._v("Nombre del proveedor")]),
                           _vm._v(" "),
                           _c("table-head", [_vm._v("Status")]),
@@ -78374,7 +78384,7 @@ var render = function() {
                   _c(
                     "label",
                     { staticClass: "control-label", attrs: { for: "name" } },
-                    [_vm._v("Nombre")]
+                    [_vm._v("Nombre o Razon Social")]
                   ),
                   _vm._v(" "),
                   _c("input", {
@@ -78472,58 +78482,6 @@ var render = function() {
                     "label",
                     {
                       staticClass: "control-label",
-                      attrs: { for: "description" }
-                    },
-                    [_vm._v("Descripción")]
-                  ),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.form.description,
-                        expression: "form.description"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      id: "description",
-                      "aria-describedby": "inputWarning2Status"
-                    },
-                    domProps: { value: _vm.form.description },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.form, "description", $event.target.value)
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("span", {
-                    staticClass:
-                      "glyphicon glyphicon-warning-sign form-control-feedback",
-                    attrs: { "aria-hidden": "true" }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    {
-                      staticClass: "sr-only",
-                      attrs: { id: "inputWarning2Status" }
-                    },
-                    [_vm._v("(warning)")]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-sm-4 form-group has-feedback" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "control-label",
                       attrs: { for: "contact_name" }
                     },
                     [_vm._v("Nombre de contacto")]
@@ -78574,8 +78532,11 @@ var render = function() {
                 _c("div", { staticClass: "col-sm-4 form-group has-feedback" }, [
                   _c(
                     "label",
-                    { staticClass: "control-label", attrs: { for: "address" } },
-                    [_vm._v("Dirección")]
+                    {
+                      staticClass: "control-label",
+                      attrs: { for: "description" }
+                    },
+                    [_vm._v("Descripción")]
                   ),
                   _vm._v(" "),
                   _c("input", {
@@ -78583,23 +78544,72 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.form.address,
-                        expression: "form.address"
+                        value: _vm.form.description,
+                        expression: "form.description"
                       }
                     ],
                     staticClass: "form-control",
                     attrs: {
                       type: "text",
-                      id: "address",
+                      id: "description",
                       "aria-describedby": "inputWarning2Status"
                     },
-                    domProps: { value: _vm.form.address },
+                    domProps: { value: _vm.form.description },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(_vm.form, "address", $event.target.value)
+                        _vm.$set(_vm.form, "description", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("span", {
+                    staticClass:
+                      "glyphicon glyphicon-warning-sign form-control-feedback",
+                    attrs: { "aria-hidden": "true" }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "sr-only",
+                      attrs: { id: "inputWarning2Status" }
+                    },
+                    [_vm._v("(warning)")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-sm-4 form-group has-feedback" }, [
+                  _c(
+                    "label",
+                    { staticClass: "control-label", attrs: { for: "email" } },
+                    [_vm._v("Email")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.email,
+                        expression: "form.email"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      id: "email",
+                      "aria-describedby": "inputWarning2Status"
+                    },
+                    domProps: { value: _vm.form.email },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "email", $event.target.value)
                       }
                     }
                   }),
@@ -78668,6 +78678,62 @@ var render = function() {
                     [_vm._v("(warning)")]
                   )
                 ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-sm-12 form-group has-feedback" },
+                  [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "control-label",
+                        attrs: { for: "address" }
+                      },
+                      [_vm._v("Dirección")]
+                    ),
+                    _vm._v(" "),
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.address,
+                          expression: "form.address"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        id: "address",
+                        "aria-describedby": "inputWarning2Status"
+                      },
+                      domProps: { value: _vm.form.address },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "address", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("span", {
+                      staticClass:
+                        "glyphicon glyphicon-warning-sign form-control-feedback",
+                      attrs: { "aria-hidden": "true" }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      {
+                        staticClass: "sr-only",
+                        attrs: { id: "inputWarning2Status" }
+                      },
+                      [_vm._v("(warning)")]
+                    )
+                  ]
+                ),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
                   _c("p", { staticClass: "text-center" }, [
