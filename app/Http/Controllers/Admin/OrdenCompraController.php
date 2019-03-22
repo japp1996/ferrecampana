@@ -17,10 +17,12 @@ class OrdenCompraController extends Controller
 {
     public function index()
     {
-    	$orden = OrdenCompra::where('id_estado', '!=', '1')->with(['detalles' => function($q){
+        $orden = OrdenCompra::where('id_estado', '!=', '1')
+        ->with(['detalles' => function($q){
             $q->with(['productos' => function($query) {
-                $query->get();
-            }])->get();
+                $query->with(['proveedor'])->get();
+            }])
+            ->get();
         }])->with(['usuario' => function($quer) {
             $quer->where('number', '123456789')->get();
         }])
@@ -29,7 +31,7 @@ class OrdenCompraController extends Controller
         $requisicion = Requisicion::where('id_estado', '!=','1')->where('id_estado', '!=', '5')
         ->with(['detalles' => function($q){
             $q->with(['productos' => function($query) {
-                $query->get();
+                $query->with(['proveedor'])->get();
             }])->get();
         }])->with(['usuario' => function($quer) {
             $quer->where('number', '123456789')->get();

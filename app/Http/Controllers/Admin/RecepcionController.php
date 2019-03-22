@@ -11,6 +11,7 @@ use App\Models\DetallesOrdenCompra;
 use App\Models\Producto;
 use App\Models\Categoria;
 use App\Models\Auditoria;
+use App\Models\MovimientoInventario;
 use App\Http\Requests\RecepcionRequest;
 
 class RecepcionController extends Controller
@@ -59,6 +60,11 @@ class RecepcionController extends Controller
             $productos = Producto::find($value['id_producto']);
             $productos->stock = $productos->stock + $value['cantidad'];
             $productos->save();
+            $movimiento = new MovimientoInventario;
+            $movimiento->producto_id = $value['id_producto'];
+            $movimiento->tipo_movimiento = "1";
+            $movimiento->cantidad = $value['cantidad'];
+            $movimiento->save();
         }
 
         $auditoria = new Auditoria;

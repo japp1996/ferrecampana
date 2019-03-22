@@ -83,7 +83,7 @@
 								            <table-cell>{{ item.price }} Bs.</table-cell>
 								             <table-cell ><input v-if="item.added == 1" type="text" v-model="item.cantidad" class="form-control" placeholder=""></table-cell>
 								            <table-cell>
-							                    <input type="button" v-if="item.added == 1" :disabled="item.cantidad > 0 ? disabled : ''" class="btn btn-success" @click="_addReq(item)" value="Solicitar">
+							                    <input type="button" v-if="item.added == 1 || item.stock_max >= item.stock" :disabled="item.cantidad > 0 ? disabled : ''" :class="item.stock_min >= item.stock ? 'btn btn-danger' : 'btn btn-success'" @click="_addReq(item)" value="Solicitar">
 								            </table-cell>
 								           
 								        </table-row>

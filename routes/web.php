@@ -60,6 +60,10 @@
 		Route::get('recepcion-all', 'RecepcionController@show');
 		Route::get('recepcion-get', 'RecepcionController@get');
 		Route::get('recepcion-getr', 'RecepcionController@getr');
+		//Inventario
+		Route::resource('inventario', 'MovimientoInventarioController');
+		Route::resource('ajuste', 'AjusteInventarioController');
+		Route::resource('repote-ajuste', 'ReporteAjusteInventarioController');
 		//Mantenimiento
 		Route::resource('mantenimiento', 'MantenimientoController');
 		Route::resource('respaldar', 'BackupController');

@@ -16,7 +16,7 @@ use Exporter;
 class ProductoController extends Controller
 {
     public function index() {
-        $productos = Producto::select('productos.id','productos.code','productos.name', 'productos.price','productos.stock', 'productos.unity','categorias.descripcion_categoria','categorias.code as codecat')->join('categorias' ,'productos.id_categoria', 'categorias.code')->where('productos.status', '1')
+        $productos = Producto::select('productos.id','productos.code','productos.name', 'productos.price','productos.stock','productos.stock_min','productos.stock_max', 'productos.unity','categorias.descripcion_categoria','categorias.code as codecat')->join('categorias' ,'productos.id_categoria', 'categorias.code')->where('productos.status', '1')
                 ->get();
         $categorias = Categoria::select('code','descripcion_categoria')->get();
         $prov = Proveedor::get();
@@ -90,8 +90,10 @@ class ProductoController extends Controller
 
     public function get()
     {
-        $productos = Producto::select('productos.id','productos.code','productos.name', 'productos.price','productos.stock', 'productos.unity','categorias.descripcion_categoria','categorias.code as codecat')->join('categorias' ,'productos.id_categoria', 'categorias.code')->where('productos.status', '1')
-                ->get();
+        $productos = Producto::select('productos.id','productos.code','productos.name', 'productos.price','productos.stock','productos.stock_min','productos.stock_max', 'productos.unity','categorias.descripcion_categoria','categorias.code as codecat')
+        ->join('categorias' ,'productos.id_categoria', 'categorias.code')
+        ->where('productos.status', '1')
+        ->get();
         return response()->json($productos);
     }
 
@@ -106,8 +108,10 @@ class ProductoController extends Controller
 
     public function pdf()
     {
-        $productos = Producto::select('productos.id','productos.code','productos.name', 'productos.price','productos.stock', 'productos.unity','categorias.descripcion_categoria','categorias.code as codecat')->join('categorias' ,'productos.id_categoria', 'categorias.code')->where('productos.status', '1')
-                ->get();
+        $productos = Producto::select('productos.id','productos.code','productos.name', 'productos.price','productos.stock', 'productos.unity','categorias.descripcion_categoria','categorias.code as codecat')
+            ->join('categorias' ,'productos.id_categoria', 'categorias.code')
+            ->where('productos.status', '1')
+            ->get();
         $productos = view('admin.productos.pdf')->with(['productos'=>$productos]);
         $dompdf = new Dompdf();
         $dompdf->loadHtml($productos);

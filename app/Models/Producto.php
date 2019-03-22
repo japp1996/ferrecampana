@@ -11,6 +11,8 @@ use App\Models\DetallesOrdenCompra;
 use App\Models\OrdenCompra;
 use App\Models\Recepcion;
 use App\Models\Requisicion;
+use App\Models\Proveedor;
+use App\Models\MovimientoInventario;
 
 class Producto extends Model
 {
@@ -45,6 +47,12 @@ class Producto extends Model
 
     public function proveedor()
     {
-        return $this->hasOne(Producto::class, '', '');
+        return $this->hasOne(Proveedor::class, 'id', 'id_proveedor');
     }
+
+    public function movimiento()
+    {
+        return $this->belongsTo(MovimientoInventario::class, 'id_producto');
+    }
+
 }

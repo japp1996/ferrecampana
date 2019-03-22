@@ -27,7 +27,7 @@
 	        <div class="col-md-12">
 	         <div class="datagrid" v-if="options == 0 || options == 1">
 				<table-byte :set-table="dataTable" :filters="['usuario.name']">
-			        <table-row slot="table-head" slot-scope="{ item }">
+			        <table-row slot="table-head">
 			            <table-head>No.</table-head>
 			            <table-head>Cliente</table-head>
 			            <table-head>Fecha</table-head>
@@ -157,7 +157,7 @@
 				})
 				.then((importar) => {
 				  if (importar) {
-				    axios.post("", item)
+				    axios.post("intranet/recepcion", item)
 				    .then( resp => {
 					    swal(resp.data.text, {
 					      icon: "success",
@@ -183,7 +183,7 @@
 				})
 				.then((willDelete) => {
 				  if (willDelete) {
-				    axios.delete(`recepcion/`+id)
+				    axios.delete(`intranet/recepcion/`+id)
 				    .then( resp => {
 					    swal(resp.data.text, {
 					      icon: "success",
@@ -199,7 +199,7 @@
 				});
 			},
 			_reloadTable() {
-				axios.get("recepcion-getr")
+				axios.get("intranet/recepcion-getr")
 				.then( resp => {
 					this.orden = resp.data
 				    this.dataTable = resp.data
@@ -207,7 +207,7 @@
 				.catch( erro => {
 
 				})
-				axios.get("recepcion-get")
+				axios.get("intranet/recepcion-get")
 				.then( resp => {
 					this.recepcion = resp.data
 				    this.dataTable = resp.data

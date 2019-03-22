@@ -23,44 +23,44 @@
 	      	<div class="col-sm-12 container-btn-add" >
                 <button v-if="options == 0" class="btn btn-success" @click="_add()"> Importar Requisición </button>
                 <button v-if="options == 1 || options == 2" class="btn btn-success" @click="_back()">Volver</button>
-            </div>
+          </div>
 	        <div class="col-md-12">
 	         <div class="datagrid" v-if="options == 0 || options == 1">
-				<table-byte :set-table="dataTable" :filters="['usuario.name']">
-			        <table-row slot="table-head">
-			            <table-head v-if="options == 0">ORDEN.</table-head>
-									<table-head v-if="options == 1 || options == 2">REQ.</table-head>
-			            <table-head>Cliente</table-head>
-			            <table-head>Fecha</table-head>
-			            <table-head>Acciones</table-head>
-			        </table-row>
+						<table-byte :set-table="dataTable" :filters="['usuario.name']">
+									<table-row slot="table-head">
+											<table-head v-if="options == 0">ORDEN.</table-head>
+											<table-head v-if="options == 1 || options == 2">REQ.</table-head>
+											<table-head>Cliente</table-head>
+											<table-head>Fecha</table-head>
+											<table-head>Acciones</table-head>
+									</table-row>
 
-			        <table-row slot="table-row" slot-scope="{ item }">
-			            <table-cell>{{ item.id }}</table-cell>
-			            <table-cell>{{ item.usuario.name }}</table-cell>
-			            <table-cell>{{ item.created_at }}</table-cell>
-			            <table-cell>
-		                    <button v-if="options == 1" class="btn btn-success" @click="_import(item)">
-								Importar
-							</button>
-			            	<a @click="_see(item)" v-if="options == 1" :id="'myBtn'+item.id">
-			                    <img src="http://localhost:8080/ferrecampana/public/images/icons/see.png" class="img-responsive" width="30px" style="display:inline-block">
-		                    </a>
-			            	<button v-if="options != 1" class="btn btn-danger" @click="_delete(item.id)">
-								Borrar
-							</button>
-			            </table-cell>
-			        </table-row>
+									<table-row slot="table-row" slot-scope="{ item }">
+											<table-cell>{{ item.id }}</table-cell>
+											<table-cell>{{ item.usuario.name }}</table-cell>
+											<table-cell>{{ item.created_at }}</table-cell>
+											<table-cell>
+														<button v-if="options == 1" class="btn btn-success" @click="_import(item)">
+										Importar
+									</button>
+												<a @click="_see(item)" v-if="options == 1" :id="'myBtn'+item.id">
+															<img src="http://localhost:8080/ferrecampana/public/images/icons/see.png" class="img-responsive" width="30px" style="display:inline-block">
+														</a>
+												<button v-if="options != 1" class="btn btn-danger" @click="_delete(item.id)">
+										Borrar
+									</button>
+											</table-cell>
+									</table-row>
 
-			        <table-row slot="empty-rows">
-			            <table-cell colspan="4">
-			                No se encontraron registros.
-			            </table-cell>
-			        </table-row>
-			    </table-byte>
-			 </div>
-			</div>
-		 </div>
+									<table-row slot="empty-rows">
+											<table-cell colspan="4">
+													No se encontraron registros.
+											</table-cell>
+									</table-row>
+							</table-byte>
+			 			</div>
+					</div>
+		 		</div>
 		</div>
 	</div>
 </template>
@@ -129,7 +129,7 @@
 				btn.onclick = function() {
 				    document.getElementById("modal-body").innerHTML = "";
 				    item.detalles.forEach((el) => {
-				    	document.getElementById("modal-body").innerHTML += "<p>Producto: " + el.id + " Cantidad: " + el.cantidad_requisicion +"</p>";
+				    	document.getElementById("modal-body").innerHTML += "<p> Producto: " + el.productos.name + " Cantidad: " + el.cantidad_requisicion + " Proveedor: " + el.productos.proveedor.name +"</p>";
 				    })
 				    modal.style.display = "block";			    
 				}

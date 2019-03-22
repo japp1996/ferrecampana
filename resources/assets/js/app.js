@@ -56,6 +56,11 @@
 	Vue.component('usuarios-index', require('./components/Usuarios/IndexUsuarios'));
 	Vue.component('usuarios-login', require('./components/Usuarios/LoginUsuarios'));
 	Vue.component('usuarios-admin', require('./components/Usuarios/AdminUsuarios'));
+	//Inventario
+	Vue.component('reporte-index', require('./components/Admin/Inventario/Reporte'));
+	Vue.component('reporte-ajuste-index', require('./components/Admin/Inventario/ReporteAjuste'));
+	Vue.component('ajuste-index', require('./components/Admin/Inventario/Ajuste'));
+
 	//Tabla
 	Vue.component('table-byte', require("./components/Admin/Table/Table"));
 	Vue.component("table-row", require("./components/Admin/Table/TableRow"));
