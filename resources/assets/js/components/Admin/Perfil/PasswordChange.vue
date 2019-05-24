@@ -54,12 +54,16 @@
 				})
 				.then((accept) => {
 				  if (accept) {
-				    axios.put(`password/${this.id}`, this.form)
+				    axios.post(`intranet/password`, this.form)
 					.then(resp => {
 						swal('',resp.data.text,'success')
 					})
 					.catch(erro => {
-						swal('','Disculpe, ha ocurrido un error','error')
+						let msg = "Disculpe, ha ocurrido un error"; 
+						if(erro.response.status == 422) {
+							msg = erro.response.data.error
+						}
+						swal(msg,'','error')
 					})
 				  }
 				});

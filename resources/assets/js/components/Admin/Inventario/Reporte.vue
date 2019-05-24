@@ -1,120 +1,103 @@
-<template id="template-reporte-index">
-    <div>
+<template id="template-reporte-ajuste-index">
+    <div class="container-fluid">
         <div class="container">
-            <div id="myModal" class="modal_ferre">
-                <!-- Modal content -->
-                <div class="modal-content">
-                <div class="modal-header">
-                    <span class="close">&times;</span>
-                    <h3>Detalles</h3>
-                    </div>
-                    <div class="modal-body" id="modal-body">
-                    
-                    </div>
-                </div>
-            </div>
-
             <div class="row">
                 <div class="col-sm-12 center-align">
-                    <h1>Reporte de Inventario</h1>
+                    <h1 >Reporte de Inventario</h1>
                 </div>
             </div>
-
             <div class="row">
-                <div class="col-md-12">
-                    <div class="datagrid">
-                        <table-byte :set-table="dataTable">
-                            <table-row slot="table-head">
-                                <table-head></table-head>
-                                <table-head>Producto</table-head>
-                                <table-head>Entrada</table-head>
-                                <table-head>Salida</table-head>
-                                <table-head>Fecha</table-head>
-                            </table-row>
-
-                            <table-row slot="table-row" slot-scope="{ item }">
-                                <table-cell>{{ item.code }}</table-cell>
-                                <table-cell> {{ item.producto.name }} </table-cell>
-                                <table-cell> {{ item.tipo_movimiento == '1' ? item.cantidad : ''}} </table-cell>
-                                <table-cell>{{ item.tipo_movimiento == '2' ? item.cantidad : ''}}</table-cell>
-                                <table-cell>{{ item.created_at }}</table-cell>
-                            </table-row>
-
-                            <table-row slot="empty-rows">
-                                <table-cell colspan="4">
-                                        No se encontraron registros.
-                                </table-cell>
-                            </table-row>
-                        </table-byte>
-                    </div>
-                </div>
+                <div class="col-sm-4 form-group">
+					<label class="control-label" for="categoria">Producto</label>
+					<select class="form-control" v-model="form.producto_id" id="producto_id" name="producto_id">
+					  <option v-if="productos.length > 0" value="">Seleccione</option>
+                      <option v-else value="" selected> No han habido ajustes con ningun articulo.</option>
+					  <option v-for="producto in productos" :key="producto.id" :value="producto.id">{{producto.name}}</option>
+					</select>
+				</div>
+                <div class="col-sm-2 form-group">
+					<p>
+						<button class="btn btn-success btn-lg" @click="_query">
+							Consultar
+						</button>				
+					</p>
+				</div>
             </div>
+            <table-byte :set-table="dataTable" :filters="['name']">
+                <table-row slot="table-head">
+                    <table-head>Producto</table-head>
+                    <table-head>Entrada</table-head>
+                    <table-head>Salida</table-head>
+                    <table-head>Fecha</table-head>
+                </table-row>
+
+                <table-row slot="table-row" slot-scope="{ item }">
+                    <table-cell>{{ item.producto.name }}</table-cell>
+                    <table-cell v-if="item.tipo_movimiento  == '1' || item.tipo_movimiento  == '3'">{{ item.cantidad }}</table-cell>
+                    <table-cell v-else></table-cell>
+                    <table-cell v-if="item.tipo_movimiento  == '2' || item.tipo_movimiento == '4'">{{ item.cantidad }}</table-cell>
+                    <table-cell v-else></table-cell>                    
+                    <table-cell>{{ item.created_at }}</table-cell>
+                </table-row>
+
+                <table-row slot="empty-rows">
+                    <table-cell colspan="6">
+                        No se encontraron registros.
+                    </table-cell>
+                </table-row>
+                <table-row v-if="dataTable.length > 0">
+                    <table-cell colspan="6">
+                        No se encontraron registros.
+                    </table-cell>
+                </table-row>
+            </table-byte>
         </div>
     </div>
 </template>
 
-<style>
-    .modal_ferre {
-	    display: none; /* Hidden by default */
-	    position: fixed; /* Stay in place */
-	    z-index: 1; /* Sit on top */
-	    left: 0;
-	    top: 0;
-	    width: 100%; /* Full width */
-	    height: 100%; /* Full height */
-	    overflow: auto; /* Enable scroll if needed */
-	    background-color: rgb(0,0,0); /* Fallback color */
-	    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-	}
-
-	/* Modal Content/Box */
-	.modal-content {
-	    background-color: #fefefe;
-	    margin: 15% auto; /* 15% from the top and centered */
-	    padding: 20px;
-	    border: 1px solid #888;
-	    width: 80%; /* Could be more or less, depending on screen size */
-	}
-
-	/* The Close Button */
-	.close {
-	    color: #aaa;
-	    float: right;
-	    font-size: 28px;
-	    font-weight: bold;
-	}
-
-	.close:hover,
-	.close:focus {
-	    color: black;
-	    text-decoration: none;
-	    cursor: pointer;
-	}
-</style>
-
-
 <script>
 export default {
+    template: "#template-reporte-ajuste-index" ,
     props: {
-
-    },
-    template: "#template-reporte-index" ,
-    data() {
-        return {
-            dataTable: [],
-            stock: 0
+        productos: {
+            type: Array,
+            default: []
         }
     },
     methods: {
-        _getStock(it){
-            return this.stock = it.tipo_movimiento == 1 ? this.stock + it.cantidad : this.stock -it.cantidad
+        _query() {
+            if (this.form.producto_id == "") {
+                swal("Por favor, Seleccione un producto.");
+            }
+
+            axios.post('intranet/inventario', this.form)
+            .then(res=>{
+
+                if (res.data.data == "") {
+                    swal("No existen movimientos para este producto.")
+                }
+                this.dataTable = res.data.data
+            })
+            .catch(err=>{
+                let msg = "Disculpe ha ocurrido un error"
+                if (err.response.status == 422) {
+                    msg = err.response.data.error
+                } 
+                swal(msg, '', "error")
+            })
         }
     },
-    props: {
-        movimiento: []
+    data() {
+        return {
+            dataTable: [],
+            form: {
+                producto_id: ""
+            },
+            products: []
+        }
     },
-    mounted() {
-        this.dataTable = this.movimiento
+    mounted(){
+        this.products = this.productos
     }
 }
 </script>

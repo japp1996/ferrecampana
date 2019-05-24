@@ -35,8 +35,8 @@
 					<ul>
 						<li><a href="{{ url('intranet/productos') }}">Productos</a></li>
 						<li><a href="{{ url('intranet/recepcion') }}">Recepción</a></li>
-						<li><a href="{{ url('') }}"> Ajuste de Inventario </a></li>
-						<li><a href="{{ url('') }}"> Reporte Ajuste de Inventario</a></li>
+						<li><a href="{{ url('intranet/ajuste') }}"> Ajuste de Inventario </a></li>
+						<li><a href="{{ url('intranet/ajuste_reporte') }}"> Reporte Ajuste de Inventario</a></li>
 						<li><a href="{{ url('intranet/inventario') }}"> Reporte de Inventario</a></li>
 					</ul>
 				</li>

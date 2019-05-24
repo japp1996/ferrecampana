@@ -13,4 +13,9 @@ class MovimientoInventario extends Model
     {
         return $this->hasOne(Producto::class, 'id', 'producto_id');
     }
+
+    public function productos()
+    {
+        return $this->belongsTo(Producto::class, 'producto_id');
+    }
 }

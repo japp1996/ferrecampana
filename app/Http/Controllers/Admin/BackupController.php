@@ -9,6 +9,7 @@ use Illuminate\Console\Command;
 use App\Models\Auditoria;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
+use Auth; 
 
 class BackupController extends Controller
 {
@@ -38,7 +39,7 @@ class BackupController extends Controller
 			return response()->json(['result' => false,'text' => 'Respaldo Fallido']);
 		 } else {
 		 	$auditoria = new Auditoria;
-			$auditoria->number = 123456789;
+			$auditoria->number = Auth::user()->number;
 			$auditoria->operacion = 'BASE DE DATOS';
 			$auditoria->rama = 'RESPALDO';
 			$auditoria->detalles_operacion = 'Respaldo de Base de Datos bajo el archivo '.$archivosql.'';

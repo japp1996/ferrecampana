@@ -61,9 +61,10 @@
 		Route::get('recepcion-get', 'RecepcionController@get');
 		Route::get('recepcion-getr', 'RecepcionController@getr');
 		//Inventario
-		Route::resource('inventario', 'MovimientoInventarioController');
+		Route::resource('inventario', 'ReporteInventarioController');
 		Route::resource('ajuste', 'AjusteInventarioController');
-		Route::resource('repote-ajuste', 'ReporteAjusteInventarioController');
+		Route::post('ajuste_get', 'AjusteInventarioController@get');
+		Route::resource('ajuste_reporte', 'ReporteAjusteInventarioController');
 		//Mantenimiento
 		Route::resource('mantenimiento', 'MantenimientoController');
 		Route::resource('respaldar', 'BackupController');

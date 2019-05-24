@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\EstadoPedido;
 use App\Http\Requests\EstadoPedidoRequest;
 use App\Models\Auditoria;
+use Auth;
 
 class EstadoPedidoController extends Controller
 {
@@ -25,7 +26,7 @@ class EstadoPedidoController extends Controller
         $estado->descripcion_estado = $request->descripcion_estado;
         $estado->save();
         $auditoria = new Auditoria;
-        $auditoria->number = 123456789;
+        $auditoria->number = Auth::user()->number;
         $auditoria->operacion = 'REGISTRO';
         $auditoria->rama = 'ESTADO DE PEDIDO';
         $auditoria->detalles_operacion = 'Registro de un tipo de estado de pedidos con el nombre de '.$request->descripcion_estado;
@@ -46,7 +47,7 @@ class EstadoPedidoController extends Controller
         $estado->descripcion_estado = $request->descripcion_estado;
         $estado->save();
         $auditoria = new Auditoria;
-        $auditoria->number = 123456789;
+        $auditoria->number = Auth::user()->number;
         $auditoria->operacion = 'ACTUALIZACION';
         $auditoria->rama = 'ESTADO DE PEDIDO';
         $auditoria->detalles_operacion = 'Actualizacion de un tipo de estado de pedidos con el id: '.$estado->id.' y la descripción: '.$estado->descripcion_estado;
@@ -59,7 +60,7 @@ class EstadoPedidoController extends Controller
         $destroy->status = '2';
         $destroy->save();
         $auditoria = new Auditoria;
-        $auditoria->number = 123456789;
+        $auditoria->number = Auth::user()->number;
         $auditoria->operacion = 'BORRADO';
         $auditoria->rama = 'ESTADO DE PEDIDO';
         $auditoria->detalles_operacion = 'Borrado de un tipo de estado de pedidos con el id: '.$id;

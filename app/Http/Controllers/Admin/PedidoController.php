@@ -32,7 +32,7 @@ class PedidoController extends Controller
 
     public function store(Request $request) {
         $pedido = new Pedido;
-        $pedido->number = 123456789;
+        $pedido->number = Auth::user()->number;
         $pedido->id_estado = 3;
         $pedido->save();
         foreach ($request->all() as $key) {
@@ -48,7 +48,7 @@ class PedidoController extends Controller
         }
 
         $auditoria = new Auditoria;
-        $auditoria->number = 123456789;
+        $auditoria->number = Auth::user()->number;
         $auditoria->operacion = 'REGISTRO';
         $auditoria->rama = 'PEDIDO';
         $auditoria->detalles_operacion = 'Registro de un pedido con el id: '.$pedido->id;
@@ -62,7 +62,7 @@ class PedidoController extends Controller
                 $query->get();
             }])->get();
         }])->with(['usuario' => function($quer) {
-            $quer->where('number', '123456789')->get();
+            $quer->where('number', Auth::user()->number)->get();
         }])
         ->get();
     	return view('admin.pedidos.show')->with(['pedidos' => $pedidos, 'current' => 'list']);
@@ -89,7 +89,7 @@ class PedidoController extends Controller
         $destroy->id_estado = '1';
         $destroy->save();
         $auditoria = new Auditoria;
-        $auditoria->number = 123456789;
+        $auditoria->number = Auth::user()->number;
         $auditoria->operacion = 'BORRADO';
         $auditoria->rama = 'PEDIDO';
         $auditoria->detalles_operacion = 'Borrado de un pedido con el id: '.$id;
@@ -104,7 +104,7 @@ class PedidoController extends Controller
                 $query->get();
             }])->get();
         }])->with(['usuario' => function($quer) {
-            $quer->where('number', '123456789')->get();
+            $quer->where('number', Auth::user()->number)->get();
         }])
         ->get();
         return response()->json($pedidos);

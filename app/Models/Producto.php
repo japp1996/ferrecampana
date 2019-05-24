@@ -52,7 +52,11 @@ class Producto extends Model
 
     public function movimiento()
     {
-        return $this->belongsTo(MovimientoInventario::class, 'id_producto');
+        return $this->belongsTo(MovimientoInventario::class, 'producto_id');
     }
 
+    public function movimientos()
+    {
+        return $this->hasOne(MovimientoInventario::class, 'producto_id', 'id');
+    }
 }

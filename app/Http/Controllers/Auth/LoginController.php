@@ -65,6 +65,6 @@ class LoginController extends Controller
             .Auth::user()->number. ' Cerró Sesión';
         $auditoria->save();
         Auth::logout();
-        return redirect('');
+        return redirect('/');
     }
 }

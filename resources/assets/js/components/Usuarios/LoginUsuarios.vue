@@ -58,9 +58,9 @@
 			  	})
 			  	.catch( error => {
 			  		let message = "Disculpe, ha ocurrido un error";
-			  		//if (error.response.status == 422) {
-			  			//message = error.response.data.error;
-			  		//}
+			  		if (error.response.status == 422) {
+			  			message = error.response.data.error;
+			  		}
 					swal("Atención", message, "warning")
 			  	})
 			}

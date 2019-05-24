@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoriaRequest;
 use App\Models\Categoria;
 use App\Models\Auditoria;
+use Auth;
 
 class CategoriaController extends Controller
 {
@@ -27,7 +28,7 @@ class CategoriaController extends Controller
         $categ->save();
         
         $auditoria = new Auditoria;
-        $auditoria->number = 123456789;
+        $auditoria->number = Auth::user()->number;
         $auditoria->operacion = 'REGISTRO';
         $auditoria->rama = 'CATEGORÍAS';
         $auditoria->detalles_operacion = 'Registro de la categoría '.$categ->descripcion.' bajo el código '.$categ->code;
@@ -50,7 +51,7 @@ class CategoriaController extends Controller
         $categ->save();
 
         $auditoria = new Auditoria;
-        $auditoria->number = 123456789;
+        $auditoria->number = Auth::user()->number;
         $auditoria->operacion = 'ACTUALIZACION';
         $auditoria->rama = 'CATEGORÍAS';
         $auditoria->detalles_operacion = 'Actualización de la categoría bajo el código '.$categ->code;
@@ -64,7 +65,7 @@ class CategoriaController extends Controller
         $destroy->save();
 
         $auditoria = new Auditoria;
-        $auditoria->number = 123456789;
+        $auditoria->number = Auth::user()->number;
         $auditoria->operacion = 'BORRADO';
         $auditoria->rama = 'CATEGORÍAS';
         $auditoria->detalles_operacion = 'Borrado de la categoría bajo el código '.$id;

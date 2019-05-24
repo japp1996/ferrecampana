@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Auditoria;
+use Auth;
 
 class RestoreController extends Controller
 {
@@ -23,7 +24,7 @@ class RestoreController extends Controller
 		system($respaldo, $resultado);
 		if ($resultado) {
 		    $auditoria = new Auditoria;
-	        $auditoria->number = 123456789;
+	        $auditoria->number = Auth::user()->number;
 	        $auditoria->operacion = 'BASE DE DATOS';
 	        $auditoria->rama = 'RESTAURACION';
 	        $auditoria->detalles_operacion = 'Restauración de los datos: '.$requisicion->id.' ';

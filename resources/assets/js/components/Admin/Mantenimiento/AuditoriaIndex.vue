@@ -9,7 +9,7 @@
 	      <div class="row">	      	
 	        <div class="col-md-12">
 		         <div class="datagrid">
-					<table-byte :set-table="dataTable" :filters="['accion']">
+					<table-byte :set-table="dataTable" :filters="['operacion','rama']">
 				        <table-row slot="table-head">
 				            <table-head>N°</table-head>
 				            <table-head>Usuario</table-head>
@@ -21,7 +21,7 @@
 
 				        <table-row slot="table-row" slot-scope="{ item }">
 				            <table-cell>{{ item.id }}</table-cell>
-				            <table-cell>{{ item.user }}</table-cell>
+				            <table-cell>{{ item.user.name }}</table-cell>
 				            <table-cell>{{ item.operacion }}</table-cell>
 				            <table-cell>{{ item.rama }}</table-cell>
 				            <table-cell>{{ item.detalles_operacion }}</table-cell>
@@ -47,7 +47,6 @@
 		data() {
 			return {
 				dataTable: [],
-				filters: []
 			}
 		},
 		props: {

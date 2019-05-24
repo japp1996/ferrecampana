@@ -10,6 +10,7 @@ use App\Models\Producto;
 use App\Models\Categoria;
 use App\Models\Auditoria;
 use App\Http\Requests\RequisicionRequest;
+use Auth;
 
 class RequisicionController extends Controller
 {
@@ -34,7 +35,7 @@ class RequisicionController extends Controller
     public function store(Request $request) 
     {
         $requisicion = new Requisicion;
-        $requisicion->number = 123456789;
+        $requisicion->number = Auth::user()->number;
         $requisicion->id_estado = 3;
         $requisicion->save();
         foreach ($request->all() as $key) {
@@ -46,7 +47,7 @@ class RequisicionController extends Controller
         }
 
         $auditoria = new Auditoria;
-        $auditoria->number = 123456789;
+        $auditoria->number = Auth::user()->number;
         $auditoria->operacion = 'REGISTRO';
         $auditoria->rama = 'REQUISICION';
         $auditoria->detalles_operacion = 'Registro de una nueva requisición con el id: '.$requisicion->id.' ';
@@ -61,7 +62,7 @@ class RequisicionController extends Controller
                 $query->get();
             }])->get();
         }])->with(['usuario' => function($quer) {
-            $quer->where('number', '123456789')->get();
+            $quer->where('number', Auth::user()->number)->get();
         }])
         ->get();
         return view('admin.requisicion.show')->with(['requisicion' => $requisicion, 'current' => 'list']);
@@ -83,7 +84,7 @@ class RequisicionController extends Controller
         $destroy->id_estado = '1';
         $destroy->save();
         $auditoria = new Auditoria;
-        $auditoria->number = 123456789;
+        $auditoria->number = Auth::user()->number;
         $auditoria->operacion = 'BORRADO';
         $auditoria->rama = 'REQUISICION';
         $auditoria->detalles_operacion = 'Borrado de una requisición: '.$id.' ';
@@ -98,7 +99,7 @@ class RequisicionController extends Controller
                 $query->get();
             }])->get();
         }])->with(['usuario' => function($quer) {
-            $quer->where('number', '123456789')->get();
+            $quer->where('number', Auth::user()->number)->get();
         }])
         ->get();
         return response()->json($requisicion);

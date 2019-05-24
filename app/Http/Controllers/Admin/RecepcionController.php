@@ -13,6 +13,7 @@ use App\Models\Categoria;
 use App\Models\Auditoria;
 use App\Models\MovimientoInventario;
 use App\Http\Requests\RecepcionRequest;
+use Auth;
 
 class RecepcionController extends Controller
 {
@@ -23,7 +24,7 @@ class RecepcionController extends Controller
                 $query->get();
             }])->get();
         }])->with(['usuario' => function($quer) {
-            $quer->where('number', '123456789')->get();
+            $quer->where('number', Auth::user()->number)->get();
         }])
         ->get();
 
@@ -33,7 +34,7 @@ class RecepcionController extends Controller
                 $query->get();
             }])->get();
         }])->with(['usuario' => function($quer) {
-            $quer->where('number', '123456789')->get();
+            $quer->where('number', Auth::user()->number)->get();
         }])
         ->get();
         
@@ -47,7 +48,7 @@ class RecepcionController extends Controller
         $orden->save();
 
         $recepcion = new Recepcion;
-        $recepcion->number = 123456789;
+        $recepcion->number = Auth::user()->number;
         $recepcion->id_estado = 3;
         $recepcion->save();
 
@@ -68,7 +69,7 @@ class RecepcionController extends Controller
         }
 
         $auditoria = new Auditoria;
-        $auditoria->number = 123456789;
+        $auditoria->number = Auth::user()->number;
         $auditoria->operacion = 'REGISTRO';
         $auditoria->rama = 'RECEPCION';
         $auditoria->detalles_operacion = 'Registro de una nueva recepción con el id: '.$recepcion->id.' ';
@@ -91,7 +92,7 @@ class RecepcionController extends Controller
         }
 
         $auditoria = new Auditoria;
-        $auditoria->number = 123456789;
+        $auditoria->number = Auth::user()->number;
         $auditoria->operacion = 'BORRADO';
         $auditoria->rama = 'RECEPCION';
         $auditoria->detalles_operacion = 'Borrado de una recepción: '.$recepcion->id.' ';
@@ -107,7 +108,7 @@ class RecepcionController extends Controller
                 $query->get();
             }])->get();
         }])->with(['usuario' => function($quer) {
-            $quer->where('number', '123456789')->get();
+            $quer->where('number', Auth::user()->number)->get();
         }])
         ->get();
         return response()->json($recepcion);
@@ -121,7 +122,7 @@ class RecepcionController extends Controller
                 $query->get();
             }])->get();
         }])->with(['usuario' => function($quer) {
-            $quer->where('number', '123456789')->get();
+            $quer->where('number', Auth::user()->number)->get();
         }])
         ->get();
         return response()->json($orden);

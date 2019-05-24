@@ -12,6 +12,7 @@ use App\Models\Proveedor;
 use Dompdf\Dompdf;
 use Carbon\Carbon;
 use Exporter;
+use Auth;
 
 class ProductoController extends Controller
 {
@@ -39,7 +40,7 @@ class ProductoController extends Controller
         $prod->save();
         
         $auditoria = new Auditoria;
-        $auditoria->number = 123456789;
+        $auditoria->number = Auth::user()->number;
         $auditoria->operacion = 'REGISTRO';
         $auditoria->rama = 'PRODUCTOS';
         $auditoria->detalles_operacion = 'Registro del producto código: '.$prod->code.', Nombre: '.$prod->name;
@@ -66,7 +67,7 @@ class ProductoController extends Controller
         $prod->save();
 
         $auditoria = new Auditoria;
-        $auditoria->number = 123456789;
+        $auditoria->number = Auth::user()->number;
         $auditoria->operacion = 'ACTUALIZACIÓN';
         $auditoria->rama = 'PRODUCTOS';
         $auditoria->detalles_operacion = 'Actualización del producto código: '.$prod->code.', Nombre:'.$prod->name;
@@ -80,7 +81,7 @@ class ProductoController extends Controller
         $destroy->save();
 
         $auditoria = new Auditoria;
-        $auditoria->number = 123456789;
+        $auditoria->number = Auth::user()->number;
         $auditoria->operacion = 'BORRADO';
         $auditoria->rama = 'PRODUCTOS';
         $auditoria->detalles_operacion = 'Borrado del producto código: '.$destroy->code.', Nombre:'.$destroy->name;

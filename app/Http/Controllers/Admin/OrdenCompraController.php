@@ -12,6 +12,7 @@ use App\Models\Producto;
 use App\Models\Categoria;
 use App\Http\Requests\OrdenCompraRequest;
 use App\Models\Auditoria;
+use Auth;
 
 class OrdenCompraController extends Controller
 {
@@ -24,7 +25,7 @@ class OrdenCompraController extends Controller
             }])
             ->get();
         }])->with(['usuario' => function($quer) {
-            $quer->where('number', '123456789')->get();
+            $quer->where('number', Auth::user()->number)->get();
         }])
         ->get();
 
@@ -34,7 +35,7 @@ class OrdenCompraController extends Controller
                 $query->with(['proveedor'])->get();
             }])->get();
         }])->with(['usuario' => function($quer) {
-            $quer->where('number', '123456789')->get();
+            $quer->where('number', Auth::user()->number)->get();
         }])
         ->get();
         
@@ -48,7 +49,7 @@ class OrdenCompraController extends Controller
     	$requisicion->save();
 
     	$orden = new OrdenCompra;
-    	$orden->number = 123456789;
+    	$orden->number = Auth::user()->number;
     	$orden->id_estado = 3;
     	$orden->save();
 
@@ -61,7 +62,7 @@ class OrdenCompraController extends Controller
         }
 
     	$auditoria = new Auditoria;
-        $auditoria->number = 123456789;
+        $auditoria->number = Auth::user()->number;
         $auditoria->operacion = 'REGISTRO';
         $auditoria->rama = 'ORDEN DE COMPRA';
         $auditoria->detalles_operacion = 'Registro de una orden de compra con el id: '.$orden->id;
@@ -76,7 +77,7 @@ class OrdenCompraController extends Controller
         $destroy->save();
 
         $auditoria = new Auditoria;
-        $auditoria->number = 123456789;
+        $auditoria->number = Auth::user()->number;
         $auditoria->operacion = 'BORRADO';
         $auditoria->rama = 'ORDEN DE COMPRA';
         $auditoria->detalles_operacion = 'Borrado de una orden de compra con el id: '.$id;
@@ -91,7 +92,7 @@ class OrdenCompraController extends Controller
                 $query->get();
             }])->get();
         }])->with(['usuario' => function($quer) {
-            $quer->where('number', '123456789')->get();
+            $quer->where('number', Auth::user()->number)->get();
         }])
         ->get();
         return response()->json($orden);
@@ -105,7 +106,7 @@ class OrdenCompraController extends Controller
                 $query->get();
             }])->get();
         }])->with(['usuario' => function($quer) {
-            $quer->where('number', '123456789')->get();
+            $quer->where('number', Auth::user()->number)->get();
         }])
         ->get();
         return response()->json($requisicion);
