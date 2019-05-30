@@ -41,14 +41,14 @@
 					</ul>
 				</li>
 
-				<li>
+				{{--<li>
 					@if (Auth::user()->level != 'CLI')
 					<a href="#" title="Clientes">Clientes<span class="caret"></span></a>
 					<ul>
 						<li><a href="{{ url('intranet/clientes') }}"> Clientes</a></li>
 					</ul>
 					@endif
-				</li>
+				</li>--}}
 
 				<li >
 					<a href="#" title="Procesos">Ventas

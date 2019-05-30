@@ -33,7 +33,7 @@ class RecepcionController extends Controller
             $q->with(['productos' => function($query) {
                 $query->get();
             }])->get();
-        }])->with(['usuario' => function($quer) {
+        },'proveedor'])->with(['usuario' => function($quer) {
             $quer->where('number', Auth::user()->number)->get();
         }])
         ->get();
@@ -56,15 +56,17 @@ class RecepcionController extends Controller
             $detalles = new DetallesRecepcion;
             $detalles->id_recepcion = $recepcion->id;
             $detalles->id_producto = $value['id_producto'];
-            $detalles->cantidad = $value['cantidad'];
+            $detalles->cantidad = $value['cantidad_recibida'];
             $detalles->save();
+
             $productos = Producto::find($value['id_producto']);
-            $productos->stock = $productos->stock + $value['cantidad'];
+            $productos->stock = $productos->stock + $value['cantidad_recibida'];
             $productos->save();
+
             $movimiento = new MovimientoInventario;
             $movimiento->producto_id = $value['id_producto'];
             $movimiento->tipo_movimiento = "1";
-            $movimiento->cantidad = $value['cantidad'];
+            $movimiento->cantidad = $value['cantidad_recibida'];
             $movimiento->save();
         }
 

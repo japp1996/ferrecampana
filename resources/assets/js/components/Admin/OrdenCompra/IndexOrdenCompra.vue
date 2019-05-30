@@ -1,18 +1,22 @@
 <template id="template-orden-compra-index">
 	<div>
 	    <div class="container">
-	    	<div id="myModal" class="modal_ferre">
+	    	<div id="myModal" :style="modal ? 'display:block' : 'display:none'" class="modal_ferre">
 			  <!-- Modal content -->
-			  <div class="modal-content">
-			  	<div class="modal-header">
-				  <span class="close">&times;</span>
-				    <h3>Detalles</h3>
-				 </div>
-				 <div class="modal-body" id="modal-body">
-				    
-				 </div>
-			  </div>
-			</div>
+					<div class="modal-content">
+						<div class="modal-header">
+						<span class="close" v-on:click="modal = false">&times;</span>
+							<h3>Detalles</h3>
+					</div>
+					<div class="modal-body" id="modal-body">
+							<select v-if="proveedores" name="proveedor_id" v-model="form.proveedor_id" id="proveedor_id">
+								<option value="">Seleccione proveedor</option>
+								<option v-for="(prov, i) in proveedor" :key="i" :value="prov.id">{{prov.name}}</option>
+							</select>
+							<button v-if="proveedores" class="btn btn-primary" @click="_do()">Importar</button>
+					</div>
+					</div>
+				</div>
 	       <div class="row">
             <div class="col-sm-12 center-align">
                 <h1 v-if="options == 0">Orden de Compra</h1>
@@ -26,11 +30,12 @@
           </div>
 	        <div class="col-md-12">
 	         <div class="datagrid" v-if="options == 0 || options == 1">
-						<table-byte :set-table="dataTable" :filters="['usuario.name']">
+						<table-byte :set-table="dataTable" :filters="['usuario.name', 'proveedor.contact_name']">
 									<table-row slot="table-head">
 											<table-head v-if="options == 0">ORDEN.</table-head>
 											<table-head v-if="options == 1 || options == 2">REQ.</table-head>
 											<table-head>Cliente</table-head>
+											<table-head v-if="options == 0">Proveedor</table-head>
 											<table-head>Fecha</table-head>
 											<table-head>Acciones</table-head>
 									</table-row>
@@ -38,6 +43,7 @@
 									<table-row slot="table-row" slot-scope="{ item }">
 											<table-cell>{{ item.id }}</table-cell>
 											<table-cell>{{ item.usuario.name }}</table-cell>
+											<table-cell v-if="options == 0">{{ item.proveedor != null ? item.proveedor.contact_name : 'SIN PROVEEDOR' }}</table-cell>
 											<table-cell>{{ item.created_at }}</table-cell>
 											<table-cell>
 														<button v-if="options == 1" class="btn btn-success" @click="_import(item)">
@@ -108,9 +114,14 @@
 		data() {
 			return {
 				options: 1,
-				form: {},
+				form: {
+					proveedor_id: ""
+				},
+				proveedor:[],
 				dataTable: [],
 				filters: [],
+				modal: false
+				
 			}
 		},
 		methods: {
@@ -149,6 +160,15 @@
 				this.dataTable = this.orden
 			},
 			_import(item) {
+				this.modal = true
+				this.form = item
+			},
+			_do() {
+				if (this.form.proveedor_id == "" || this.form.proveedor_id == undefined) {
+					swal("Debe seleccionar un proveedor")
+					return false
+				}
+
 				swal({
 				  title: "¿Desea importar ésta requisición?",
 				  text: "Ésta acción traerá los datos de la requisición y creará una nueva Orden de compra!",
@@ -158,15 +178,19 @@
 				})
 				.then((importar) => {
 				  if (importar) {
-				    axios.post("intranet/orden", item)
+				    axios.post("intranet/orden", this.form)
 				    .then( resp => {
-					    swal(resp.data.text, {
+							this.modal = false
+							this.form.proveedor_id = ""
+							swal(resp.data.text, {
 					      icon: "success",
 					    });
 					    this._reloadTable()
 					    this.options = 0
 				    })
 				    .catch( erro => {
+							this.modal = false
+							this.form.proveedor_id = ""
 				    	swal("Lo sentimos! ha ocurrido un error!", {
 					      icon: "error",
 					    });
@@ -234,9 +258,14 @@
 			requisicion: {
 				type: Array,
 				default: []
+			},
+			proveedores: {
+				type: Array,
+				default: []
 			}
 		},
 		mounted() {	
+			this.proveedor = this.proveedores
 			this.dataTable = this.requisicion
 		}
 	}

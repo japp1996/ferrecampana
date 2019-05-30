@@ -9,6 +9,7 @@ use App\Models\Requisicion;
 use App\Models\DetallesRequisicion;
 use App\Models\DetallesOrdenCompra;
 use App\Models\Producto;
+use App\Models\Proveedor;
 use App\Models\Categoria;
 use App\Http\Requests\OrdenCompraRequest;
 use App\Models\Auditoria;
@@ -24,11 +25,12 @@ class OrdenCompraController extends Controller
                 $query->with(['proveedor'])->get();
             }])
             ->get();
-        }])->with(['usuario' => function($quer) {
+        },
+        'proveedor'])->with(['usuario' => function($quer) {
             $quer->where('number', Auth::user()->number)->get();
         }])
         ->get();
-
+        $proveedores = Proveedor::get();
         $requisicion = Requisicion::where('id_estado', '!=','1')->where('id_estado', '!=', '5')
         ->with(['detalles' => function($q){
             $q->with(['productos' => function($query) {
@@ -39,7 +41,7 @@ class OrdenCompraController extends Controller
         }])
         ->get();
         
-        return view('admin.orden.index')->with(['orden' => $orden, 'requisicion' => $requisicion, 'current' => 'process']);
+        return view('admin.orden.index')->with(['orden' => $orden, 'proveedores' => $proveedores, 'requisicion' => $requisicion, 'current' => 'process']);
     }
 
     public function store(Request $request)
@@ -50,7 +52,8 @@ class OrdenCompraController extends Controller
 
     	$orden = new OrdenCompra;
     	$orden->number = Auth::user()->number;
-    	$orden->id_estado = 3;
+        $orden->id_estado = 3;
+        $orden->id_proveedor = $request->proveedor_id;
     	$orden->save();
 
     	foreach ($request->detalles as $key => $value) {
